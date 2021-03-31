@@ -4,12 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mytest.R
+import java.io.Serializable
 
 
 /**
@@ -17,13 +16,9 @@ import com.example.mytest.R
  */
 class PlaceholderFragment : Fragment() {
 
-    // private lateinit var pageViewModel: PageViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // pageViewModel = ViewModelProvider(this).get(PageViewModel::class.java).apply {
-        //     setIndex(arguments?.getInt(ARG_SECTION_NUMBER) ?: 1)
-        // }
     }
 
     override fun onCreateView(
@@ -31,19 +26,9 @@ class PlaceholderFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.fragment_main, container, false)
-        // val textView: TextView = root.findViewById(R.id.section_label)
-        // pageViewModel.text.observe(this, Observer<String> {
-        //     textView.text = it
-        // })
         val recyclerView: RecyclerView = root.findViewById(R.id.rl_layout)
         recyclerView.layoutManager = LinearLayoutManager(context)
-
-        recyclerView.adapter = context?.let { arguments?.getStringArrayList("params")?.let { it1 ->
-            RecyclerViewAdapter(it,
-                it1
-            )
-        } }
-
+        recyclerView.adapter =RecyclerViewAdapter(requireContext(), arguments?.getSerializable(ARG_SECTION_NUMBER) as MutableList<testDataBean>)
 
         return root
     }
@@ -60,10 +45,10 @@ class PlaceholderFragment : Fragment() {
          * number.
          */
         @JvmStatic
-        fun newInstance(sectionNumber: Int): PlaceholderFragment {
+        fun newInstance(data: MutableList<testDataBean>): PlaceholderFragment {
             return PlaceholderFragment().apply {
                 arguments = Bundle().apply {
-                    putInt(ARG_SECTION_NUMBER, sectionNumber)
+                    putSerializable(ARG_SECTION_NUMBER, data as Serializable)
                 }
             }
         }

@@ -34,6 +34,7 @@
             app:tabIndicatorFullWidth="false"
             app:tabTextColor="@color/purple_700"
             app:tabSelectedTextColor="@color/purple_500"
+            app:tabRippleColor="@android:color/transparent"
             android:background="?attr/colorPrimary" />
     </com.google.android.material.appbar.AppBarLayout>
 

@@ -8,13 +8,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mytest.R
 
 
-class RecyclerViewAdapter(context: Context, data: MutableList<String>) :
+class RecyclerViewAdapter(context: Context, data: MutableList<testDataBean>) :
     RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>() {
     //当前上下文对象
     var context: Context = context
 
     //RecyclerView填充Item数据的List对象
-    var datas: List<String> = data
+    var datas: MutableList<testDataBean> = data
 
     //创建ViewHolder
     override fun onCreateViewHolder(
@@ -33,7 +33,7 @@ class RecyclerViewAdapter(context: Context, data: MutableList<String>) :
         holder: MyViewHolder,
         position: Int
     ) {
-        holder.textView.text = datas[position]
+        holder.textView.text = datas[position].title
     }
 
     //告诉系统item的数量
