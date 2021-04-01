@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.mytest">
+    package="com.chinshry.mytest">
 
     <application
         android:allowBackup="true"
@@ -19,6 +19,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".scrollView.ScrollingActivity"
+            android:label="@string/title_activity_scrollview"
+            android:theme="@style/Theme.MyTest.NoActionBar" />
+        <activity
+            android:name=".tabView.TabActivity"
+            android:label="@string/title_activity_tabview"
+            android:theme="@style/Theme.MyTest.NoActionBar" />
     </application>
 
 </manifest>

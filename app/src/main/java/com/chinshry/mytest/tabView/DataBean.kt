@@ -1,9 +1,9 @@
-package com.example.mytest.ui.main
+package com.chinshry.mytest.tabView
 
 /**
  * Created by chinshry on 2018/3/14.
  * Project Name:MyTest
- * Package Name:com.example.mytest.ui.main
+ * Package Name:com.chinshry.mytest.ui.main
  * File Name:DataBean
  * Describe：Application
  */

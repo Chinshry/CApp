@@ -1,11 +1,11 @@
-package com.example.mytest.ui.main
+package com.chinshry.mytest.tabView
 
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mytest.R
+import com.chinshry.mytest.R
 
 
 class RecyclerViewAdapter(context: Context, data: MutableList<testDataBean>) :
@@ -22,7 +22,7 @@ class RecyclerViewAdapter(context: Context, data: MutableList<testDataBean>) :
         viewType: Int
     ): MyViewHolder {
         //引入item布局并且实例化为对象
-        val v: View = View.inflate(context, R.layout.item_layout, null)
+        val v: View = View.inflate(context, R.layout.tab_item_layout, null)
         //返回MyViewHolder的对象 这是自己创建的继承RecyclerView.ViewHolder的 类
         return MyViewHolder(v)
     }

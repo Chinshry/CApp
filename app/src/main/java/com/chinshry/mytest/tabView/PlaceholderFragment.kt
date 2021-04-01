@@ -1,4 +1,4 @@
-package com.example.mytest.ui.main
+package com.chinshry.mytest.tabView
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mytest.R
+import com.chinshry.mytest.R
 import java.io.Serializable
 
 
@@ -25,10 +25,13 @@ class PlaceholderFragment : Fragment() {
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.fragment_main, container, false)
+        val root = inflater.inflate(R.layout.fragment_tabview, container, false)
         val recyclerView: RecyclerView = root.findViewById(R.id.rl_layout)
         recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter =RecyclerViewAdapter(requireContext(), arguments?.getSerializable(ARG_SECTION_NUMBER) as MutableList<testDataBean>)
+        recyclerView.adapter = RecyclerViewAdapter(
+            requireContext(),
+            arguments?.getSerializable(ARG_SECTION_NUMBER) as MutableList<testDataBean>
+        )
 
         return root
     }
