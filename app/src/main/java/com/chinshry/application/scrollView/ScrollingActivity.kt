@@ -1,11 +1,11 @@
-package com.chinshry.mytest.scrollView
+package com.chinshry.application.scrollView
 
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.chinshry.mytest.R
-import com.chinshry.mytest.bean.Router
+import com.chinshry.application.R
+import com.chinshry.application.bean.Router
 import kotlinx.android.synthetic.main.activity_scrolling.*
 
 @Route(path = Router.ACTIVITY_SCROLLVIEW)

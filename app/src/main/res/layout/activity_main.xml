@@ -28,7 +28,16 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:showDividers="middle"
+        android:divider="@drawable/divider_10">
+
+        <Button
+            android:id="@+id/btn_test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:text="Test" />
 
         <Button
             android:id="@+id/btn_tabView"
@@ -41,9 +50,15 @@
             android:id="@+id/btn_scrollView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:background="@color/white"
             android:text="ScrollView" />
+
+        <Button
+            android:id="@+id/btn_viewModel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:text="ViewModel"/>
 
     </LinearLayout>
 

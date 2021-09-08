@@ -1,4 +1,4 @@
-package com.chinshry.mytest.tabView
+package com.chinshry.application.tabView
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

@@ -1,13 +1,14 @@
-package com.chinshry.mytest
+package com.chinshry.application
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.alibaba.android.arouter.launcher.ARouter
-import com.chinshry.mytest.bean.Router
+import com.chinshry.application.bean.Router
 import kotlinx.android.synthetic.main.activity_main.*
 
+open class MainActivity : AppCompatActivity() {
 
-class MainActivity : AppCompatActivity() {
+    private val TAG = "chinshry"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -15,14 +16,20 @@ class MainActivity : AppCompatActivity() {
 
         init()
 
+        btn_test.setOnClickListener {
+            ARouter.getInstance().build(Router.ACTIVITY_TEST).navigation()
+        }
+
         btn_tabView.setOnClickListener {
-            println("chengshu btn_tabView")
             ARouter.getInstance().build(Router.ACTIVITY_TABVIEW).navigation()
         }
 
         btn_scrollView.setOnClickListener {
-            println("chengshu btn_scrollView")
             ARouter.getInstance().build(Router.ACTIVITY_SCROLLVIEW).navigation()
+        }
+
+        btn_viewModel.setOnClickListener {
+            ARouter.getInstance().build(Router.FRAGMENT_VIEWMODEL).navigation()
         }
     }
 

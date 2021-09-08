@@ -1,4 +1,4 @@
-package com.chinshry.mytest.tabView
+package com.chinshry.application.tabView
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.chinshry.mytest.R
+import com.chinshry.application.R
 import java.io.Serializable
 
 
@@ -30,7 +30,7 @@ class PlaceholderFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = RecyclerViewAdapter(
             requireContext(),
-            arguments?.getSerializable(ARG_SECTION_NUMBER) as MutableList<testDataBean>
+            arguments?.getSerializable(ARG_SECTION_NUMBER) as MutableList<DataBean>
         )
 
         return root
@@ -48,7 +48,7 @@ class PlaceholderFragment : Fragment() {
          * number.
          */
         @JvmStatic
-        fun newInstance(data: MutableList<testDataBean>): PlaceholderFragment {
+        fun newInstance(data: MutableList<DataBean>): PlaceholderFragment {
             return PlaceholderFragment().apply {
                 arguments = Bundle().apply {
                     putSerializable(ARG_SECTION_NUMBER, data as Serializable)

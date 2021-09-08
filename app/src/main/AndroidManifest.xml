@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.chinshry.mytest">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.chinshry.application">
 
     <application
         android:allowBackup="true"
@@ -22,6 +23,9 @@
         <activity
             android:name=".scrollView.ScrollingActivity"
             android:label="@string/title_activity_scrollview"
+            android:theme="@style/Theme.MyTest.NoActionBar" />
+        <activity
+            android:name=".TestActivity"
             android:theme="@style/Theme.MyTest.NoActionBar" />
         <activity
             android:name=".tabView.TabActivity"

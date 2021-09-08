@@ -1,20 +1,20 @@
-package com.chinshry.mytest.tabView
+package com.chinshry.application.tabView
 
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.chinshry.mytest.R
+import com.chinshry.application.R
 
 
-class RecyclerViewAdapter(context: Context, data: MutableList<testDataBean>) :
+class RecyclerViewAdapter(context: Context, data: MutableList<DataBean>) :
     RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>() {
     //当前上下文对象
     var context: Context = context
 
     //RecyclerView填充Item数据的List对象
-    var datas: MutableList<testDataBean> = data
+    var datas: MutableList<DataBean> = data
 
     //创建ViewHolder
     override fun onCreateViewHolder(
