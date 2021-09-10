@@ -14,6 +14,21 @@ import java.lang.StringBuilder
  * Describe：Application
  */
 object CommonUtils {
+    fun getProperty(propName: String?): String? {
+        var value: String? = null
+        val roSecureObj: Any?
+        try {
+            roSecureObj = Class.forName("android.os.SystemProperties")
+                .getMethod("get", String::class.java)
+                .invoke(null, propName)
+            if (roSecureObj != null) value = roSecureObj as String?
+        } catch (e: java.lang.Exception) {
+            value = null
+        } finally {
+            return value
+        }
+    }
+
     fun exec(command: String): String? {
         var bufferedOutputStream: BufferedOutputStream? = null
         var bufferedInputStream: BufferedInputStream? = null

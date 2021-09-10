@@ -1,4 +1,4 @@
-package com.chinshry.application
+package com.chinshry.application.util
 
 import android.annotation.SuppressLint
 import java.io.*
