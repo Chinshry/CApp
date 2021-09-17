@@ -1,5 +1,6 @@
 package com.chinshry.application.util
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -148,12 +149,13 @@ object DevicesCheckUtil {
         Log.d(TAG, "checkRootAndEmulator isEmulator = ${emulatorResult.result}")
         if (rootResult) {
             Toast.makeText(context, "您的设备已ROOT，存在安全隐患！", Toast.LENGTH_LONG).show()
-        } else if (emulatorResult.result) {
+        }
+        if (emulatorResult.result) {
             Toast.makeText(context, "您正在使用模拟器设备，存在安全隐患！", Toast.LENGTH_LONG).show()
-            val brand  = getSimulatorBrand(context)
+            val brand  = getSimulatorBrand(context, emulatorResult.resultList)
             val simulator = SimulatorDetector.deviceType
-            println("brand = $brand")
-            println("simulator = $simulator")
+            Log.d(TAG, "checkRootAndEmulator brand = $brand")
+            Log.d(TAG, "checkRootAndEmulator simulator = $simulator")
         }
         logEmulatorResult(emulatorResult)
         return rootResult || emulatorResult.result
@@ -516,6 +518,7 @@ object DevicesCheckUtil {
     /**
      * 判断是否包含模拟器应用
      */
+    @SuppressLint("QueryPermissionsNeeded")
     private fun checkInstalledEmulatorPackages(context: Context): CheckItemResult {
         val checkItemName = "installedEmulatorPackages"
         val intent = Intent(Intent.ACTION_MAIN, null)
@@ -528,40 +531,41 @@ object DevicesCheckUtil {
         return CheckItemResult(checkItemName)
     }
 
-    private fun getSimulatorBrand(context: Context): String {
-        val pkgName = checkInstalledEmulatorPackages(context).value ?: "UNKNOWN"
-        val knownSimulator = SimulatorDetector.SimulatorList.filter { pkgName.contains(it.code)}
+    private fun getSimulatorBrand(context: Context, resultPkg: MutableList<CheckItemResult>): String {
+        val emulatorPkgName : String = resultPkg.filter { it.name == "installedEmulatorPackages" }[0].value
+            ?: checkInstalledEmulatorPackages(context).value ?: "UNKNOWN"
+        val knownSimulator = SimulatorDetector.SimulatorList.filter { emulatorPkgName.contains(it.code)}
         if (knownSimulator.isNotEmpty()) return knownSimulator[0].name
 
         when {
-            // pkgName.contains("mumu") -> {
+            // emulatorPkgName.contains("mumu") -> {
             //     return "mumu"
             // }
-            // pkgName.contains("bluestacks") -> {
+            // emulatorPkgName.contains("bluestacks") -> {
             //     return "蓝叠"
             // }
-            // pkgName.contains("kaopu001") || pkgName.contains("tiantian") -> {
+            // emulatorPkgName.contains("kaopu001") || emulatorPkgName.contains("tiantian") -> {
             //     return "天天"
             // }
-            // pkgName.contains("microvirt") -> {
+            // emulatorPkgName.contains("microvirt") -> {
             //     return "逍遥"
             // }
-            // pkgName.contains("bignox") -> {
+            // emulatorPkgName.contains("bignox") -> {
             //     return "夜神"
             // }
-            // pkgName.contains("haimawan") -> {
+            // emulatorPkgName.contains("haimawan") -> {
             //     return "海马玩"
             // }
-            // pkgName.contains("flysilkworm") -> {
+            // emulatorPkgName.contains("flysilkworm") -> {
             //     return "雷电"
             // }
-            pkgName.contains("ami") -> {
+            emulatorPkgName.contains("ami") -> {
                 return "AMIDuOS"
             }
-            pkgName.contains("kpzs") -> {
+            emulatorPkgName.contains("kpzs") -> {
                 return "靠谱助手"
             }
-            pkgName.contains("genymotion") -> {
+            emulatorPkgName.contains("genymotion") -> {
                 return when {
                     Build.MODEL.contains("iTools") -> {
                         "iTools"
@@ -574,31 +578,31 @@ object DevicesCheckUtil {
                     }
                 }
             }
-            pkgName.contains("uc") -> {
+            emulatorPkgName.contains("uc") -> {
                 return "uc"
             }
-            pkgName.contains("blue") -> {
+            emulatorPkgName.contains("blue") -> {
                 return "blue"
             }
-            pkgName.contains("itools") -> {
+            emulatorPkgName.contains("itools") -> {
                 return "itools"
             }
-            pkgName.contains("syd") -> {
+            emulatorPkgName.contains("syd") -> {
                 return "手游岛"
             }
-            pkgName.contains("windroy") -> {
+            emulatorPkgName.contains("windroy") -> {
                 return "windroy"
             }
-            pkgName.contains("emu") -> {
+            emulatorPkgName.contains("emu") -> {
                 return "emu"
             }
-            pkgName.contains("le8") -> {
+            emulatorPkgName.contains("le8") -> {
                 return "le8"
             }
-            pkgName.contains("vphone") -> {
+            emulatorPkgName.contains("vphone") -> {
                 return "vphone"
             }
-            pkgName.contains("duoyi") -> {
+            emulatorPkgName.contains("duoyi") -> {
                 return "多益"
             }
             else -> {

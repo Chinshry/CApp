@@ -31,6 +31,11 @@ object SimulatorDetector {
         XYAZ_SIMULATOR
     )
 
+    fun getSimulatorCodeList(): List<String> {
+        return SimulatorList.map { it.code }
+    }
+
+
     /**
      * Get Device Type
      *
