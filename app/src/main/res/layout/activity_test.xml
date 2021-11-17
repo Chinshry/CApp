@@ -2,21 +2,41 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:gravity="center">
 
-    <Button
-        android:id="@+id/btn_test"
-        android:layout_centerInParent="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:text="测试" />
-
-    <TextView
-        android:id="@+id/tv_msg"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="20dp"
-        android:scrollbars="vertical" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:divider="@drawable/divider_10"
+        android:showDividers="middle"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/btn_root"
+            style="@style/Button"
+            android:text="ROOT和模拟器检测" />
+
+        <Button
+            android:id="@+id/btn_gallery"
+            style="@style/Button"
+            android:text="选择图片" />
+
+        <Button
+            android:id="@+id/btn_camera"
+            style="@style/Button"
+            android:text="拍摄照片" />
+
+        <Button
+            android:id="@+id/btn_clear_cache"
+            style="@style/Button"
+            android:text="清除缓存" />
+
+        <ImageView
+            android:id="@+id/iv_preview"
+            android:layout_width="260dp"
+            android:layout_height="260dp" />
+
+    </LinearLayout>
 
 </RelativeLayout>
