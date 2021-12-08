@@ -18,7 +18,32 @@ class TabActivity : AppCompatActivity() {
     private var data1 : MutableList<DataBean> = mutableListOf(
         DataBean("1"),
         DataBean("2"),
-        DataBean("3")
+        DataBean("3"),
+        DataBean("3"),
+        DataBean("3"),
+        DataBean("3"),
+        DataBean("3"),
+        DataBean("3"),
+        DataBean("3"),
+        DataBean("3"),
+        DataBean("3"),
+        DataBean("3"),
+        DataBean("3"),
+        DataBean("3"),
+        DataBean("3"),
+        DataBean("3"),
+        DataBean("3"),
+        DataBean("3"),
+        DataBean("3"),
+        DataBean("3"),
+        DataBean("3"),
+        DataBean("3"),
+        DataBean("3"),
+        DataBean("3"),
+        DataBean("3"),
+        DataBean("3"),
+        DataBean("3"),
+        DataBean("3"),
     )
     private var data2 : MutableList<DataBean> = mutableListOf(
         DataBean("11"),
@@ -40,12 +65,8 @@ class TabActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tabview)
-        btn_add.setOnClickListener {
-            refreshData()
-        }
         val viewPager: ViewPager2 = findViewById(R.id.view_pager)
         val tabs: TabLayout = findViewById(R.id.tabs)
-
 
         for (i in titles.indices) {
             val dataList: MutableList<DataBean> = when(i){
@@ -64,27 +85,12 @@ class TabActivity : AppCompatActivity() {
         viewPager.isUserInputEnabled = false
         viewPager.isSaveEnabled = false
         TabLayoutMediator(tabs, viewPager) { tab, position ->
-                    tab.text = titles[position]
+            tab.text = titles[position]
         }.attach()
 
         for (i in titles.indices) {
             tabs.getTabAt(i)?.text = titles[i]
         }
     }
-
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun refreshData() {
-        fragments.forEach{
-            val data = it.getData()
-            data?.add(data[0])
-            it.refreshData(data)
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-    }
-
 
 }

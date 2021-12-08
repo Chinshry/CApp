@@ -4,11 +4,22 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Project/AS/MyTest/app/src/main/res/drawable/bg_btn.xml" value="0.2890295358649789" />
+        <entry key="..\:/Project/AS/MyTest/app/src/main/res/drawable/bg_item.xml" value="0.29273504273504275" />
         <entry key="..\:/Project/AS/MyTest/app/src/main/res/drawable/divider_10.xml" value="0.1" />
-        <entry key="..\:/Project/AS/MyTest/app/src/main/res/layout/activity_main.xml" value="0.4466666666666667" />
+        <entry key="..\:/Project/AS/MyTest/app/src/main/res/drawable/red_bubble_bg.xml" value="0.16111111111111112" />
+        <entry key="..\:/Project/AS/MyTest/app/src/main/res/layout/activity_main.xml" value="0.3215311004784689" />
+        <entry key="..\:/Project/AS/MyTest/app/src/main/res/layout/activity_main2.xml" value="0.3333333333333333" />
         <entry key="..\:/Project/AS/MyTest/app/src/main/res/layout/activity_tabview.xml" value="0.2794871794871795" />
         <entry key="..\:/Project/AS/MyTest/app/src/main/res/layout/activity_test.xml" value="0.22" />
         <entry key="..\:/Project/AS/MyTest/app/src/main/res/layout/blank_fragment.xml" value="0.1" />
+        <entry key="..\:/Project/AS/MyTest/app/src/main/res/layout/budge_view.xml" value="0.5" />
+        <entry key="..\:/Project/AS/MyTest/app/src/main/res/layout/design_bottom_navigation_item.xml" value="0.4683684794672586" />
+        <entry key="..\:/Project/AS/MyTest/app/src/main/res/layout/fragment_dashboard.xml" value="0.12008547008547009" />
+        <entry key="..\:/Project/AS/MyTest/app/src/main/res/layout/fragment_home.xml" value="0.4466666666666667" />
+        <entry key="..\:/Project/AS/MyTest/app/src/main/res/layout/fragment_tabview.xml" value="0.2794871794871795" />
+        <entry key="..\:/Project/AS/MyTest/app/src/main/res/layout/tab_item_layout.xml" value="0.3333333333333333" />
+        <entry key="..\:/Project/AS/MyTest/app/src/main/res/menu/bottom_nav_menu.xml" value="0.14358974358974358" />
+        <entry key="..\:/Project/AS/MyTest/app/src/main/res/menu/menu_scrolling.xml" value="0.17735042735042736" />
       </map>
     </option>
   </component>

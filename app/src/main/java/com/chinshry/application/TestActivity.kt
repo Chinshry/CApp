@@ -1,18 +1,24 @@
 package com.chinshry.application
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.fastjson.JSON
+import com.blankj.utilcode.constant.TimeConstants
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.PermissionUtils
+import com.blankj.utilcode.util.TimeUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.chinshry.application.bean.Router
@@ -28,6 +34,7 @@ import com.luck.picture.lib.listener.OnResultCallbackListener
 import com.luck.picture.lib.tools.MediaUtils
 import kotlinx.android.synthetic.main.activity_test.*
 import com.luck.picture.lib.thread.PictureThreadUtils
+import kotlinx.android.synthetic.main.tab_item_layout.view.*
 import java.io.File
 
 
@@ -44,7 +51,25 @@ class TestActivity : AppCompatActivity() {
         initView()
     }
 
+    @SuppressLint("InflateParams")
     private fun initView() {
+        for (index in 0..3) {
+            val childView = LayoutInflater.from(this).inflate(R.layout.tab_item_layout, null)
+            childView.rootView.item_text.text = "aaa" + index.toString()
+            val layoutParams = LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                1f
+            )
+            ll_list.addView(childView, layoutParams)
+        }
+
+        btn_test.setOnClickListener {
+            val oldTimeStamp = 1638876626000
+            val day = TimeUtils.getTimeSpanByNow(TimeUtils.getNowMills(), TimeConstants.DAY)
+            println("chengshu day = " + day)
+        }
+
         btn_root.setOnClickListener {
             if (!DevicesCheckUtil.checkRootAndEmulator(this)) {
                 Toast.makeText(this, "您的设备未root，且为真机", Toast.LENGTH_LONG).show()

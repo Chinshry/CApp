@@ -3,8 +3,10 @@ package com.chinshry.application.tabView
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AbsListView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -22,11 +24,7 @@ class PlaceholderFragment : Fragment() {
     private lateinit var dataAdpter: RecyclerViewAdapter
     private lateinit var viewModel: MyViewModel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
+    @SuppressLint("NotifyDataSetChanged", "ClickableViewAccessibility")
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
@@ -36,6 +34,45 @@ class PlaceholderFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(MyViewModel::class.java)
 
 
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                println("chengshu scroll newState = " + newState)
+                when(newState) {
+                    RecyclerView.SCROLL_STATE_IDLE -> {
+                        if (recyclerView.isInTouchMode) {
+                            println("chengshu scroll stop")
+                        }
+                    }
+                }
+                super.onScrollStateChanged(recyclerView, newState)
+            }
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (recyclerView.isInTouchMode) {
+                    println("chengshu scroll move")
+                }
+                super.onScrolled(recyclerView, dx, dy)
+            }
+        })
+
+        recyclerView.setOnTouchListener { v, event ->
+            when(event.action) {
+                MotionEvent.ACTION_UP,
+                MotionEvent.ACTION_CANCEL,
+                MotionEvent.ACTION_OUTSIDE -> {
+                    if (recyclerView.scrollState != RecyclerView.SCROLL_STATE_IDLE) {
+                        println("chengshu touch stop")
+                    }
+                }
+                MotionEvent.ACTION_MOVE,
+                MotionEvent.ACTION_SCROLL -> {
+                    if (recyclerView.scrollState == RecyclerView.SCROLL_STATE_DRAGGING) {
+                        println("chengshu touch move")
+                    }
+                }
+            }
+            return@setOnTouchListener false
+        }
         recyclerView.layoutManager = LinearLayoutManager(context)
         dataAdpter = RecyclerViewAdapter(
             requireContext(),
@@ -43,8 +80,8 @@ class PlaceholderFragment : Fragment() {
         )
         recyclerView.adapter = dataAdpter
 
-        viewModel.data.observe(this, Observer {
-            dataAdpter.datas = it
+        viewModel.data.observe(viewLifecycleOwner, Observer {
+            dataAdpter.data = it
             dataAdpter.notifyDataSetChanged()
         })
 
@@ -63,16 +100,8 @@ class PlaceholderFragment : Fragment() {
     }
 
     companion object {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
         private const val ARG_SECTION_NUMBER = "section_number"
 
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
         @JvmStatic
         fun newInstance(data: MutableList<DataBean>): PlaceholderFragment {
             return PlaceholderFragment().apply {
