@@ -61,7 +61,7 @@ dependencies {
     api 'com.github.bingoogolapple.BGABadgeView-Android:api:1.2.0'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
-    kapt  'com.github.bingoogolapple.BGABadgeView-Android:compiler:1.2.0'
+    kapt 'com.github.bingoogolapple.BGABadgeView-Android:compiler:1.2.0'
     implementation 'com.ashokvarma.android:bottom-navigation-bar:2.2.0'
     
     testImplementation 'junit:junit:4.13.2'

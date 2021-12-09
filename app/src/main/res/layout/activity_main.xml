@@ -24,6 +24,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:visibility="gone"
         android:background="?android:attr/windowBackground" />
+
+    <com.chinshry.application.view.CustomTabView
+        android:id="@+id/custom_tab_container"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
 
 </RelativeLayout>

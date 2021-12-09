@@ -7,7 +7,10 @@ package com.chinshry.application.bean
  * File Name:TestBean
  * Describe：Application
  */
-data class TestBean(
-    var int: Int,
-    var string: String
+data class TabBean(
+    var model: Int? = null,
+    var title: String? = null,
+    var normalIcon: Int? = null,
+    var selectIcon: Int? = null,
+    var badge: Int? = null
 )
