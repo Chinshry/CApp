@@ -17,7 +17,7 @@ import com.blankj.utilcode.util.ColorUtils
 import com.chinshry.application.R
 import java.util.ArrayList
 
-class CustomTabView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
+class CustomTabView(context: Context, attrs: AttributeSet? = null) : LinearLayout(context, attrs) {
     init {
         initView()
     }
