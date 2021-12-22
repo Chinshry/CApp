@@ -1,2 +1,5 @@
-include ':app'
 rootProject.name = "MyTest"
+include ':app'
+include ':base'
+include ':home'
+include ':util'

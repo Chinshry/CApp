@@ -1,48 +1,74 @@
 package com.chinshry.application
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.launcher.ARouter
 import com.blankj.utilcode.util.ResourceUtils
-import com.chinshry.application.bean.TabBean
-import com.chinshry.application.fragment.HomeFragment
-import com.chinshry.application.ui.dashboard.DashboardFragment
-import com.chinshry.application.ui.notifications.NotificationsFragment
-import com.chinshry.application.view.CustomTabView
+import com.chinshry.base.BaseActivity
+import com.chinshry.base.bean.FragmentBean
+import com.chinshry.base.bean.TabBean
+import com.chinshry.base.view.CustomTabView
+import com.chinshry.home.fragment.HomeFragment
+import com.chinshry.util.fragment.UtilFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
+/**
+ * Created by chinshry on 2021/12/23.
+ * File Name: MainActivity.kt
+ * Describe： 主Activity
+ */
+open class MainActivity : BaseActivity() {
 
-open class MainActivity : AppCompatActivity() {
-
-    private val TAG = "chinshry"
-
-    private lateinit var mCustomTabView: CustomTabView
-    private val fragments: List<Fragment> = listOf(
-        HomeFragment(),
-        DashboardFragment(),
-        NotificationsFragment()
+    private val fragments = listOf(
+        FragmentBean(
+            fragment = HomeFragment(),
+            model = 0
+        ),
+        FragmentBean(
+            fragment = UtilFragment(),
+            model = 1
+        )
     )
 
-    val tabData = listOf<TabBean>(
-        TabBean(model = 0, title = "首页", normalIcon = R.drawable.ic_tab_strip_icon_feed, selectIcon = R.drawable.ic_tab_strip_icon_feed_selected),
-        TabBean(model = 1, title = "dashboard", normalIcon = R.drawable.ic_tab_strip_icon_category, selectIcon = R.drawable.ic_tab_strip_icon_category_selected, badge = R.drawable.red_bubble_bg),
-        TabBean(model = 2, title = "通知", normalIcon = R.drawable.ic_tab_strip_icon_pgc, selectIcon = R.drawable.ic_tab_strip_icon_pgc_selected),
+    private val tabData = listOf(
+        TabBean(
+            model = 1,
+            title = "工具",
+            normalIcon = R.mipmap.ic_tab_util,
+            selectIcon = R.mipmap.ic_tab_util_selected,
+        ),
+        TabBean(
+            model = 0,
+            title = "首页",
+            normalIcon = R.mipmap.ic_tab_home,
+            selectIcon = R.mipmap.ic_tab_home_selected,
+            badge = R.drawable.badge_red
+        ),
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        init()
+        initApp()
         initCustomTab()
     }
 
+    private fun initApp() {
+        ARouter.openLog()
+        ARouter.openDebug()
+        ARouter.init(application)
+
+        // DoKit.Builder(application)
+        //     .productId("")
+        //     .build()
+    }
+
+
     private fun initCustomTab() {
-        mCustomTabView = findViewById(R.id.custom_tab_container)
         tabData.forEach {
             if (it.model == null) return@forEach
-            mCustomTabView.addTab(
+            custom_tab.addTab(
                 CustomTabView.Tab()
                     .setTabText(it.title)
                     .setIcon(
@@ -55,29 +81,27 @@ open class MainActivity : AppCompatActivity() {
             )
         }
 
-        mCustomTabView.setCurrentItem(0)
-    }
-
-    private fun init() {
-        ARouter.openLog()
-        ARouter.openDebug()
-        ARouter.init(application)
-
-        // DoKit.Builder(application)
-        //     .productId("需要使用平台功能的话，需要到dokit.cn平台申请id")
-        //     .build()
+        custom_tab.setCurrentItem(0)
     }
 
     private fun changeFragment(position: Int) {
-        val fragment: Fragment? = fragments.getOrNull(position)
+        val fragment: Fragment? = getFragmentByModel(position)
         if (fragment != null) {
             supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.nav_host_fragment_activity_main, fragment)
+                .replace(R.id.fragment_container, fragment)
                 .commit()
         }
 
     }
+
+    private fun getFragmentByModel(model: Int?): Fragment? {
+        fragments.forEach {
+            if (it.model == model) return it.fragment
+        }
+        return null
+    }
+
 }
 
 
