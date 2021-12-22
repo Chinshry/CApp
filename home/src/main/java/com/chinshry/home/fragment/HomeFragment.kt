@@ -2,7 +2,7 @@ package com.chinshry.home.fragment
 
 import android.os.Bundle
 import android.view.View
-import com.chinshrry.home.R
+import com.chinshry.home.R
 import com.chinshry.base.BaseFragment
 
 /**

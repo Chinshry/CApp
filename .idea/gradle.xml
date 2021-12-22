@@ -14,7 +14,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/base" />
             <option value="$PROJECT_DIR$/home" />
-            <option value="$PROJECT_DIR$/util" />
+            <option value="$PROJECT_DIR$/tool" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

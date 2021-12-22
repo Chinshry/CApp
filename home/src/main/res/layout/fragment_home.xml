@@ -7,7 +7,7 @@
     android:paddingTop="50dp"
     android:clipChildren="false"
     android:clipToPadding="false"
-    tools:context="com.chinshry.home.fragment.HomeFragment" >
+    tools:context=".fragment.HomeFragment" >
 
     <GridLayout
         android:id="@+id/gl_test"

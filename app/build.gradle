@@ -58,7 +58,7 @@ dependencies {
 
     implementation project(path: ':base')
     implementation project(path: ':home')
-    implementation project(path: ':util')
+    implementation project(path: ':tool')
     // implementation project(path: ':mine')
 
 }

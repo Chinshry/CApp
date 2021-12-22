@@ -9,7 +9,7 @@ import com.chinshry.base.bean.FragmentBean
 import com.chinshry.base.bean.TabBean
 import com.chinshry.base.view.CustomTabView
 import com.chinshry.home.fragment.HomeFragment
-import com.chinshry.util.fragment.UtilFragment
+import com.chinshry.tool.fragment.ToolFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 /**
@@ -25,7 +25,7 @@ open class MainActivity : BaseActivity() {
             model = 0
         ),
         FragmentBean(
-            fragment = UtilFragment(),
+            fragment = ToolFragment(),
             model = 1
         )
     )

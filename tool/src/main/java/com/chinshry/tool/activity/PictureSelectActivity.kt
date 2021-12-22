@@ -1,4 +1,4 @@
-package com.chinshry.util.activity
+package com.chinshry.tool.activity
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -14,7 +14,7 @@ import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.PermissionUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.chinshrry.util.R
+import com.chinshry.tool.R
 import com.chinshry.base.BaseActivity
 import com.chinshry.base.bean.Router
 import com.chinshry.base.util.GlideEngine
@@ -28,7 +28,6 @@ import com.luck.picture.lib.listener.OnResultCallbackListener
 import com.luck.picture.lib.thread.PictureThreadUtils
 import com.luck.picture.lib.tools.MediaUtils
 import kotlinx.android.synthetic.main.activity_picture_select.*
-import kotlinx.android.synthetic.main.fragment_util.*
 import java.io.File
 
 

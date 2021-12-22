@@ -30,7 +30,7 @@ data class MyWindow(
 
 object DialogManager {
 
-    private val disableWindowShowActivityList = listOf<String>(
+    private val disableWindowShowActivityList = listOf(
         "TabActivity"
     )
 
