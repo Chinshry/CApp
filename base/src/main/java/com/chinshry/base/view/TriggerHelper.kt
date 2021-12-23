@@ -1,6 +1,10 @@
 package com.chinshry.base.view
 
 import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
+import com.chinshry.base.util.getClickBuryPoint
+import com.chinshry.base.util.logBuryPoint
 import com.example.base.R
 
 
@@ -39,15 +43,40 @@ private fun <T : View> T.clickEnable(): Boolean {
 
 /***
  * 带延迟过滤点击事件的 View 扩展
- * @param delay Long 延迟时间，默认500毫秒
+ * @param delay Long 延迟时间，默认200毫秒
  * @param block: (T) -> Unit 函数
  * @return Unit
  */
-fun <T : View> T.clickWithTrigger(delay: Long = 500, block: (T) -> Unit) {
+
+fun <T : View> T.clickFun(text: String, delay: Long, block: (T) -> Unit) {
     triggerDelay = delay
+    val viewBuryPoint = getClickBuryPoint(text)
     setOnClickListener {
         if (clickEnable()) {
+            logBuryPoint(viewBuryPoint)
             block(this)
         }
     }
+}
+
+fun <T : View> T.clickWithTrigger(
+    text: String = "",
+    delay: Long = 200,
+    block: (T) -> Unit
+) {
+    clickFun(text, delay, block)
+}
+
+fun <T : TextView> T.clickWithTrigger(
+    delay: Long = 200,
+    block: (T) -> Unit
+) {
+    clickFun(this.text.toString(), delay, block)
+}
+
+fun <T : ImageView> T.clickWithTrigger(
+    delay: Long = 200,
+    block: (T) -> Unit
+) {
+    clickFun(this.contentDescription.toString(), delay, block)
 }

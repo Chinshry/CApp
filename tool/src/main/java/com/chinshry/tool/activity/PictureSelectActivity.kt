@@ -19,6 +19,7 @@ import com.chinshry.base.BaseActivity
 import com.chinshry.base.bean.BuryPoint
 import com.chinshry.base.bean.Router
 import com.chinshry.base.util.GlideEngine
+import com.chinshry.base.view.clickWithTrigger
 import com.luck.picture.lib.PictureMediaScannerConnection
 import com.luck.picture.lib.PictureSelectionModel
 import com.luck.picture.lib.PictureSelector
@@ -37,7 +38,7 @@ import java.io.File
  * File Name: PictureSelectActivity.kt
  * Describe：图片选择
  */
-@BuryPoint(pageName = "图片选择器", pageChannel = "工具")
+@BuryPoint(pageName = "图片选择器")
 @Route(path = Router.PICTURE_SELECT)
 class PictureSelectActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,7 +49,7 @@ class PictureSelectActivity : BaseActivity() {
 
     @SuppressLint("InflateParams", "SetTextI18n")
     private fun initView() {
-        btn_gallery.setOnClickListener {
+        btn_gallery.clickWithTrigger {
             PermissionUtils.permission(
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
             )
@@ -61,7 +62,7 @@ class PictureSelectActivity : BaseActivity() {
                 .request()
         }
 
-        btn_camera.setOnClickListener {
+        btn_camera.clickWithTrigger {
             PermissionUtils.permission(
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.CAMERA
@@ -75,7 +76,7 @@ class PictureSelectActivity : BaseActivity() {
                 .request()
         }
 
-        btn_clear_cache.setOnClickListener {
+        btn_clear_cache.clickWithTrigger {
             clearCache()
         }
 

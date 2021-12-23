@@ -1,50 +1,56 @@
 package com.chinshry.base.bean
 
 import androidx.fragment.app.Fragment
-import com.blankj.utilcode.util.LogUtils
+import java.util.*
 
 /**
  * Created by chinshry on 2021/12/23.
  * File Name: Bean.kt
  * Describe：数据类
  */
-
-@Retention(AnnotationRetention.RUNTIME)
-annotation class BuryPoint(
-    val pageName: String = "",
-    val pageChannel: String = ""
-)
-
-data class BuryPointInfo(
-    var pageName: String = "",
-    var pageChannel: String = "",
+enum class Module(
+    val model: Int,
+    val buryName: String
 ) {
+    HOME(0, "首页"),
+    TOOL(1, "工具");
 
     companion object {
 
-        fun getPageBuryPoint(mClass: Class<*>): BuryPointInfo? {
-            return mClass.getAnnotation(BuryPoint::class.java)?.run {
-                BuryPointInfo(pageName, pageChannel)
+        fun getBuryNameByModel(model: Int?): String? {
+            values().forEach {
+                if (it.model == model) return it.buryName
             }
+            return null
         }
 
-        fun logBuryPoint(buryPoint: BuryPointInfo) {
-            if (buryPoint.pageName.isNotEmpty() && buryPoint.pageChannel.isNotEmpty()) {
-                LogUtils.d(buryPoint.toString())
+        fun getBuryNameByModelName(name: String?): String {
+            values().forEach {
+                if (it.name.lowercase(Locale.getDefault()) == name) return it.buryName
             }
+            return ""
         }
 
     }
 }
 
-data class PageParamsBean(
-    var source: String? = null,
-    val trackInfo: BuryPointInfo? = null,
-)
-
 data class FragmentBean(
     val fragment: Fragment,
     val model: Int
+)
+
+@Retention(AnnotationRetention.RUNTIME)
+annotation class BuryPoint(val pageName: String = "")
+
+data class BuryPointInfo(
+    var pageName: String = "",
+    var pageChannel: String = "",
+    var buttonName: String = "",
+)
+
+data class PageParamsBean(
+    var source: String? = null,
+    val trackInfo: BuryPointInfo? = null,
 )
 
 data class TabBean(

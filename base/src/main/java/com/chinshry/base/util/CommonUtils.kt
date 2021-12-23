@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.StringUtils
+import com.chinshry.base.bean.BuryPointInfo
 import com.chinshry.base.bean.Constants
 import com.example.base.R
 import org.json.JSONArray
@@ -22,6 +23,29 @@ import java.lang.reflect.Type
  * Describe：通用工具
  */
 object CommonUtils {
+    fun getTrackClass(offset: Int = 0): Class<*>? {
+        return Thread.currentThread().stackTrace.getOrNull(offset)?.className?.let {
+            Class.forName(it)
+        }
+    }
+
+    fun getTrackBuryPoint(offset: Int = 0): BuryPointInfo? {
+        Thread.currentThread().stackTrace.forEachIndexed { index, stackTraceElement ->
+            if (index >= offset) {
+                stackTraceElement.className?.let {
+                    getPageBuryPoint(Class.forName(it)) ?.let { classBuryPoint ->
+                        return classBuryPoint
+                    }
+                }
+            }
+        }
+        return null
+    }
+
+    fun getModuleName(packageName: String): String? {
+        return packageName.split(".").getOrNull(2)
+    }
+
     /**
      * 字符串转对象 捕获异常
      * @param data Any?

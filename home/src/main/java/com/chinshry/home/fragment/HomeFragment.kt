@@ -11,7 +11,7 @@ import com.chinshry.base.bean.BuryPoint
  * File Name: HomeFragment.kt
  * Describe： 主页Fragment
  */
-@BuryPoint(pageName = "主页", pageChannel = "主页")
+@BuryPoint(pageName = "主页Fragment")
 class HomeFragment: BaseFragment() {
 
     override fun setLayout(): Int {

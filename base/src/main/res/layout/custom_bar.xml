@@ -17,7 +17,8 @@
             android:layout_alignParentStart="true"
             android:background="@null"
             android:scaleType="center"
-            android:src="@mipmap/header_back" />
+            android:src="@mipmap/header_back"
+            android:contentDescription="CustomBar-返回" />
 
         <ImageButton
             android:id="@+id/header_btn_close"
@@ -27,7 +28,8 @@
             android:src="@mipmap/header_close"
             android:scaleType="center"
             android:visibility="gone"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"
+            android:contentDescription="CustomBar-关闭" />
 
         <TextView
             android:id="@+id/header_btn_right"

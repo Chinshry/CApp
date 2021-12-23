@@ -16,6 +16,7 @@ import com.chinshry.base.util.window.DialogManager
 import com.chinshry.base.util.window.MyWindow
 import com.chinshry.base.util.window.WindowPriority
 import com.chinshry.base.util.window.WindowType
+import com.chinshry.base.view.clickWithTrigger
 import kotlinx.android.synthetic.main.fragment_tool.*
 
 /**
@@ -23,7 +24,7 @@ import kotlinx.android.synthetic.main.fragment_tool.*
  * File Name: UtilFragment.kt
  * Describe：工具Fragment
  */
-@BuryPoint(pageName = "工具", pageChannel = "工具")
+@BuryPoint(pageName = "工具Fragment")
 class ToolFragment : BaseFragment() {
     override fun setLayout(): Int {
         return R.layout.fragment_tool
@@ -37,17 +38,17 @@ class ToolFragment : BaseFragment() {
 
     @SuppressLint("InflateParams", "SetTextI18n")
     private fun initView() {
-        btn_test.setOnClickListener {
+        btn_test.clickWithTrigger {
             testPriorityQueue()
         }
 
-        btn_root.setOnClickListener {
+        btn_root.clickWithTrigger {
             if (!DevicesCheckUtil.checkRootAndEmulator(requireContext())) {
                 ToastUtils.showShort("您的设备未root，且为真机")
             }
         }
 
-        btn_picture_select.setOnClickListener {
+        btn_picture_select.clickWithTrigger {
             ARouter.getInstance().build(Router.PICTURE_SELECT).navigation()
         }
     }

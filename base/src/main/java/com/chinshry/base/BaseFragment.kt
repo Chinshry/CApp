@@ -7,7 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.chinshry.base.bean.BuryPointInfo
-import com.chinshry.base.bean.BuryPointInfo.Companion.logBuryPoint
+import com.chinshry.base.bean.Module.Companion.getBuryNameByModelName
+import com.chinshry.base.util.CommonUtils
+import com.chinshry.base.util.getPageBuryPoint
+import com.chinshry.base.util.logBuryPoint
 import com.chinshry.base.view.clickWithTrigger
 import com.example.base.R
 import com.gyf.immersionbar.ImmersionBar
@@ -26,8 +29,11 @@ abstract class BaseFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // 注解埋点
-        BuryPointInfo.getPageBuryPoint(this::class.java)?.let {
-            pageBuryPoint = it
+        getPageBuryPoint(this::class.java)?.let {
+            pageBuryPoint = BuryPointInfo(
+                pageName = it.pageName,
+                pageChannel = getBuryNameByModelName(CommonUtils.getModuleName(this.javaClass.name))
+            )
         }
 
         logBuryPoint(pageBuryPoint)

@@ -3,10 +3,12 @@ package com.chinshry.base
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.chinshry.base.bean.BuryPointInfo
-import com.chinshry.base.bean.BuryPointInfo.Companion.getPageBuryPoint
-import com.chinshry.base.bean.BuryPointInfo.Companion.logBuryPoint
+import com.chinshry.base.bean.Module.Companion.getBuryNameByModelName
 import com.chinshry.base.bean.PageParamsBean
 import com.chinshry.base.util.CommonUtils
+import com.chinshry.base.util.CommonUtils.getModuleName
+import com.chinshry.base.util.getPageBuryPoint
+import com.chinshry.base.util.logBuryPoint
 import com.chinshry.base.view.clickWithTrigger
 import com.example.base.R
 import com.gyf.immersionbar.ImmersionBar
@@ -25,7 +27,10 @@ open class BaseActivity : AppCompatActivity() {
 
         // 注解埋点
         getPageBuryPoint(this::class.java)?.let {
-            pageBuryPoint = it
+            pageBuryPoint = BuryPointInfo(
+                pageName = it.pageName,
+                pageChannel = getBuryNameByModelName(getModuleName(this.javaClass.name))
+            )
         }
 
         // intent携带params
@@ -35,6 +40,9 @@ open class BaseActivity : AppCompatActivity() {
                 trackInfo?.let { pageBuryPoint = it }
             }
         }
+
+        logBuryPoint(pageBuryPoint)
+
     }
 
     override fun setContentView(layoutResID: Int) {
@@ -44,36 +52,24 @@ open class BaseActivity : AppCompatActivity() {
     }
 
     fun setPageTitle(title: String) {
-        header_text_title?.apply {
-            text = title
-        }
+        header_text_title?.text = title
     }
 
     private fun setCloseButton(
         function: () -> Unit = { finish() }
     ) {
-        header_btn_close?.apply {
-            clickWithTrigger {
-                function()
-            }
-        }
+        header_btn_close?.clickWithTrigger { function() }
+
     }
 
     private fun setBackButton(
         function: () -> Unit = { finish() }
     ) {
-        header_btn_back?.apply {
-            clickWithTrigger {
-                function()
-            }
-        }
+        header_btn_back?.clickWithTrigger { function() }
     }
 
     override fun onResume() {
         super.onResume()
-
-        logBuryPoint(pageBuryPoint)
-
         ImmersionBar
             .with(this)
             .fitsSystemWindows(true)

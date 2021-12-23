@@ -16,3 +16,4 @@ local.properties
 /libs/build/
 /PictureSelector/build/
 /.idea/
+misc.xml

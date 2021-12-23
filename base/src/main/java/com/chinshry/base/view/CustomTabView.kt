@@ -101,7 +101,7 @@ class CustomTabView(context: Context, attrs: AttributeSet? = null) : LinearLayou
             badgeView.setImageDrawable(tab.badge)
 
             view.tag = mTabViews.size
-            view.setOnClickListener{
+            view.clickWithTrigger {
                 tab.selectFunction()
                 updateState(it.tag as Int)
             }
