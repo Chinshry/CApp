@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.chinshry.base.bean.BuryPointInfo
 import com.chinshry.base.bean.BuryPointInfo.Companion.getPageBuryPoint
+import com.chinshry.base.bean.BuryPointInfo.Companion.logBuryPoint
 import com.chinshry.base.bean.PageParamsBean
-import com.chinshry.base.util.BuryPointUtil
 import com.chinshry.base.util.CommonUtils
 import com.chinshry.base.view.clickWithTrigger
 import com.example.base.R
@@ -72,7 +72,7 @@ open class BaseActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        BuryPointUtil.logBuryPoint(pageBuryPoint)
+        logBuryPoint(pageBuryPoint)
 
         ImmersionBar
             .with(this)

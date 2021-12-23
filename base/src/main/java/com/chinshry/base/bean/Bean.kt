@@ -1,6 +1,7 @@
 package com.chinshry.base.bean
 
 import androidx.fragment.app.Fragment
+import com.blankj.utilcode.util.LogUtils
 
 /**
  * Created by chinshry on 2021/12/23.
@@ -26,6 +27,13 @@ data class BuryPointInfo(
                 BuryPointInfo(pageName, pageChannel)
             }
         }
+
+        fun logBuryPoint(buryPoint: BuryPointInfo) {
+            if (buryPoint.pageName.isNotEmpty() && buryPoint.pageChannel.isNotEmpty()) {
+                LogUtils.d(buryPoint.toString())
+            }
+        }
+
     }
 }
 

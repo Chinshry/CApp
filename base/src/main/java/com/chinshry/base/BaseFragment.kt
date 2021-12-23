@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.chinshry.base.bean.BuryPointInfo
-import com.chinshry.base.util.BuryPointUtil
+import com.chinshry.base.bean.BuryPointInfo.Companion.logBuryPoint
 import com.chinshry.base.view.clickWithTrigger
 import com.example.base.R
 import com.gyf.immersionbar.ImmersionBar
@@ -30,7 +30,7 @@ abstract class BaseFragment: Fragment() {
             pageBuryPoint = it
         }
 
-        BuryPointUtil.logBuryPoint(pageBuryPoint)
+        logBuryPoint(pageBuryPoint)
 
         return inflater.inflate(setLayout(), container, false)
     }
@@ -38,7 +38,7 @@ abstract class BaseFragment: Fragment() {
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
         if (!hidden) {
-            BuryPointUtil.logBuryPoint(pageBuryPoint)
+            logBuryPoint(pageBuryPoint)
         }
     }
 
