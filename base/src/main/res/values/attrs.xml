@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomBar">
+        <!-- 标题字号 -->
+        <attr name="title_text_size" format="dimension" />
+        <!-- 是否显示左边返回按钮 默认true -->
+        <attr name="show_back" format="boolean" />
+        <!-- 是否显示右边关闭按钮 默认false -->
+        <attr name="show_close" format="boolean" />
+        <!-- 左边返回按钮图标 -->
+        <attr name="left_back_img" format="reference" />
+        <!-- 右边关闭按钮图标 -->
+        <attr name="right_close_img" format="reference" />
+        <!-- 标题文字 -->
+        <attr name="title_text" format="string" />
+        <!-- 右侧文本按钮文字 -->
+        <attr name="right_button_text" format="string" />
+        <!-- 标题栏bottom shadow 默认true -->
+        <attr name="shadow_line" format="boolean" />
+        <!-- 默认为 白色标题栏 黑色icon -->
+        <!-- 透明标题栏 黑色icon 不显示下方阴影线 -->
+        <attr name="transparent" format="boolean" />
+        <!-- 透明标题栏 白色icon 不显示下方阴影线 -->
+        <attr name="transparent_white_icon" format="boolean" />
+        <!-- 是否margin状态栏 -->
+        <attr name="margin_status_bar" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="chris">
+        <attr name="left_title" format="string" />
+        <attr name="left_subtitle" format="string" />
+        <attr name="right_subtitle" format="string" />
+        <attr name="middle_title" format="string" />
+        <attr name="middle_title_color" format="string" />
+        <attr name="right_button" format="string" />
+        <attr name="right_switch" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="VerCodeEditText">
+        <attr name="verCodeCount" format="integer" />
+
+        <attr name="verCodeNormalBackground" format="reference" />
+        <attr name="verCodeFocusedBackground" format="reference" />
+
+        <attr name="verCodeWidth" format="dimension" />
+        <attr name="verCodeHeight" format="dimension" />
+
+        <attr name="verCodeMargin" format="dimension" />
+
+        <attr name="verCodeTextSize" format="dimension" />
+        <attr name="verCodeTextColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="MarqueeTextView">
+        <attr name="mtvtextsize" format="dimension"/>
+        <attr name="mtvtextcolor" format="color"/>
+        <attr name="mtvtext" format="string"/>
+    </declare-styleable>
+
+    <declare-styleable name="DisPlayInfoView">
+        <attr name="tipName" format="string"/>
+
+    </declare-styleable>
+
+    <declare-styleable name="PercentBarView">
+        <attr name="leftBarColor" format="color" />
+        <attr name="rightBarColor" format="color" />
+        <attr name="space" format="dimension" />
+        <attr name="barHeight" format="dimension" />
+        <attr name="radius" format="dimension" />
+        <attr name="iconHeight" format="dimension" />
+        <attr name="iconWidth" format="dimension" />
+    </declare-styleable>
+
+</resources>

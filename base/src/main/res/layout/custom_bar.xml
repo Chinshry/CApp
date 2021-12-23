@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/custom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white">
+
+        <ImageButton
+            android:id="@+id/header_btn_back"
+            android:layout_width="56dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:background="@null"
+            android:scaleType="center"
+            android:src="@mipmap/header_back" />
+
+        <ImageButton
+            android:id="@+id/header_btn_close"
+            android:layout_width="56dp"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:src="@mipmap/header_close"
+            android:scaleType="center"
+            android:visibility="gone"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:id="@+id/header_btn_right"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="12dp"
+            android:gravity="center"
+            android:textColor="@color/grey"
+            android:textSize="15sp"
+            android:visibility="gone"
+            android:layout_alignParentEnd="true"
+            tools:text="按钮" />
+
+        <TextView
+            android:id="@+id/header_text_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="17sp"
+            android:textColor="@color/grey"
+            android:textStyle="bold"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:gravity="center"
+            android:layout_centerInParent="true"/>
+
+        <View
+            android:id="@+id/header_shadow_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/shadow"
+            android:layout_alignParentBottom="true" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

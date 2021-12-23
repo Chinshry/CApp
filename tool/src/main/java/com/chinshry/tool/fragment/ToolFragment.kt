@@ -9,6 +9,7 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.blankj.utilcode.util.ToastUtils
 import com.chinshry.tool.R
 import com.chinshry.base.BaseFragment
+import com.chinshry.base.bean.BuryPoint
 import com.chinshry.base.bean.Router
 import com.chinshry.base.util.DevicesCheckUtil
 import com.chinshry.base.util.window.DialogManager
@@ -22,6 +23,7 @@ import kotlinx.android.synthetic.main.fragment_tool.*
  * File Name: UtilFragment.kt
  * Describe：工具Fragment
  */
+@BuryPoint(pageName = "工具", pageChannel = "工具")
 class ToolFragment : BaseFragment() {
     override fun setLayout(): Int {
         return R.layout.fragment_tool

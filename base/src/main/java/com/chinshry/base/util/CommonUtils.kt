@@ -1,12 +1,20 @@
 package com.chinshry.base.util
 
 import android.annotation.SuppressLint
+import com.blankj.utilcode.util.GsonUtils
+import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.StringUtils
 import com.chinshry.base.bean.Constants
+import com.example.base.R
+import org.json.JSONArray
+import org.json.JSONObject
 import java.io.BufferedInputStream
 import java.io.BufferedOutputStream
 import java.io.IOException
 import java.lang.Exception
 import java.lang.StringBuilder
+import java.lang.reflect.Type
+
 
 /**
  * Created by chinshry on 2021/12/23.
@@ -14,6 +22,148 @@ import java.lang.StringBuilder
  * Describe：通用工具
  */
 object CommonUtils {
+    /**
+     * 字符串转对象 捕获异常
+     * @param data Any?
+     * @param type Class<T>
+     * @return T?
+     */
+    fun <T> string2object(data: Any?, type: Class<T>): T? {
+        return try {
+            GsonUtils.fromJson(
+                if (data is String) data else GsonUtils.toJson(data),
+                type
+            )
+        } catch (e: Exception) {
+            LogUtils.e(
+                "string2object: " + StringUtils.getString(R.string.json_error_msg) + e.message
+            )
+            null
+        }
+    }
+
+    fun <T> string2object(data: Any?, type: Type): T? {
+        return try {
+            GsonUtils.fromJson(
+                if (data is String) data else GsonUtils.toJson(data),
+                type
+            )
+        } catch (e: Exception) {
+            LogUtils.e(
+                "string2object: " + StringUtils.getString(R.string.json_error_msg) + e.message
+            )
+            null
+        }
+    }
+
+    fun getJsonStringWithIndex(
+        args: JSONArray,
+        index: Int
+    ): String {
+        return if (args.length() > index) args[index].toString() else ""
+    }
+
+    fun getJsonObjectWithIndex(
+        args: JSONArray,
+        index: Int
+    ): JSONObject {
+        return if (args.length() > index) args.getJSONObject(index) else JSONObject()
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    fun <T> parseAndGetValueOrDefault(
+        params: String?,
+        key: String,
+        defValue: T
+    ): T {
+        return try {
+            val data = com.alibaba.fastjson.JSONObject.parseObject(params)
+            getValueOrDefault(data, key, defValue)
+        } catch (e: Exception) {
+            defValue
+        }
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    inline fun <reified T> parseAndGetValueOrNull(
+        params: String?,
+        key: String,
+    ): T? {
+        return try {
+            val data = com.alibaba.fastjson.JSONObject.parseObject(params)
+            getValueOrNull(data, key)
+        } catch (e: Exception) {
+            null
+        }
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    fun <T> getValueOrDefault(
+        params: Any,
+        key: String,
+        defValue: T
+    ): T {
+        try {
+            when (params) {
+                is JSONObject -> {
+                    if (params.has(key)) {
+                        when (defValue) {
+                            is Int -> return (params.getInt(key) as? T) ?: defValue
+                            is Boolean -> return (params.getBoolean(key) as? T) ?: defValue
+                            is String -> return (params.getString(key) as? T) ?: defValue
+                        }
+                    }
+                }
+                is com.alibaba.fastjson.JSONObject -> {
+                    if (params.containsKey(key)) {
+                        when (defValue) {
+                            is Int -> return (params.getInteger(key) as? T) ?: defValue
+                            is Boolean -> return (params.getBoolean(key) as? T) ?: defValue
+                            is String -> return (params.getString(key) as? T) ?: defValue
+                        }
+                    }
+                }
+            }
+        } catch (e: Exception) {
+        }
+        return defValue
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    inline fun <reified T> getValueOrNull(
+        params: Any,
+        key: String
+    ): T? {
+        try {
+            when (params) {
+                is JSONObject -> {
+                    if (params.has(key)) {
+                        when (getType<T>()) {
+                            java.lang.Integer::class.java -> return params.getInt(key) as? T
+                            java.lang.Boolean::class.java -> return params.getBoolean(key) as? T
+                            java.lang.String::class.java -> return params.getString(key) as? T
+                        }
+                    }
+                }
+                is com.alibaba.fastjson.JSONObject -> {
+                    if (params.containsKey(key)) {
+                        when (getType<T>()) {
+                            java.lang.Integer::class.java -> return params.getInteger(key) as? T
+                            java.lang.Boolean::class.java -> return params.getBoolean(key) as? T
+                            java.lang.String::class.java -> return params.getString(key) as? T
+                        }
+                    }
+                }
+            }
+        } catch (e: Exception) {
+        }
+        return null
+    }
+
+    inline fun <reified T> getType(): Class<T> {
+        return T::class.java
+    }
+    
     @SuppressLint("PrivateApi")
     fun getProperty(propName: String?): String? {
         var value: String? = null

@@ -3,62 +3,30 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../../../layout/custom_preview.xml" value="0.171875" />
         <entry key="..\:/Project/AS/MyTest/app/src/main/res/drawable/bg_btn.xml" value="0.2890295358649789" />
         <entry key="..\:/Project/AS/MyTest/app/src/main/res/drawable/bg_item.xml" value="0.29273504273504275" />
         <entry key="..\:/Project/AS/MyTest/app/src/main/res/drawable/divider_10.xml" value="0.1" />
-        <entry key="..\:/Project/AS/MyTest/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.12863247863247862" />
-        <entry key="..\:/Project/AS/MyTest/app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.12863247863247862" />
-        <entry key="..\:/Project/AS/MyTest/app/src/main/res/drawable/ic_launcher_background.xml" value="0.12863247863247862" />
-        <entry key="..\:/Project/AS/MyTest/app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.12863247863247862" />
         <entry key="..\:/Project/AS/MyTest/app/src/main/res/drawable/red_bubble_bg.xml" value="0.16111111111111112" />
-        <entry key="..\:/Project/AS/MyTest/app/src/main/res/layout/activity_main.xml" value="0.43934426229508194" />
+        <entry key="..\:/Project/AS/MyTest/app/src/main/res/layout/activity_main.xml" value="0.3215311004784689" />
         <entry key="..\:/Project/AS/MyTest/app/src/main/res/layout/activity_main2.xml" value="0.3333333333333333" />
-        <entry key="..\:/Project/AS/MyTest/app/src/main/res/layout/activity_scrolling.xml" value="0.2794871794871795" />
-        <entry key="..\:/Project/AS/MyTest/app/src/main/res/layout/activity_tabview.xml" value="0.4466666666666667" />
+        <entry key="..\:/Project/AS/MyTest/app/src/main/res/layout/activity_tabview.xml" value="0.2794871794871795" />
         <entry key="..\:/Project/AS/MyTest/app/src/main/res/layout/activity_test.xml" value="0.22" />
-        <entry key="..\:/Project/AS/MyTest/app/src/main/res/layout/badge_view.xml" value="0.2794871794871795" />
         <entry key="..\:/Project/AS/MyTest/app/src/main/res/layout/blank_fragment.xml" value="0.1" />
         <entry key="..\:/Project/AS/MyTest/app/src/main/res/layout/budge_view.xml" value="0.5" />
-        <entry key="..\:/Project/AS/MyTest/app/src/main/res/layout/content_scrolling.xml" value="0.2794871794871795" />
         <entry key="..\:/Project/AS/MyTest/app/src/main/res/layout/custom_tab_item_layout.xml" value="0.3333333333333333" />
         <entry key="..\:/Project/AS/MyTest/app/src/main/res/layout/design_bottom_navigation_item.xml" value="0.4683684794672586" />
         <entry key="..\:/Project/AS/MyTest/app/src/main/res/layout/fragment_dashboard.xml" value="0.12008547008547009" />
         <entry key="..\:/Project/AS/MyTest/app/src/main/res/layout/fragment_home.xml" value="0.4466666666666667" />
         <entry key="..\:/Project/AS/MyTest/app/src/main/res/layout/fragment_notifications.xml" value="0.3333333333333333" />
-        <entry key="..\:/Project/AS/MyTest/app/src/main/res/layout/fragment_tabview.xml" value="0.3333333333333333" />
-        <entry key="..\:/Project/AS/MyTest/app/src/main/res/layout/tab_item_layout.xml" value="0.4466666666666667" />
-        <entry key="..\:/Project/AS/MyTest/app/src/main/res/layout/tab_item_layout_rl.xml" value="0.5" />
+        <entry key="..\:/Project/AS/MyTest/app/src/main/res/layout/fragment_tabview.xml" value="0.2794871794871795" />
+        <entry key="..\:/Project/AS/MyTest/app/src/main/res/layout/tab_item_layout.xml" value="0.3333333333333333" />
         <entry key="..\:/Project/AS/MyTest/app/src/main/res/menu/bottom_nav_menu.xml" value="0.14358974358974358" />
         <entry key="..\:/Project/AS/MyTest/app/src/main/res/menu/menu_scrolling.xml" value="0.17735042735042736" />
-        <entry key="..\:/Project/AS/MyTest/base/src/main/res/drawable/bg_btn.xml" value="0.15085470085470085" />
-        <entry key="..\:/Project/AS/MyTest/base/src/main/res/drawable/bg_item.xml" value="0.17692307692307693" />
-        <entry key="..\:/Project/AS/MyTest/base/src/main/res/drawable/divider_10.xml" value="0.18504273504273505" />
-        <entry key="..\:/Project/AS/MyTest/base/src/main/res/drawable/red_badge.xml" value="0.17692307692307693" />
-        <entry key="..\:/Project/AS/MyTest/base/src/main/res/layout/activity_main.xml" value="0.13760683760683762" />
-        <entry key="..\:/Project/AS/MyTest/base/src/main/res/layout/activity_scrolling.xml" value="0.13760683760683762" />
-        <entry key="..\:/Project/AS/MyTest/base/src/main/res/layout/activity_tabview.xml" value="0.13760683760683762" />
-        <entry key="..\:/Project/AS/MyTest/base/src/main/res/layout/badge_view.xml" value="0.6" />
-        <entry key="..\:/Project/AS/MyTest/base/src/main/res/layout/content_scrolling.xml" value="0.13760683760683762" />
-        <entry key="..\:/Project/AS/MyTest/base/src/main/res/layout/custom_tab_item.xml" value="0.5" />
-        <entry key="..\:/Project/AS/MyTest/base/src/main/res/layout/custom_tab_item_layout.xml" value="0.13760683760683762" />
-        <entry key="..\:/Project/AS/MyTest/base/src/main/res/layout/fragment_home.xml" value="0.13760683760683762" />
-        <entry key="..\:/Project/AS/MyTest/base/src/main/res/layout/fragment_tabview.xml" value="0.13760683760683762" />
-        <entry key="..\:/Project/AS/MyTest/base/src/main/res/layout/tab_item_layout.xml" value="0.13760683760683762" />
-        <entry key="..\:/Project/AS/MyTest/base/src/main/res/layout/tab_item_layout_rl.xml" value="0.13760683760683762" />
-        <entry key="..\:/Project/AS/MyTest/base/src/main/res/menu/menu_scrolling.xml" value="0.16538461538461538" />
-        <entry key="..\:/Project/AS/MyTest/base/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.16709401709401708" />
-        <entry key="..\:/Project/AS/MyTest/base/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.16709401709401708" />
-        <entry key="..\:/Project/AS/MyTest/home/src/main/res/layout/activity_main.xml" value="0.11538461538461539" />
-        <entry key="..\:/Project/AS/MyTest/home/src/main/res/layout/activity_test.xml" value="0.13760683760683762" />
-        <entry key="..\:/Project/AS/MyTest/home/src/main/res/layout/fragment_home.xml" value="0.4466666666666667" />
-        <entry key="..\:/Project/AS/MyTest/home/src/main/res/layout/item_view.xml" value="0.4466666666666667" />
-        <entry key="..\:/Project/AS/MyTest/main/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.16709401709401708" />
-        <entry key="..\:/Project/AS/MyTest/tool/src/main/res/layout/activity_picture_select.xml" value="0.2764957264957265" />
-        <entry key="..\:/Project/AS/MyTest/tool/src/main/res/layout/fragment_tool.xml" value="0.2764957264957265" />
-        <entry key="..\:/Project/AS/MyTest/util/src/main/res/layout/activity_picture_select.xml" value="0.1717948717948718" />
-        <entry key="..\:/Project/AS/MyTest/util/src/main/res/layout/activity_test.xml" value="0.4343807763401109" />
-        <entry key="..\:/Project/AS/MyTest/util/src/main/res/layout/fragment_home.xml" value="0.13760683760683762" />
-        <entry key="..\:/Project/AS/MyTest/util/src/main/res/layout/fragment_util.xml" value="0.4466666666666667" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.2520833333333333" />
+        <entry key="base/src/main/res/layout/custom_bar.xml" value="0.2520833333333333" />
+        <entry key="base/src/main/res/layout/layout_common_header.xml" value="0.14427083333333332" />
+        <entry key="tool/src/main/res/layout/activity_picture_select.xml" value="0.375" />
       </map>
     </option>
   </component>

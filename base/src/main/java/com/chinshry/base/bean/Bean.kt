@@ -8,6 +8,32 @@ import androidx.fragment.app.Fragment
  * Describe：数据类
  */
 
+@Retention(AnnotationRetention.RUNTIME)
+annotation class BuryPoint(
+    val pageName: String = "",
+    val pageChannel: String = ""
+)
+
+data class BuryPointInfo(
+    var pageName: String = "",
+    var pageChannel: String = "",
+) {
+
+    companion object {
+
+        fun getPageBuryPoint(mClass: Class<*>): BuryPointInfo? {
+            return mClass.getAnnotation(BuryPoint::class.java)?.run {
+                BuryPointInfo(pageName, pageChannel)
+            }
+        }
+    }
+}
+
+data class PageParamsBean(
+    var source: String? = null,
+    val trackInfo: BuryPointInfo? = null,
+)
+
 data class FragmentBean(
     val fragment: Fragment,
     val model: Int

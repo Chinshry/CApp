@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.chinshry.tool.R
 import com.chinshry.base.BaseActivity
+import com.chinshry.base.bean.BuryPoint
 import com.chinshry.base.bean.Router
 import com.chinshry.base.util.GlideEngine
 import com.luck.picture.lib.PictureMediaScannerConnection
@@ -36,6 +37,7 @@ import java.io.File
  * File Name: PictureSelectActivity.kt
  * Describe：图片选择
  */
+@BuryPoint(pageName = "图片选择器", pageChannel = "工具")
 @Route(path = Router.PICTURE_SELECT)
 class PictureSelectActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

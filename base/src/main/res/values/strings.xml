@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Chinshry App</string>
+    <string name="json_error_msg">数据解析异常</string>
 </resources>
