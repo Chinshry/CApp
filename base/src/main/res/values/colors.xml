@@ -4,6 +4,7 @@
     <color name="black">#FF000000</color>
     <color name="empty">#DDDDDD</color>
     <color name="grey">#333333</color>
+    <color name="grey_deep">#666666</color>
     <color name="shadow">#EAEAEA</color>
     <color name="purple">#9D6FD6</color>
     <color name="green">#57C85B</color>

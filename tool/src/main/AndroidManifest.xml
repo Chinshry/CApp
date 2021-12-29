@@ -3,5 +3,8 @@
     package="com.chinshry.tool">
     <application>
         <activity android:name=".activity.PictureSelectActivity" />
+        <activity android:name=".activity.CodeInputActivity"
+            android:theme="@style/ThemeTransparentWithDim"
+            android:windowSoftInputMode="stateVisible|adjustPan" />
     </application>
 </manifest>

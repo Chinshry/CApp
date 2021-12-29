@@ -48,6 +48,10 @@ class ToolFragment : BaseFragment() {
             }
         }
 
+        btn_code_input.clickWithTrigger {
+            ARouter.getInstance().build(Router.PICTURE_CODE_INPUT).navigation()
+        }
+
         btn_picture_select.clickWithTrigger {
             ARouter.getInstance().build(Router.PICTURE_SELECT).navigation()
         }

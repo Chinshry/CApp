@@ -6,5 +6,6 @@ package com.chinshry.base.bean
  * Describe：Router路径
  */
 object Router {
+    const val PICTURE_CODE_INPUT = "/util/activity/CodeInputActivity"
     const val PICTURE_SELECT = "/util/activity/PictureSelectActivity"
 }
