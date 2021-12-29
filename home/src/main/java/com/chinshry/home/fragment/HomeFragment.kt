@@ -8,7 +8,6 @@ import com.chinshry.base.bean.BuryPoint
 
 /**
  * Created by chinshry on 2021/12/23.
- * File Name: HomeFragment.kt
  * Describe： 主页Fragment
  */
 @BuryPoint(pageName = "主页Fragment")

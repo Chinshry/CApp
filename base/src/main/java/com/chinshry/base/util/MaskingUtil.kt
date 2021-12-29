@@ -1,12 +1,7 @@
 package com.chinshry.base.util
 
 /**
- * @author         chinshry
- * @description    数据脱敏工具类
- */
-/**
  * Created by chinshry on 2021/12/23.
- * File Name: MaskingUtil.kt
  * Describe：数据脱敏工具类
  */
 object MaskingUtil {

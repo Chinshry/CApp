@@ -7,7 +7,6 @@ import com.chinshry.base.bean.Module.Companion.getBuryNameByModelName
 
 /**
  * Created by chinshry on 2021/12/23.
- * File Name: BuryPointUtil
  * Describe：
  */
 fun getPageBuryPoint(mClass: Class<*>?): BuryPointInfo? {

@@ -16,7 +16,6 @@ import kotlinx.android.synthetic.main.custom_bar.*
 
 /**
  * Created by chinshry on 2021/12/23.
- * File Name: BaseActivity.kt
  */
 open class BaseActivity : AppCompatActivity() {
     var pageSource: String? = null

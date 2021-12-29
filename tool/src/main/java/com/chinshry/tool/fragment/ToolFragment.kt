@@ -21,7 +21,6 @@ import kotlinx.android.synthetic.main.fragment_tool.*
 
 /**
  * Created by chinshry on 2021/12/23.
- * File Name: UtilFragment.kt
  * Describe：工具Fragment
  */
 @BuryPoint(pageName = "工具Fragment")

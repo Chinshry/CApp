@@ -14,7 +14,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 /**
  * Created by chinshry on 2021/12/23.
- * File Name: MainActivity.kt
  * Describe： 主Activity
  */
 open class MainActivity : BaseActivity() {

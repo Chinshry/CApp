@@ -19,7 +19,6 @@ import java.lang.reflect.Type
 
 /**
  * Created by chinshry on 2021/12/23.
- * File Name: CommonUtils.kt
  * Describe：通用工具
  */
 object CommonUtils {

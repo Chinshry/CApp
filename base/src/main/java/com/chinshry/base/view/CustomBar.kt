@@ -17,7 +17,6 @@ import kotlinx.android.synthetic.main.custom_bar.view.*
 
 /**
  * Created by chinshry on 2021/12/23.
- * File Name: CustomBar.kt
  * Describe：标题栏自定义组件
  */
 class CustomBar(context: Context, attrs: AttributeSet) : RelativeLayout(context, attrs) {

@@ -5,7 +5,6 @@ import java.util.*
 
 /**
  * Created by chinshry on 2021/12/23.
- * File Name: Bean.kt
  * Describe：数据类
  */
 enum class Module(

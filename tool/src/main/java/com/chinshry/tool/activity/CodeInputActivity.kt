@@ -14,7 +14,6 @@ import kotlinx.android.synthetic.main.dialog_code_input.*
 
 /**
  * Created by chinshry on 2021/12/29.
- * File Name: EditInputActivity.kt
  * Describe：验证码输入框组件
  */
 @BuryPoint(pageName = "验证码输入框组件")

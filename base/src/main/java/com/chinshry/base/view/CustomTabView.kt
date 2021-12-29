@@ -19,7 +19,6 @@ import java.util.*
 
 /**
  * Created by chinshry on 2021/12/23.
- * File Name: CustomTabView.kt
  * Describe： 自定义tab组件
  */
 class CustomTabView(context: Context, attrs: AttributeSet? = null) : LinearLayout(context, attrs) {

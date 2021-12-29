@@ -23,7 +23,6 @@ import com.example.base.R
 
 /**
  * Created by chinshry on 2021/12/23.
- * File Name: GlideEngine.kt
  * Describe：图片选择器 图片加载引擎
  */
 class GlideEngine private constructor() : ImageEngine {

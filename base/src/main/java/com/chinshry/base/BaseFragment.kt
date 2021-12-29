@@ -18,7 +18,6 @@ import kotlinx.android.synthetic.main.custom_bar.*
 
 /**
  * Created by chinshry on 2021/12/23.
- * File Name: BaseFragment.kt
  */
 abstract class BaseFragment: Fragment() {
     var pageBuryPoint: BuryPointInfo = BuryPointInfo()

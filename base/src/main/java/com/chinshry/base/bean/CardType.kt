@@ -2,7 +2,6 @@ package com.chinshry.base.bean
 
 /**
  * Created by chinshry on 2021/12/23.
- * File Name: CardType.kt
  * Describe： 证件枚举类
  */
 enum class CardType(var cardName: String, var sxType: String, var tyrzType: String) {

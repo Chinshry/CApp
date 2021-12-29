@@ -5,7 +5,6 @@ import java.io.*
 
 /**
  * Created by chinshry on 2021/12/23.
- * File Name: SimulatorDetectorUtil.kt
  * Describe：模拟器厂商检测
  */
 object SimulatorDetectorUtil {

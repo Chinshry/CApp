@@ -35,7 +35,6 @@ import java.io.File
 
 /**
  * Created by chinshry on 2021/12/23.
- * File Name: PictureSelectActivity.kt
  * Describe：图片选择
  */
 @BuryPoint(pageName = "图片选择器")

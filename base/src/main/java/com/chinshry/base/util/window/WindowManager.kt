@@ -8,7 +8,6 @@ import java.util.*
 
 /**
  * Created by chinshry on 2021/12/23.
- * File Name: WindowManager.kt
  * Describe：弹窗管理
  */
 enum class WindowType {

@@ -20,7 +20,6 @@ import java.util.*
 
 /**
  * Created by chinshry on 2021/12/23.
- * File Name: DevicesCheckUtil.kt
  * Describe： checkIsRoot root检测  checkIsRunningInEmulator 模拟器检测
  */
 object DevicesCheckUtil {
