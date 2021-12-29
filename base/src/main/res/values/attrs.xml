@@ -26,4 +26,15 @@
         <attr name="margin_status_bar" format="boolean" />
     </declare-styleable>
 
+    <declare-styleable name="VerCodeEditText">
+        <attr name="verCodeCount" format="integer" />
+        <attr name="verCodeNormalBackground" format="reference" />
+        <attr name="verCodeFocusedBackground" format="reference" />
+        <attr name="verCodeWidth" format="dimension" />
+        <attr name="verCodeHeight" format="dimension" />
+        <attr name="verCodeMargin" format="dimension" />
+        <attr name="verCodeTextSize" format="dimension" />
+        <attr name="verCodeTextColor" format="color" />
+    </declare-styleable>
+
 </resources>
