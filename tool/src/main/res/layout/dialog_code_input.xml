@@ -51,7 +51,7 @@
             app:verCodeCount="6"
             app:verCodeWidth="44dp"
             app:verCodeHeight="44dp"
-            app:verCodeMargin="5dp"
+            app:verCodeDividerWidth="8dp"
             app:verCodeNormalBackground="@drawable/et_verify_code_normal"
             app:verCodeFocusedBackground="@drawable/et_verify_code_focused"
             app:verCodeTextColor="@color/grey"

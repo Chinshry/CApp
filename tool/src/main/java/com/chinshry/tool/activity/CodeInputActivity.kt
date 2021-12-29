@@ -32,8 +32,7 @@ class CodeInputActivity : BaseActivity() {
                 ToastUtils.showShort(code)
             }
 
-            override fun onInput() {
-            }
+            override fun onInput() {}
         })
 
         tv_get_sms_code.clickWithTrigger {

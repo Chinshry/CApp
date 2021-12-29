@@ -32,7 +32,7 @@
         <attr name="verCodeFocusedBackground" format="reference" />
         <attr name="verCodeWidth" format="dimension" />
         <attr name="verCodeHeight" format="dimension" />
-        <attr name="verCodeMargin" format="dimension" />
+        <attr name="verCodeDividerWidth" format="dimension" />
         <attr name="verCodeTextSize" format="dimension" />
         <attr name="verCodeTextColor" format="color" />
     </declare-styleable>

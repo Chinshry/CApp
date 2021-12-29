@@ -2,7 +2,9 @@ package com.chinshry.base.view
 
 import android.content.Context
 import android.graphics.Color
+import android.graphics.Paint
 import android.graphics.drawable.Drawable
+import android.graphics.drawable.shapes.RectShape
 import android.text.InputType
 import android.util.AttributeSet
 import android.util.TypedValue
@@ -13,20 +15,18 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.ColorInt
 import com.example.base.R
+import android.graphics.drawable.ShapeDrawable
 
 /**
  * Created by chinshry on 2021/12/29.
- * File Name: VerCodeEditText.kt
- * Describe：验证码框
+ * Describe：验证码布局
  */
-class VerCodeEditText constructor(
+class VerCodeEditText @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) :
     VerCodeLayout(context, attrs, defStyleAttr) {
-
-    private var mLinearLayout: LinearLayout? = null
 
     private val mCount: Int
     private var mNormalBackground: Drawable?
@@ -34,22 +34,22 @@ class VerCodeEditText constructor(
     private val mWidth: Int
     private val mHeight: Int
     private val mTextSize: Float
-
+    private val mDividerWidth: Int
     @ColorInt
     private val mTextColor: Int
-    private val mMargin: Int
 
     init {
-        val etStyle = context.obtainStyledAttributes(attrs, R.styleable.VerCodeEditText)
-        mCount = etStyle.getInt(R.styleable.VerCodeEditText_verCodeCount, 0)
-        mNormalBackground = etStyle.getDrawable(R.styleable.VerCodeEditText_verCodeNormalBackground)
-        mFocusedBackground = etStyle.getDrawable(R.styleable.VerCodeEditText_verCodeFocusedBackground)
-        mTextSize = etStyle.getDimensionPixelSize(R.styleable.VerCodeEditText_verCodeTextSize, 0).toFloat()
-        mTextColor = etStyle.getColor(R.styleable.VerCodeEditText_verCodeTextColor, Color.BLACK)
-        mWidth = etStyle.getDimension(R.styleable.VerCodeEditText_verCodeWidth, 0f).toInt()
-        mHeight = etStyle.getDimension(R.styleable.VerCodeEditText_verCodeHeight, 0f).toInt()
-        mMargin = etStyle.getDimension(R.styleable.VerCodeEditText_verCodeMargin, 0f).toInt()
-        etStyle.recycle()
+        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.VerCodeEditText)
+        mCount = typedArray.getInt(R.styleable.VerCodeEditText_verCodeCount, 0)
+        mNormalBackground = typedArray.getDrawable(R.styleable.VerCodeEditText_verCodeNormalBackground)
+        mFocusedBackground = typedArray.getDrawable(R.styleable.VerCodeEditText_verCodeFocusedBackground)
+        mTextSize = typedArray.getDimensionPixelSize(R.styleable.VerCodeEditText_verCodeTextSize, 0).toFloat()
+        mTextColor = typedArray.getColor(R.styleable.VerCodeEditText_verCodeTextColor, Color.BLACK)
+        mWidth = typedArray.getDimension(R.styleable.VerCodeEditText_verCodeWidth, 0f).toInt()
+        mHeight = typedArray.getDimension(R.styleable.VerCodeEditText_verCodeHeight, 0f).toInt()
+        mDividerWidth = typedArray.getDimension(R.styleable.VerCodeEditText_verCodeDividerWidth, 0f).toInt()
+        typedArray.recycle()
+
         createTextViews()
         initEditText()
     }
@@ -59,82 +59,65 @@ class VerCodeEditText constructor(
             return
         }
 
-        mLinearLayout = LinearLayout(context)
-        mLinearLayout!!.orientation = LinearLayout.HORIZONTAL
-        mLinearLayout!!.gravity = Gravity.CENTER
-        mLinearLayout!!.layoutParams = LayoutParams(
+        val mLinearLayout = LinearLayout(context)
+        mLinearLayout.id = R.id.verCodeLinearLayout
+        mLinearLayout.orientation = LinearLayout.HORIZONTAL
+        mLinearLayout.gravity = Gravity.CENTER
+        mLinearLayout.layoutParams = LayoutParams(
             ViewGroup.LayoutParams.WRAP_CONTENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
+        mLinearLayout.showDividers = LinearLayout.SHOW_DIVIDER_MIDDLE
+        val dividerDrawable = ShapeDrawable(RectShape())
+        dividerDrawable.paint.color = Color.TRANSPARENT
+        dividerDrawable.paint.style = Paint.Style.FILL
+        dividerDrawable.intrinsicWidth = mDividerWidth
+        mLinearLayout.dividerDrawable = dividerDrawable
 
-        for (i in 0 until mCount) {
-            val mTextView = TextView(context)
-            setDefault(mTextView)
-            val params = marginLayoutParams
-            if (i == 0) {
-                setBackground(mTextView, mFocusedBackground)
-            } else {
-                setBackground(mTextView, mNormalBackground)
-            }
-            setPadding(mTextView)
-            mLinearLayout!!.addView(mTextView, params)
+        for (index in 0 until mCount) {
+            mLinearLayout.addView(getTextView(index))
         }
+
         addView(mLinearLayout)
     }
 
+    private fun getTextView(index: Any?):TextView {
+        val mTextView = TextView(context)
+        mTextView.width = mWidth
+        mTextView.height = mHeight
+        mTextView.maxLines = 1
+        mTextView.gravity = Gravity.CENTER
+
+        if (mTextSize != 0f) {
+            mTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextSize)
+        }
+        mTextView.setTextColor(mTextColor)
+
+        if (index == 0) {
+            mTextView.background = mFocusedBackground
+        } else {
+            mTextView.background = mNormalBackground
+        }
+
+        return mTextView
+    }
+
     private fun initEditText() {
-        val editTextWidth = mCount * (mWidth + mMargin * 2)
-        val layoutParams = LayoutParams(editTextWidth, mHeight)
         val editText = EditText(context)
+        val layoutParams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
+        layoutParams.addRule(ALIGN_START, R.id.verCodeLinearLayout)
+        layoutParams.addRule(ALIGN_END, R.id.verCodeLinearLayout)
+        editText.id = R.id.verCodeEditTextview
         editText.layoutParams = layoutParams
-        editText.inputType = InputType.TYPE_CLASS_PHONE
+        editText.inputType = InputType.TYPE_CLASS_NUMBER
         editText.setBackgroundColor(Color.TRANSPARENT)
         editText.setTextColor(Color.TRANSPARENT)
         editText.isCursorVisible = false
-        getEditTextFocus(editText)
-        addView(editText)
-    }
-
-    private fun getEditTextFocus(editText: EditText) {
         editText.isFocusable = true
         editText.isFocusableInTouchMode = true
         editText.requestFocus()
-    }
 
-    private fun setDefault(editText: TextView) {
-        editText.maxLines = 1
-        if (mTextSize != 0f) {
-            editText.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextSize)
-        }
-        editText.setTextColor(mTextColor)
-        editText.gravity = Gravity.CENTER
+        addView(editText)
     }
-
-    private fun setBackground(editText: TextView, drawable: Drawable?) {
-        editText.background = drawable
-    }
-
-    private fun setPadding(editText: TextView) {
-        editText.setPadding(0, 0, 0, 0)
-    }
-
-    private val marginLayoutParams: MarginLayoutParams
-        get() {
-            val params = MarginLayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            )
-            if (mMargin != 0) {
-                params.leftMargin = mMargin
-                params.rightMargin = mMargin
-            }
-            if (mWidth != 0) {
-                params.width = mWidth
-            }
-            if (mHeight != 0) {
-                params.height = mHeight
-            }
-            return params
-        }
 
 }
