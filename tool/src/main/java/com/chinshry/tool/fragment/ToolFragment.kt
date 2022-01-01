@@ -2,8 +2,6 @@ package com.chinshry.tool.fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.View
 import com.alibaba.android.arouter.launcher.ARouter
 import com.blankj.utilcode.util.ToastUtils
@@ -11,11 +9,10 @@ import com.chinshry.tool.R
 import com.chinshry.base.BaseFragment
 import com.chinshry.base.bean.BuryPoint
 import com.chinshry.base.bean.Router
+import com.chinshry.base.dialog.MyDialog
 import com.chinshry.base.util.DevicesCheckUtil
-import com.chinshry.base.util.window.DialogManager
-import com.chinshry.base.util.window.MyWindow
-import com.chinshry.base.util.window.WindowPriority
-import com.chinshry.base.util.window.WindowType
+import com.chinshry.base.util.WindowLevel
+import com.chinshry.base.util.WindowManager
 import com.chinshry.base.view.clickWithTrigger
 import kotlinx.android.synthetic.main.fragment_tool.*
 
@@ -57,20 +54,16 @@ class ToolFragment : BaseFragment() {
     }
 
     private fun testPriorityQueue() {
-        DialogManager.addWindow(
-            MyWindow(
-                "testData",
-                WindowType.Dialog,
-                WindowPriority.MIDDLE
-            )
-        )
-
-        val handler = Handler(Looper.getMainLooper())
-        handler.postDelayed(
-            {
-                DialogManager.showWindow()
-            }, 3000
-        )
+        WindowManager.addWindow(
+            WindowLevel.LOW
+        ) {
+            MyDialog()
+                .setTitle(null)
+                .setMsg("内容")
+                .setConfirmBtn("ok") { ToastUtils.showShort("toast!!")}
+                .setCancelBtn("bye")
+                .show()
+        }
     }
 
 
