@@ -9,6 +9,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.view.children
 import androidx.core.widget.doAfterTextChanged
+import com.blankj.utilcode.util.KeyboardUtils
 import com.example.base.R
 
 /**
@@ -44,6 +45,14 @@ open class VerCodeLayout @JvmOverloads constructor(
                     true
                 } else {
                     false
+                }
+            }
+
+            editText.showSoftInputOnFocus
+
+            editText.setOnFocusChangeListener { v, hasFocus ->
+                if (hasFocus) {
+                    KeyboardUtils.showSoftInput()
                 }
             }
 

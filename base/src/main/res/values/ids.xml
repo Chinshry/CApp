@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <item name="custom_header_bar" type="id"/>
     <item name="triggerDelayKey" type="id"/>
     <item name="triggerLastTimeKey" type="id"/>
     <item name="verCodeLinearLayout" type="id"/>

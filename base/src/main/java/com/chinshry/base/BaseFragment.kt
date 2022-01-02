@@ -5,22 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.chinshry.base.bean.BuryPointInfo
 import com.chinshry.base.bean.Module.Companion.getBuryNameByModelName
 import com.chinshry.base.util.CommonUtils
-import com.chinshry.base.util.getPageBuryPoint
+import com.chinshry.base.util.getPageBuryPointByClass
 import com.chinshry.base.util.logBuryPoint
-import com.chinshry.base.view.clickWithTrigger
-import com.example.base.R
-import com.gyf.immersionbar.ImmersionBar
-import kotlinx.android.synthetic.main.custom_bar.*
+import com.chinshry.base.view.CustomHeaderBar.Companion.initCustomHeaderBar
 
 /**
  * Created by chinshry on 2021/12/23.
  */
 abstract class BaseFragment: Fragment() {
-    var pageBuryPoint: BuryPointInfo = BuryPointInfo()
+    open var pageBuryPoint: BuryPointInfo = BuryPointInfo()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,7 +24,7 @@ abstract class BaseFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // 注解埋点
-        getPageBuryPoint(this::class.java)?.let {
+        getPageBuryPointByClass(this::class.java)?.let {
             pageBuryPoint = BuryPointInfo(
                 pageName = it.pageName,
                 pageChannel = getBuryNameByModelName(CommonUtils.getModuleName(this.javaClass.name))
@@ -47,47 +43,10 @@ abstract class BaseFragment: Fragment() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        ImmersionBar
-            .with(this)
-            .fitsSystemWindows(true)
-            .barColor(R.color.white)
-            .autoDarkModeEnable(true)
-            .init()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        setCloseButton()
-        setBackButton()
-    }
-
-    fun setPageTitle(title: String) {
-        header_text_title?.text = title
-    }
-
-    private fun setCloseButton(
-        function: () -> Unit = { onCloseBtn() }
-    ) {
-        header_btn_close?.clickWithTrigger { function() }
-    }
-
-    private fun setBackButton(
-        function: () -> Unit = { onBackBtn() }
-    ) {
-        header_btn_back?.clickWithTrigger { function() }
-    }
-
-    open fun onBackBtn() {
-        if (!findNavController().navigateUp()) {
-            requireActivity().finish()
-        }
-    }
-
-    open fun onCloseBtn() {
-        requireActivity().finish()
+        // 初始化header点击事件
+        initCustomHeaderBar(this)
     }
 
     abstract fun setLayout(): Int

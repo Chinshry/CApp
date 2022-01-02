@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:background="@drawable/card_top_radius_background">
 
-    <com.chinshry.base.view.CustomBar
+    <com.chinshry.base.view.CustomHeaderBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:transparent="true"

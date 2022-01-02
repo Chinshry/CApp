@@ -1,6 +1,8 @@
 package com.chinshry.base.view
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.app.Dialog
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -10,6 +12,8 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.widget.RelativeLayout
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.example.base.R
@@ -18,11 +22,51 @@ import kotlinx.android.synthetic.main.custom_bar.view.*
 /**
  * Created by chinshry on 2021/12/23.
  * Describe：标题栏自定义组件
+ * 需要设置id为custom_header_bar才可自动初始化点击监听
  */
-class CustomBar(context: Context, attrs: AttributeSet) : RelativeLayout(context, attrs) {
+open class CustomHeaderBar(context: Context, attrs: AttributeSet) : RelativeLayout(context, attrs) {
 
     init {
+        if (id == NO_ID) {
+            id = R.id.custom_header_bar
+
+        }
         initView(context, attrs)
+    }
+
+    companion object {
+        fun initCustomHeaderBar(
+            parent: Any?,
+            headerId: Int = R.id.custom_header_bar
+        ) {
+            when(parent) {
+                is Activity -> {
+                    parent.findViewById<CustomHeaderBar>(headerId)?.apply {
+                        setBackOnClickListener { parent.finish() }
+                        setCloseOnClickListener { parent.finish() }
+                    }
+
+                }
+                is Fragment -> {
+                    parent.view?.findViewById<CustomHeaderBar>(headerId)?.apply {
+                        setBackOnClickListener { parent.requireActivity().finish() }
+                        setCloseOnClickListener {
+                            if (!parent.findNavController().navigateUp()) {
+                                parent.requireActivity().finish()
+                            }
+                        }
+                    }
+
+                }
+                is Dialog -> {
+                    parent.findViewById<CustomHeaderBar>(headerId)?.apply {
+                        setBackOnClickListener { parent.dismiss() }
+                        setCloseOnClickListener { parent.dismiss() }
+                    }
+
+                }
+            }
+        }
     }
 
     @SuppressLint("CustomViewStyleable")
@@ -87,69 +131,69 @@ class CustomBar(context: Context, attrs: AttributeSet) : RelativeLayout(context,
         typedArray.recycle()
     }
 
-    fun setTitleTextSize(size: Float) {
+    open fun setTitleTextSize(size: Float) {
         header_text_title.setTextSize(TypedValue.COMPLEX_UNIT_PX, size)
     }
 
-    fun setPageTitle(str: String?) {
+    open fun setPageTitle(str: String?) {
         if (!str.isNullOrEmpty()) {
             header_text_title?.text = str
         }
     }
 
-    fun setRightTitle(str: String?) {
+    open fun setRightTitle(str: String?) {
         if (!str.isNullOrEmpty()) {
             header_btn_right?.visibility = VISIBLE
             header_btn_right?.text = str
         }
     }
 
-    fun setLeftImg(drawable: Drawable?) {
+    open fun setLeftImg(drawable: Drawable?) {
         if (drawable != null) {
             header_btn_back?.visibility = VISIBLE
             header_btn_back?.setImageDrawable(drawable)
         }
     }
 
-    fun setRightImg(drawable: Drawable?) {
+    open fun setRightImg(drawable: Drawable?) {
         if (drawable != null) {
             header_btn_close?.visibility = VISIBLE
             header_btn_close?.setImageDrawable(drawable)
         }
     }
 
-    fun setBackVisible(visible: Boolean) {
+    open fun setBackVisible(visible: Boolean) {
         header_btn_back?.isVisible = visible
     }
 
-    fun setCloseVisible(visible: Boolean) {
+    open fun setCloseVisible(visible: Boolean) {
         header_btn_close?.isVisible = visible
     }
 
-    fun setRightTextVisible(visible: Boolean) {
+    open fun setRightTextVisible(visible: Boolean) {
         header_btn_right?.isVisible = visible
     }
 
-    fun setBackOnClickListener(listener: OnClickListener) {
+    open fun setBackOnClickListener(listener: OnClickListener) {
         header_btn_back?.clickWithTrigger {
             listener.onClick(it)
         }
     }
 
-    fun setCloseOnClickListener(listener: OnClickListener) {
+    open fun setCloseOnClickListener(listener: OnClickListener) {
         header_btn_close?.clickWithTrigger {
             listener.onClick(it)
         }
     }
 
-    fun setRightTextOnClickListener(listener: OnClickListener) {
+    open fun setRightTextOnClickListener(listener: OnClickListener) {
         header_btn_right?.clickWithTrigger {
             listener.onClick(it)
         }
     }
 
-    fun setTransparentBarTheme(transparent: Boolean = true) {
-        custom_bar?.setBackgroundColor(
+    open fun setTransparentBarTheme(transparent: Boolean = true) {
+        header_bar_container?.setBackgroundColor(
             if (transparent) {
                 Color.TRANSPARENT
             } else {
@@ -159,14 +203,14 @@ class CustomBar(context: Context, attrs: AttributeSet) : RelativeLayout(context,
         setShadowLineVisible(!transparent)
     }
 
-    fun setWhiteBarTheme(white: Boolean = true) {
+    open fun setWhiteBarTheme(white: Boolean = true) {
         val textColor: Int
         val color = if (white) {
-            custom_bar?.setBackgroundColor(Color.TRANSPARENT)
+            header_bar_container?.setBackgroundColor(Color.TRANSPARENT)
             textColor = Color.WHITE
             Color.WHITE
         } else {
-            custom_bar?.setBackgroundColor(Color.WHITE)
+            header_bar_container?.setBackgroundColor(Color.WHITE)
             textColor = Color.parseColor("#333333")
             Color.parseColor("#4F4F4F")
         }
@@ -177,12 +221,12 @@ class CustomBar(context: Context, attrs: AttributeSet) : RelativeLayout(context,
         header_btn_back?.imageTintList = ColorStateList.valueOf(color)
     }
 
-    fun setShadowLineVisible(visible: Boolean) {
+    open fun setShadowLineVisible(visible: Boolean) {
         header_shadow_line.isVisible = visible
     }
 
-    fun setHeaderMargin() {
-        custom_bar?.layoutParams?.let {
+    open fun setHeaderMargin() {
+        header_bar_container?.layoutParams?.let {
             (it as MarginLayoutParams).topMargin = BarUtils.getStatusBarHeight()
         }
     }

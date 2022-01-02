@@ -4,18 +4,38 @@ import com.blankj.utilcode.util.LogUtils
 import com.chinshry.base.bean.BuryPoint
 import com.chinshry.base.bean.BuryPointInfo
 import com.chinshry.base.bean.Module.Companion.getBuryNameByModelName
+import java.lang.Exception
+import java.lang.reflect.Method
 
 /**
  * Created by chinshry on 2021/12/23.
- * Describe：
+ * Describe：埋点工具类
  */
-fun getPageBuryPoint(mClass: Class<*>?): BuryPointInfo? {
+fun getPageBuryPointByClass(mClass: Class<*>?): BuryPointInfo? {
     return mClass?.getAnnotation(BuryPoint::class.java)?.run {
         BuryPointInfo(
             pageName = pageName,
             pageChannel = getBuryNameByModelName(CommonUtils.getModuleName(mClass.name))
         )
     }
+}
+
+fun getPageBuryPointByMethod(method: Method?): BuryPointInfo? {
+    return method?.getAnnotation(BuryPoint::class.java)?.run {
+        BuryPointInfo(
+            pageName = pageName,
+            pageChannel = getBuryNameByModelName(CommonUtils.getModuleName(method.toString()))
+        )
+    }
+}
+
+fun getPageBuryPoint(className: String, methodName: String?): BuryPointInfo? {
+    try {
+        if (!methodName.isNullOrBlank()) {
+            return getPageBuryPointByMethod(Class.forName(className).getDeclaredMethod(methodName))
+        }
+    } catch (e: Exception) { }
+    return getPageBuryPointByClass(Class.forName(className))
 }
 
 fun getClickBuryPoint(text: String?, offset: Int = 3): BuryPointInfo? {
@@ -29,11 +49,7 @@ fun getClickBuryPoint(text: String?, offset: Int = 3): BuryPointInfo? {
 fun logBuryPoint(buryPoint: BuryPointInfo?) {
     buryPoint?.apply {
         if (pageName.isNotEmpty() && pageChannel.isNotEmpty()) {
-            if (buttonName.isEmpty()) {
-                LogUtils.d("PAGE | $this")
-            } else {
-                LogUtils.d("BUTTON | $this")
-            }
+            LogUtils.d(this.toLogString())
         }
     }
 }

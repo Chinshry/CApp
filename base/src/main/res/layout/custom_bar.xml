@@ -5,7 +5,7 @@
     android:layout_height="wrap_content">
 
     <RelativeLayout
-        android:id="@+id/custom_bar"
+        android:id="@+id/header_bar_container"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/white">
@@ -18,7 +18,7 @@
             android:background="@null"
             android:scaleType="center"
             android:src="@mipmap/header_back"
-            android:contentDescription="CustomBar-返回" />
+            android:contentDescription="CustomHeaderBar-返回" />
 
         <ImageButton
             android:id="@+id/header_btn_close"
@@ -29,7 +29,7 @@
             android:scaleType="center"
             android:visibility="gone"
             android:layout_alignParentEnd="true"
-            android:contentDescription="CustomBar-关闭" />
+            android:contentDescription="CustomHeaderBar-关闭" />
 
         <TextView
             android:id="@+id/header_btn_right"

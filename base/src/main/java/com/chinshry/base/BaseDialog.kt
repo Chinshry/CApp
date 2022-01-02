@@ -1,9 +1,10 @@
-package com.chinshry.base.util
+package com.chinshry.base
 
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -11,8 +12,13 @@ import android.widget.TextView
 import androidx.annotation.*
 import androidx.annotation.IntRange
 import com.blankj.utilcode.util.ActivityUtils
+import com.blankj.utilcode.util.KeyboardUtils
 import com.blankj.utilcode.util.ScreenUtils
-import com.chinshry.base.view.clickWithTrigger
+import com.chinshry.base.bean.BuryPointInfo
+import com.chinshry.base.util.CommonUtils.getTrackBuryPoint
+import com.chinshry.base.util.logBuryPoint
+import com.chinshry.base.util.setNotBlankText
+import com.chinshry.base.view.CustomHeaderBar.Companion.initCustomHeaderBar
 import com.example.base.R
 
 /**
@@ -24,40 +30,50 @@ open class BaseDialog(
     style: Int = 0,
 ): Dialog(context, style) {
 
-    var rootView: View? = null
-
     // dialog宽度
     private var dialogWidth: Int? = null
     // dialog与屏幕边距百分比
     private var dialogWidthPercent: Float? = null
     // dialog gravity
     private var dialogGravity: Int? = null
+    // 自定义埋点
+    private var pageBuryPoint: BuryPointInfo = BuryPointInfo()
 
-    fun builder(layoutResID: Int): BaseDialog {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        // 初始化header点击事件
+        initCustomHeaderBar(this)
+
+        // 获取堆栈埋点
+        getTrackBuryPoint(1)?.let {
+            pageBuryPoint = it
+        }
+    }
+
+    open fun builder(layoutResID: Int): BaseDialog {
         LayoutInflater.from(context).inflate(layoutResID, null)?.let {
-            rootView = it
             setContentView(it)
             setWindowAnimations(R.style.WindowAnimationDefault)
         }
         return this
     }
 
-    fun setWidth(@IntRange(from = -2) width: Int): BaseDialog {
+    open fun setWidth(@IntRange(from = -2) width: Int): BaseDialog {
         this.dialogWidth = width
         return this
     }
 
-    fun setWidthPercent(@FloatRange(from = 0.0, to = 1.0) widthPercent: Float): BaseDialog {
+    open fun setWidthPercent(@FloatRange(from = 0.0, to = 1.0) widthPercent: Float): BaseDialog {
         this.dialogWidthPercent = widthPercent
         return this
     }
 
-    fun setGravity(gravity: Int): BaseDialog {
+    open fun setGravity(gravity: Int): BaseDialog {
         this.dialogGravity = gravity
         return this
     }
 
-    fun setDialogCancelable(cancel: Boolean): BaseDialog {
+    open fun setDialogCancelable(cancel: Boolean): BaseDialog {
         setCancelable(cancel)
         return this
     }
@@ -65,41 +81,34 @@ open class BaseDialog(
     /**
      * 清除灰色背景
      */
-    fun setDialogTransparent(): BaseDialog {
+    open fun setDialogTransparent(): BaseDialog {
         window?.setDimAmount(0f)
         return this
     }
 
-    fun setWindowAnimations(
+    open fun setWindowAnimations(
         @StyleRes resId: Int = R.style.WindowAnimationBottomToTop
     ): BaseDialog {
         window?.setWindowAnimations(resId)
         return this
     }
 
-    /**
-     * function 使用任意布局，此方法获取控键Id设置值以及点击消失等操作
-     *      ex: dialog.findViewById(R.id.xx).text="值"
-     *          dialog.dismiss()
-     */
-    fun setExtendMethod(dsl: (dialog: BaseDialog) -> Unit): BaseDialog {
-        dsl.invoke(this)
+    open fun showInput() : BaseDialog {
+        KeyboardUtils.showSoftInput()
         return this
     }
 
-    fun setViewInDialog(
+    open fun <T : View?> initViewById(
         @IdRes id: Int,
         name: String? = null,
         visibleWithName: Boolean = false,
-        viewFunction: (View) -> Unit = {},
-        clickListener: View.OnClickListener? = null
+        view: (T) -> Unit = {},
     ): BaseDialog {
-        findViewById<TextView>(id)?.apply {
-            setNotBlankText(name, visibleWithName)
-            viewFunction(this)
-            clickWithTrigger { v ->
-                clickListener?.onClick(v)
+        findViewById<T>(id)?.apply {
+            if (this is TextView) {
+                setNotBlankText(name, visibleWithName)
             }
+            view(this)
         }
 
         return this
@@ -135,6 +144,13 @@ open class BaseDialog(
         if (!isShowing) {
             super.show()
             showParams()
+            logBuryPoint(pageBuryPoint)
         }
     }
+
+    override fun dismiss() {
+        window?.let { KeyboardUtils.hideSoftInput(it) }
+        super.dismiss()
+    }
+
 }

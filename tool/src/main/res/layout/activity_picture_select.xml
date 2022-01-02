@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".activity.PictureSelectActivity">
 
-    <com.chinshry.base.view.CustomBar
-        android:id="@+id/bar"
+    <com.chinshry.base.view.CustomHeaderBar
+        android:id="@id/custom_header_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title_text="图片选择"
@@ -21,7 +21,7 @@
         android:layout_marginTop="150dp"
         android:divider="@drawable/divider_10"
         android:showDividers="middle"
-        app:layout_constraintTop_toBottomOf="@+id/bar">
+        app:layout_constraintTop_toBottomOf="@id/custom_header_bar">
 
         <Button
             android:id="@+id/btn_gallery"

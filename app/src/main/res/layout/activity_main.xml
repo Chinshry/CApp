@@ -9,8 +9,8 @@
     android:clipToPadding="false"
     tools:context=".MainActivity">
 
-    <com.chinshry.base.view.CustomBar
-        android:id="@+id/bar"
+    <com.chinshry.base.view.CustomHeaderBar
+        android:id="@id/custom_header_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title_text="@string/app_name"
@@ -21,7 +21,7 @@
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/bar"
+        android:layout_below="@id/custom_header_bar"
         android:layout_above="@+id/custom_tab"/>
 
     <com.chinshry.base.view.CustomTabView

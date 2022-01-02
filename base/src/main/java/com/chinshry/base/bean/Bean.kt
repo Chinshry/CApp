@@ -11,8 +11,9 @@ enum class Module(
     val model: Int,
     val buryName: String
 ) {
-    HOME(0, "首页"),
-    TOOL(1, "工具");
+    // BASE(0, "基础"),
+    HOME(1, "首页"),
+    TOOL(2, "工具");
 
     companion object {
 
@@ -45,7 +46,20 @@ data class BuryPointInfo(
     var pageName: String = "",
     var pageChannel: String = "",
     var buttonName: String = "",
-)
+) {
+    fun toLogString(): String {
+        var str = ""
+        if (pageChannel.isNotBlank()) str += "pageChannel = $pageChannel"
+        if (pageName.isNotBlank()) str += "  pageName = $pageName"
+        if (buttonName.isNotBlank()) {
+            str += "  buttonName = $buttonName"
+            str = "BUTTON BuryPoint | $str"
+        } else {
+            str = "PAGE BuryPoint | $str"
+        }
+        return str
+    }
+}
 
 data class PageParamsBean(
     var source: String? = null,

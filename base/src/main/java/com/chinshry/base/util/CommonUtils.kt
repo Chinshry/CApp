@@ -6,6 +6,7 @@ import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.StringUtils
 import com.chinshry.base.bean.BuryPointInfo
 import com.chinshry.base.bean.Constants
+import com.chinshry.base.bean.Module.Companion.getBuryNameByModelName
 import com.example.base.R
 import org.json.JSONArray
 import org.json.JSONObject
@@ -31,14 +32,20 @@ object CommonUtils {
     fun getTrackBuryPoint(offset: Int = 0): BuryPointInfo? {
         Thread.currentThread().stackTrace.forEachIndexed { index, stackTraceElement ->
             if (index >= offset) {
-                stackTraceElement.className?.let {
-                    getPageBuryPoint(Class.forName(it)) ?.let { classBuryPoint ->
-                        return classBuryPoint
+                stackTraceElement?.let {
+                    if (!(it.isNativeMethod || isIgnoreClass(it.className))) {
+                        getPageBuryPoint(it.className, it.methodName) ?.let { classBuryPoint ->
+                            return classBuryPoint
+                        }
                     }
                 }
             }
         }
         return null
+    }
+
+    private fun isIgnoreClass(className: String): Boolean {
+        return getBuryNameByModelName(getModuleName(className)) == ""
     }
 
     fun getModuleName(packageName: String): String? {
