@@ -30,12 +30,19 @@ fun getPageBuryPointByMethod(method: Method?): BuryPointInfo? {
 }
 
 fun getPageBuryPoint(className: String, methodName: String?): BuryPointInfo? {
+    var buryPoint: BuryPointInfo? = null
     try {
         if (!methodName.isNullOrBlank()) {
-            return getPageBuryPointByMethod(Class.forName(className).getDeclaredMethod(methodName))
+            buryPoint = getPageBuryPointByMethod(Class.forName(className).getDeclaredMethod(methodName))
         }
-    } catch (e: Exception) { }
-    return getPageBuryPointByClass(Class.forName(className))
+    } catch (e: Exception) {
+        Class.forName(className).declaredMethods.forEach {
+            if (it.name == methodName) {
+                buryPoint = getPageBuryPointByMethod(it)
+            }
+        }
+    }
+    return buryPoint ?: getPageBuryPointByClass(Class.forName(className))
 }
 
 fun getClickBuryPoint(text: String?, offset: Int = 3): BuryPointInfo? {

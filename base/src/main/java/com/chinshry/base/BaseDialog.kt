@@ -102,13 +102,13 @@ open class BaseDialog(
         @IdRes id: Int,
         name: String? = null,
         visibleWithName: Boolean = false,
-        view: (T) -> Unit = {},
+        viewFunction: ((T) -> Unit)? = null,
     ): BaseDialog {
         findViewById<T>(id)?.apply {
             if (this is TextView) {
                 setNotBlankText(name, visibleWithName)
             }
-            view(this)
+            viewFunction?.invoke(this)
         }
 
         return this

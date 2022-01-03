@@ -11,29 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:divider="@drawable/divider_10"
+        android:gravity="center"
         android:orientation="vertical"
-        android:showDividers="middle">
-
-        <Button
-            android:id="@+id/btn_test"
-            style="@style/Button"
-            android:text="测试" />
-
-        <Button
-            android:id="@+id/btn_root"
-            style="@style/Button"
-            android:text="ROOT和模拟器检测" />
-
-        <Button
-            android:id="@+id/btn_code_input"
-            style="@style/Button"
-            android:text="验证码输入框组件" />
-
-        <Button
-            android:id="@+id/btn_picture_select"
-            style="@style/Button"
-            android:text="图片选择器" />
-
-    </LinearLayout>
+        android:showDividers="middle" />
 
 </RelativeLayout>

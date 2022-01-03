@@ -11,7 +11,6 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.fastjson.JSON
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.LogUtils
-import com.blankj.utilcode.util.PermissionUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.chinshry.tool.R
@@ -19,6 +18,8 @@ import com.chinshry.base.BaseActivity
 import com.chinshry.base.bean.BuryPoint
 import com.chinshry.base.bean.Router
 import com.chinshry.base.util.GlideEngine
+import com.chinshry.base.util.PermissionHelper
+import com.chinshry.base.util.addButton
 import com.chinshry.base.view.clickWithTrigger
 import com.luck.picture.lib.PictureMediaScannerConnection
 import com.luck.picture.lib.PictureSelectionModel
@@ -48,37 +49,30 @@ class PictureSelectActivity : BaseActivity() {
 
     @SuppressLint("InflateParams", "SetTextI18n")
     private fun initView() {
-        btn_gallery.clickWithTrigger {
-            PermissionUtils.permission(
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            )
-                .callback { isAllGranted, _, _, _ ->
-                    if (isAllGranted) {
-                        gallerySelect()
-                        return@callback
-                    }
-                }
-                .request()
+        ll_btn.addButton("选择图片") {
+            it.clickWithTrigger {
+                PermissionHelper.request(
+                    function = { gallerySelect() },
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                )
+            }
         }
 
-        btn_camera.clickWithTrigger {
-            PermissionUtils.permission(
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.CAMERA
-            )
-                .callback { isAllGranted, _, _, _ ->
-                    if (isAllGranted) {
-                        takePicture()
-                        return@callback
-                    }
-                }
-                .request()
+        ll_btn.addButton("拍摄照片") {
+            it.clickWithTrigger {
+                PermissionHelper.request(
+                    function = { takePicture() },
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.CAMERA
+                )
+            }
         }
 
-        btn_clear_cache.clickWithTrigger {
-            clearCache()
+        ll_btn.addButton("清除缓存") {
+            it.clickWithTrigger {
+                clearCache()
+            }
         }
-
     }
 
     /**

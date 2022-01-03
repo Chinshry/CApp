@@ -6,6 +6,7 @@ import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.StringUtils
 import com.chinshry.base.bean.BuryPointInfo
 import com.chinshry.base.bean.Constants
+import com.chinshry.base.bean.Module
 import com.chinshry.base.bean.Module.Companion.getBuryNameByModelName
 import com.example.base.R
 import org.json.JSONArray
@@ -45,7 +46,11 @@ object CommonUtils {
     }
 
     private fun isIgnoreClass(className: String): Boolean {
-        return getBuryNameByModelName(getModuleName(className)) == ""
+        if (className.contains("$")) return true
+        if (className.contains("PermissionHelper")) return false
+
+        val modelName = getBuryNameByModelName(getModuleName(className))
+        return modelName == "" || modelName == Module.BASE.buryName
     }
 
     fun getModuleName(packageName: String): String? {

@@ -11,7 +11,7 @@ enum class Module(
     val model: Int,
     val buryName: String
 ) {
-    // BASE(0, "基础"),
+    BASE(0, "基础"),
     HOME(1, "首页"),
     TOOL(2, "工具");
 

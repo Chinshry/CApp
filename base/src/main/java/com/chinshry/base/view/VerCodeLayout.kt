@@ -48,9 +48,7 @@ open class VerCodeLayout @JvmOverloads constructor(
                 }
             }
 
-            editText.showSoftInputOnFocus
-
-            editText.setOnFocusChangeListener { v, hasFocus ->
+            editText.setOnFocusChangeListener { _, hasFocus ->
                 if (hasFocus) {
                     KeyboardUtils.showSoftInput()
                 }

@@ -22,6 +22,8 @@ class MyDialog(
         builder(R.layout.dialog_base)
         setWidthPercent(0.7f)
         setWindowAnimations()
+        setConfirmBtn()
+        setCancelBtn()
     }
 
     fun setTitle(text: String?): MyDialog {
@@ -45,7 +47,7 @@ class MyDialog(
     }
 
     fun setCancelBtn(
-        text: String?,
+        text: String? = null,
         function: () -> Unit = {},
     ): MyDialog {
         initViewById<Button>(
@@ -61,7 +63,7 @@ class MyDialog(
     }
 
     fun setConfirmBtn(
-        text: String?,
+        text: String? = null,
         function: () -> Unit = {},
     ): MyDialog {
         initViewById<Button>(

@@ -6,8 +6,8 @@ import android.view.Gravity
 import android.view.View
 import android.widget.TextView
 import com.alibaba.android.arouter.launcher.ARouter
+import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.ToastUtils
-import com.chinshry.tool.R
 import com.chinshry.base.BaseFragment
 import com.chinshry.base.bean.BuryPoint
 import com.chinshry.base.bean.Router
@@ -20,6 +20,9 @@ import com.chinshry.base.view.VerCodeEditText
 import com.chinshry.base.view.VerCodeLayout
 import com.chinshry.base.view.clickWithTrigger
 import kotlinx.android.synthetic.main.fragment_tool.*
+import com.chinshry.base.util.addButton
+import com.chinshry.tool.R
+
 
 /**
  * Created by chinshry on 2021/12/23.
@@ -39,27 +42,40 @@ class ToolFragment : BaseFragment() {
 
     @SuppressLint("InflateParams", "SetTextI18n")
     private fun initView() {
-        btn_test.clickWithTrigger {
-            WindowManager.addWindow(
-                WindowLevel.LOW
-            ) {
-                showNormalDialog()
-            }
-
-        }
-
-        btn_root.clickWithTrigger {
-            if (!DevicesCheckUtil.checkRootAndEmulator(requireContext())) {
-                ToastUtils.showShort("您的设备未root，且为真机")
+        ll_btn.addButton("测试") {
+            it.clickWithTrigger {
+                WindowManager.addWindow(
+                    WindowLevel.LOW
+                ) {
+                    showNormalDialog()
+                }
             }
         }
 
-        btn_code_input.clickWithTrigger {
-            showCodeInputDialog()
+        ll_btn.addButton("系统设置") {
+            it.clickWithTrigger {
+                AppUtils.launchAppDetailsSettings()
+            }
         }
 
-        btn_picture_select.clickWithTrigger {
-            ARouter.getInstance().build(Router.PICTURE_SELECT).navigation()
+        ll_btn.addButton("ROOT和模拟器检测") {
+            it.clickWithTrigger {
+                if (!DevicesCheckUtil.checkRootAndEmulator(requireContext())) {
+                    ToastUtils.showShort("您的设备未root，且为真机")
+                }
+            }
+        }
+
+        ll_btn.addButton("验证码输入框组件") {
+            it.clickWithTrigger {
+                showCodeInputDialog()
+            }
+        }
+
+        ll_btn.addButton("图片选择器") {
+            it.clickWithTrigger {
+                ARouter.getInstance().build(Router.PICTURE_SELECT).navigation()
+            }
         }
     }
 
@@ -96,10 +112,10 @@ class ToolFragment : BaseFragment() {
     @BuryPoint(pageName = "测试弹窗")
     private fun showNormalDialog() {
         MyDialog()
-            .setTitle(null)
+            .setTitle("")
             .setMsg("内容内容")
-            .setConfirmBtn("ok") { ToastUtils.showShort("toast!!")}
-            .setCancelBtn("bye")
+            .setConfirmBtn("OK") { ToastUtils.showShort("toast!!")}
+            .setCancelBtn("CANCEL")
             .show()
     }
 
