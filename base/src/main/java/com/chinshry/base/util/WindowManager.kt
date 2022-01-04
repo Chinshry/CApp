@@ -11,7 +11,7 @@ import java.util.concurrent.PriorityBlockingQueue
  * Describe：弹窗管理
  */
 data class MyWindow(
-    @WindowLevel val level: Int, // window等级 数字越大 优先级更高
+    val level: WindowLevel, // window等级 数字越大 优先级更高
     val priority: Int, // window优先级 同level情况下 priority数字越大 优先级更高
     val function: (() -> Unit),
 )
@@ -19,26 +19,15 @@ data class MyWindow(
 /**
  * 弹窗优先级
  */
-@Retention(AnnotationRetention.SOURCE)
-annotation class WindowLevel {
-    companion object {
-        /**
-         * 仅能在首页弹出 eg: 低优先级运营弹窗
-         */
-        var LOW = 0
-        /**
-         * 可以在除了登录以外的流程弹出 eg: 高优先级运营弹窗
-         */
-        var MIDDLE = 1
-        /**
-         * 在任意位置弹出 eg: 升级弹窗
-         */
-        var HIGH = 2
-        /**
-         * 跳转
-         */
-        var JUMP = 10
-    }
+enum class WindowLevel {
+    /** 仅能在首页弹出 eg: 低优先级运营弹窗 **/
+    LOW,
+    /** 可以在除了登录以外的流程弹出 eg: 高优先级运营弹窗 **/
+    MIDDLE,
+    /** 在任意位置弹出 eg: 升级弹窗 **/
+    HIGH,
+    /** 跳转 **/
+    JUMP
 }
 
 object WindowManager {
@@ -78,7 +67,7 @@ object WindowManager {
      * @param function Function0<Unit> 执行方法
      */
     fun addWindow(
-        @WindowLevel level: Int,
+        level: WindowLevel,
         priority: Int = 0,
         function: (() -> Unit),
     ) {
@@ -110,14 +99,12 @@ object WindowManager {
             // 取出队列头
             windowQueue.peek()?.let { window ->
                 // 是否可展示
-                canShowWindow(window.level)?.let { canShow ->
-                    if (canShow) {
-                        // 执行窗口展示
-                        doWindowShow(window)
-                    } else {
-                        // 暂时不能展示 循环任务该窗口
-                        startWindowIterator(window)
-                    }
+                if (canShowWindow(window.level)) {
+                    // 执行窗口展示
+                    doWindowShow(window)
+                } else {
+                    // 暂时不能展示 循环任务该窗口
+                    startWindowIterator(window)
                 }
             }
         }, WINDOW_SHOW_DELAY)
@@ -129,7 +116,7 @@ object WindowManager {
      */
     private fun startWindowIterator(window: MyWindow) {
         MainScope().launch(Dispatchers.Main) {
-            while (canShowWindow(window.level) == false) {
+            while (!canShowWindow(window.level)) {
                 delay(CHECK_WINDOW_INTERVAL)
             }
 
@@ -157,7 +144,7 @@ object WindowManager {
      * @param level WindowLevel 窗口级别
      * @return Boolean 当前是否可展示
      */
-    private fun canShowWindow(@WindowLevel level: Int): Boolean? {
+    private fun canShowWindow(level: WindowLevel): Boolean {
         // 当前activity名
         val currentActivityName = ActivityUtils.getTopActivity().javaClass.name
         return when(level) {
@@ -169,9 +156,6 @@ object WindowManager {
             }
             WindowLevel.HIGH, WindowLevel.JUMP -> {
                 true
-            }
-            else -> {
-                null
             }
         }
     }
