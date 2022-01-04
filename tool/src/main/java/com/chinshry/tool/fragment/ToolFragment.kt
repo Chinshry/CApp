@@ -42,13 +42,32 @@ class ToolFragment : BaseFragment() {
 
     @SuppressLint("InflateParams", "SetTextI18n")
     private fun initView() {
-        ll_btn.addButton("测试") {
+        ll_btn.addButton("测试弹窗") {
             it.clickWithTrigger {
                 WindowManager.addWindow(
                     WindowLevel.LOW
                 ) {
-                    showNormalDialog()
+                    showNormalDialog("LOW")
                 }
+
+                WindowManager.addWindow(
+                    WindowLevel.MIDDLE
+                ) {
+                    showNormalDialog("MIDDLE")
+                }
+
+                WindowManager.addWindow(
+                    WindowLevel.JUMP
+                ) {
+                    ARouter.getInstance().build(Router.PICTURE_SELECT).navigation()
+                }
+
+                WindowManager.addWindow(
+                    WindowLevel.HIGH
+                ) {
+                    showHighDialog("HIGH")
+                }
+
             }
         }
 
@@ -110,11 +129,32 @@ class ToolFragment : BaseFragment() {
     }
 
     @BuryPoint(pageName = "测试弹窗")
-    private fun showNormalDialog() {
+    private fun showNormalDialog(
+        message: String? = null,
+        title: String? = null,
+    ) {
         MyDialog()
-            .setTitle("")
-            .setMsg("内容内容")
-            .setConfirmBtn("OK") { ToastUtils.showShort("toast!!")}
+            .setTitle(title)
+            .setMsg(message)
+            .setConfirmBtn("OK") {
+                ARouter.getInstance().build(Router.PICTURE_SELECT).navigation()
+            }
+            .setCancelBtn("CANCEL")
+            .showWindowOnDismiss()
+            .show()
+    }
+
+    @BuryPoint(pageName = "高级弹窗")
+    private fun showHighDialog(
+        message: String? = null,
+        title: String? = null,
+    ) {
+        MyDialog()
+            .setTitle(title)
+            .setMsg(message)
+            .setConfirmBtn("OK") {
+                ARouter.getInstance().build(Router.PICTURE_SELECT).navigation()
+            }
             .setCancelBtn("CANCEL")
             .show()
     }

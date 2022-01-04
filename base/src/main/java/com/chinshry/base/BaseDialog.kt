@@ -16,6 +16,7 @@ import com.blankj.utilcode.util.KeyboardUtils
 import com.blankj.utilcode.util.ScreenUtils
 import com.chinshry.base.bean.BuryPointInfo
 import com.chinshry.base.util.CommonUtils.getTrackBuryPoint
+import com.chinshry.base.util.WindowManager.showWindow
 import com.chinshry.base.util.logBuryPoint
 import com.chinshry.base.util.setNotBlankText
 import com.chinshry.base.view.CustomHeaderBar.Companion.initCustomHeaderBar
@@ -54,6 +55,13 @@ open class BaseDialog(
         LayoutInflater.from(context).inflate(layoutResID, null)?.let {
             setContentView(it)
             setWindowAnimations(R.style.WindowAnimationDefault)
+        }
+        return this
+    }
+
+    open fun showWindowOnDismiss(): BaseDialog {
+        setOnDismissListener {
+            showWindow()
         }
         return this
     }

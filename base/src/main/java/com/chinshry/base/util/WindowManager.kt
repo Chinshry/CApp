@@ -1,9 +1,9 @@
 package com.chinshry.base.util
 
-import androidx.annotation.IntDef
+import android.os.Handler
+import android.os.Looper
 import com.blankj.utilcode.util.ActivityUtils
 import kotlinx.coroutines.*
-import java.util.*
 import java.util.concurrent.PriorityBlockingQueue
 
 /**
@@ -19,7 +19,6 @@ data class MyWindow(
 /**
  * 弹窗优先级
  */
-@IntDef(value = [ShapeType.RECTANGLE, ShapeType.OVAL])
 @Retention(AnnotationRetention.SOURCE)
 annotation class WindowLevel {
     companion object {
@@ -44,7 +43,9 @@ annotation class WindowLevel {
 
 object WindowManager {
 
+    private const val HIGH_WINDOW_SHOW_DELAY: Long = 2 * 1000
     private const val CHECK_WINDOW_INTERVAL: Long = 1 * 1000
+    private const val WINDOW_SHOW_DELAY: Long = 500
 
     /**
      * 不展示WindowLevel.MIDDLE级别窗口的activity列表
@@ -66,56 +67,88 @@ object WindowManager {
 
     private val windowQueue = PriorityBlockingQueue(10, comparator)
 
+    private fun hasJumpInQueue(): Boolean {
+        return windowQueue.peek()?.level == WindowLevel.JUMP
+    }
+
     /**
      * 添加窗口
      * @param level WindowLevel 窗口级别
      * @param priority Int 窗口优先级
-     * @param function Function0<Unit> 窗口弹出方法
+     * @param function Function0<Unit> 执行方法
      */
     fun addWindow(
         @WindowLevel level: Int,
         priority: Int = 0,
         function: (() -> Unit),
     ) {
+        // 高优先级弹窗 不入栈
+        if (level == WindowLevel.HIGH){
+            // 若栈中有JUMP类 延迟弹出
+            Handler(Looper.getMainLooper()).postDelayed({
+                function()
+            }, if (hasJumpInQueue()) HIGH_WINDOW_SHOW_DELAY else 0)
+            return
+        }
+
+        // 将窗口加入队列
         windowQueue.put(MyWindow(level = level, priority = priority, function = function))
 
-        // 队列原本为空 此次为新窗口入队 开启循环
+        // 此次为新窗口入空队 展示窗口
         if (windowQueue.size == 1) {
-            startWindowQueueIterator()
+            showWindow()
         }
     }
 
     /**
-     * 窗口展示
+     * 准备进行窗口展示
      */
-    private fun showWindow() {
-        // 取队列头
-        windowQueue.peek()?.let { window ->
-            // 是否可展示
-            if (canShowWindow(window.level)) {
-                // 出队列 并执行窗口展示
-                windowQueue.poll()
-                window.function()
+    fun showWindow() {
+        // 延迟一段时间再取队列
+        // 等待初始化完成 或 上个弹窗结束后的跳转完成
+        Handler(Looper.getMainLooper()).postDelayed({
+            // 取出队列头
+            windowQueue.peek()?.let { window ->
+                // 是否可展示
+                canShowWindow(window.level)?.let { canShow ->
+                    if (canShow) {
+                        // 执行窗口展示
+                        doWindowShow(window)
+                    } else {
+                        // 暂时不能展示 循环任务该窗口
+                        startWindowIterator(window)
+                    }
+                }
             }
-        }
+        }, WINDOW_SHOW_DELAY)
     }
 
     /**
-     * 窗口队列展示循环
+     * 开始循环任务 直至将该窗口弹出任务停止
+     * @param window MyWindow 需要循环的窗口
      */
-    private fun startWindowQueueIterator() {
+    private fun startWindowIterator(window: MyWindow) {
         MainScope().launch(Dispatchers.Main) {
-            // 等待弹窗添加完毕开始循环
-            // delay(500)
-
-            // 当队列有窗口时 循环 直至窗口全部弹出
-            while (isActive && windowQueue.size > 0) {
-                showWindow()
+            while (canShowWindow(window.level) == false) {
                 delay(CHECK_WINDOW_INTERVAL)
             }
 
-            // 循环完成取消任务
-            cancel()
+            doWindowShow(window)
+        }
+    }
+
+    /**
+     * 展示窗口
+     * @param window MyWindow 需要循环的窗口
+     */
+    private fun doWindowShow(window: MyWindow) {
+        // 出队列 并执行窗口展示
+        windowQueue.poll()
+        window.function()
+
+        // 本次为跳转页面 继续展示弹窗
+        if (window.level == WindowLevel.JUMP) {
+            showWindow()
         }
     }
 
@@ -124,7 +157,7 @@ object WindowManager {
      * @param level WindowLevel 窗口级别
      * @return Boolean 当前是否可展示
      */
-    private fun canShowWindow(@WindowLevel level: Int): Boolean {
+    private fun canShowWindow(@WindowLevel level: Int): Boolean? {
         // 当前activity名
         val currentActivityName = ActivityUtils.getTopActivity().javaClass.name
         return when(level) {
@@ -138,7 +171,7 @@ object WindowManager {
                 true
             }
             else -> {
-                false
+                null
             }
         }
     }
