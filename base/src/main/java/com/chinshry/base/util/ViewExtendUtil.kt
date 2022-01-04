@@ -104,8 +104,7 @@ fun TextView.setColorSelector(
 }
 //TODO 可自己根据需求添加属性
 fun View.setShape(
-    @ShapeType
-    shapeType: Int = ShapeType.RECTANGLE,
+    @ShapeType shapeType: Int = ShapeType.RECTANGLE,
     @ColorRes solidColor: Int? = null,
     @ColorInt solidColorRgb: Int? = null,
     strokeWith: Int? = null,

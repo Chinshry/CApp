@@ -8,6 +8,8 @@ import com.chinshry.base.util.logBuryPoint
 import com.example.base.R
 
 
+const val CLICK_DELAY = 200L
+
 /**
  * get set
  * 给view添加一个上次触发时间的属性（用来屏蔽连击操作）
@@ -61,21 +63,21 @@ fun <T : View> T.clickFun(text: String, delay: Long, block: (T) -> Unit) {
 
 fun <T : View> T.clickWithTrigger(
     text: String = "",
-    delay: Long = 200,
+    delay: Long = CLICK_DELAY,
     block: (T) -> Unit
 ) {
     clickFun(text, delay, block)
 }
 
 fun <T : TextView> T.clickWithTrigger(
-    delay: Long = 200,
+    delay: Long = CLICK_DELAY,
     block: (T) -> Unit
 ) {
     clickFun(this.text.toString(), delay, block)
 }
 
 fun <T : ImageView> T.clickWithTrigger(
-    delay: Long = 200,
+    delay: Long = CLICK_DELAY,
     block: (T) -> Unit
 ) {
     clickFun(this.contentDescription.toString(), delay, block)
