@@ -11,8 +11,10 @@ import java.util.concurrent.PriorityBlockingQueue
  * Describe：弹窗管理
  */
 data class MyWindow(
-    val level: WindowLevel, // window等级 数字越大 优先级更高
-    val priority: Int, // window优先级 同level情况下 priority数字越大 优先级更高
+    /** window等级 数字越大 优先级更高 **/
+    val level: WindowLevel,
+    /** window优先级 同level情况下 priority数字越大 优先级更高 **/
+    val priority: Int,
     val function: (() -> Unit),
 )
 
@@ -36,16 +38,12 @@ object WindowManager {
     private const val CHECK_WINDOW_INTERVAL: Long = 1 * 1000
     private const val WINDOW_SHOW_DELAY: Long = 500
 
-    /**
-     * 不展示WindowLevel.MIDDLE级别窗口的activity列表
-     */
+    /** 不展示WindowLevel.MIDDLE级别窗口的activity列表 **/
     private val disableWindowShowActivityList = listOf(
         ""
     )
 
-    /**
-     * 优先级比较器
-     */
+    /** 队列优先级比较器 **/
     private val comparator = Comparator<MyWindow> { o1, o2 ->
         if (o2.level == o1.level) {
             (o2.priority).compareTo(o1.priority)
@@ -56,6 +54,9 @@ object WindowManager {
 
     private val windowQueue = PriorityBlockingQueue(10, comparator)
 
+    /**
+     * 队列中是否有JUMP任务
+     */
     private fun hasJumpInQueue(): Boolean {
         return windowQueue.peek()?.level == WindowLevel.JUMP
     }
