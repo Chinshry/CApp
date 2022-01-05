@@ -2,6 +2,8 @@ package com.chinshry.tool.fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.Gravity
 import android.view.View
 import android.widget.TextView
@@ -47,7 +49,7 @@ class ToolFragment : BaseFragment() {
                 WindowManager.addWindow(
                     WindowLevel.LOW
                 ) {
-                    showNormalDialog("LOW")
+                    showNormalDialog("LOW 0")
                 }
 
                 WindowManager.addWindow(
@@ -62,11 +64,31 @@ class ToolFragment : BaseFragment() {
                     ARouter.getInstance().build(Router.PICTURE_SELECT).navigation()
                 }
 
+
                 WindowManager.addWindow(
                     WindowLevel.HIGH
                 ) {
                     showHighDialog("HIGH")
                 }
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    WindowManager.addWindow(
+                        WindowLevel.LOW,
+                        priority = 10
+                    ) {
+                        showNormalDialog("LOW 10")
+                    }
+                }, 5000)
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    WindowManager.addWindow(
+                        WindowLevel.MIDDLE,
+                        priority = 10
+                    ) {
+                        showNormalDialog("MIDDLE 10")
+                    }
+                }, 5000)
+
 
             }
         }

@@ -105,7 +105,7 @@ object WindowManager {
                     doWindowShow(window)
                 } else {
                     // 暂时不能展示 循环任务该窗口
-                    startWindowIterator(window)
+                    startWindowIterator()
                 }
             }
         }, WINDOW_SHOW_DELAY)
@@ -113,15 +113,20 @@ object WindowManager {
 
     /**
      * 开始循环任务 直至将该窗口弹出任务停止
-     * @param window MyWindow 需要循环的窗口
      */
-    private fun startWindowIterator(window: MyWindow) {
+    private fun startWindowIterator() {
         MainScope().launch(Dispatchers.Main) {
-            while (!canShowWindow(window.level)) {
+            while (isActive) {
+                val window = windowQueue.peek() ?: break
+
+                // 是否可展示
+                if (canShowWindow(window.level)) {
+                    doWindowShow(window)
+                    break
+                }
+
                 delay(CHECK_WINDOW_INTERVAL)
             }
-
-            doWindowShow(window)
         }
     }
 
