@@ -15,14 +15,11 @@ import com.chinshry.base.bean.BuryPoint
 import com.chinshry.base.bean.Router
 import com.chinshry.base.dialog.MyDialog
 import com.chinshry.base.BaseDialog
-import com.chinshry.base.util.DevicesCheckUtil
-import com.chinshry.base.util.WindowLevel
-import com.chinshry.base.util.WindowManager
+import com.chinshry.base.util.*
 import com.chinshry.base.view.VerCodeEditText
 import com.chinshry.base.view.VerCodeLayout
 import com.chinshry.base.view.clickWithTrigger
 import kotlinx.android.synthetic.main.fragment_tool.*
-import com.chinshry.base.util.addButton
 import com.chinshry.tool.R
 
 
@@ -46,49 +43,56 @@ class ToolFragment : BaseFragment() {
     private fun initView() {
         ll_btn.addButton("测试弹窗") {
             it.clickWithTrigger {
-                WindowManager.addWindow(
-                    WindowLevel.LOW
-                ) {
-                    showNormalDialog("LOW 0")
-                }
-
-                WindowManager.addWindow(
-                    WindowLevel.MIDDLE
-                ) {
-                    showNormalDialog("MIDDLE")
-                }
-
-                WindowManager.addWindow(
-                    WindowLevel.JUMP
-                ) {
-                    ARouter.getInstance().build(Router.PICTURE_SELECT).navigation()
-                }
-
-
-                WindowManager.addWindow(
-                    WindowLevel.HIGH
-                ) {
-                    showHighDialog("HIGH")
-                }
+                // WindowManagerList.addWindow(
+                //     WindowConfig.DEVICE_CHECK,
+                //     delayTime = WindowManagerList.WINDOW_SHOW_LONG_DELAY
+                // ) {
+                //     showNormalDialog("DEVICE_CHECK")
+                // }
+                //
+                // WindowManagerList.addWindow(
+                //     WindowConfig.PERMISSION_HINT,
+                //     delayTime = WindowManagerList.WINDOW_SHOW_LONG_DELAY
+                // ) {
+                //     showNormalDialog("PERMISSION_HINT")
+                // }
 
                 Handler(Looper.getMainLooper()).postDelayed({
-                    WindowManager.addWindow(
-                        WindowLevel.LOW,
-                        priority = 10
+                    WindowManagerList.addWindow(
+                        WindowConfig.JUMP
                     ) {
-                        showNormalDialog("LOW 10")
+                        ARouter.getInstance().build(Router.PICTURE_SELECT).navigation()
                     }
-                }, 5000)
+                }, 100)
 
                 Handler(Looper.getMainLooper()).postDelayed({
-                    WindowManager.addWindow(
-                        WindowLevel.MIDDLE,
-                        priority = 10
+                    WindowManagerList.addWindow(
+                        WindowConfig.CIPHER
                     ) {
-                        showNormalDialog("MIDDLE 10")
+                        showNormalDialog("CIPHER")
                     }
-                }, 5000)
+                }, 1000)
 
+                Handler(Looper.getMainLooper()).postDelayed({
+                    WindowManagerList.addWindow(
+                        WindowConfig.UPDATE
+                    ) {
+                        showNormalDialog("UPDATE")
+                    }
+                }, 2000)
+
+                // Handler(Looper.getMainLooper()).postDelayed({
+                //     WindowManagerList.clear()
+                //     showNormalDialog("UPDATE HIGH")
+                // }, 2000)
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    WindowManagerList.addWindow(
+                        WindowConfig.CARING_CHOOSE
+                    ) {
+                        showNormalDialog("CARING_CHOOSE")
+                    }
+                }, 4000)
 
             }
         }
@@ -163,21 +167,6 @@ class ToolFragment : BaseFragment() {
             }
             .setCancelBtn("CANCEL")
             .showWindowOnDismiss()
-            .show()
-    }
-
-    @BuryPoint(pageName = "高级弹窗")
-    private fun showHighDialog(
-        message: String? = null,
-        title: String? = null,
-    ) {
-        MyDialog()
-            .setTitle(title)
-            .setMsg(message)
-            .setConfirmBtn("OK") {
-                ARouter.getInstance().build(Router.PICTURE_SELECT).navigation()
-            }
-            .setCancelBtn("CANCEL")
             .show()
     }
 
