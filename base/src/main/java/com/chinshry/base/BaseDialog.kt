@@ -13,10 +13,12 @@ import androidx.annotation.*
 import androidx.annotation.IntRange
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.KeyboardUtils
+import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ScreenUtils
 import com.chinshry.base.bean.BuryPointInfo
 import com.chinshry.base.util.CommonUtils.getTrackBuryPoint
-import com.chinshry.base.util.WindowManager.showWindow
+import com.chinshry.base.util.WindowManager
+import com.chinshry.base.util.WindowManagerList
 import com.chinshry.base.util.logBuryPoint
 import com.chinshry.base.util.setNotBlankText
 import com.chinshry.base.view.CustomHeaderBar.Companion.initCustomHeaderBar
@@ -61,7 +63,11 @@ open class BaseDialog(
 
     open fun showWindowOnDismiss(): BaseDialog {
         setOnDismissListener {
-            showWindow()
+            // 弹窗消失 置弹窗显示标志为false
+            WindowManagerList.isDialogShowing = false
+            LogUtils.d("csTest showWindow")
+            WindowManager.showWindow()
+            WindowManagerList.showWindow()
         }
         return this
     }

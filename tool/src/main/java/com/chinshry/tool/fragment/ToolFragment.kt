@@ -43,19 +43,17 @@ class ToolFragment : BaseFragment() {
     private fun initView() {
         ll_btn.addButton("测试弹窗") {
             it.clickWithTrigger {
-                // WindowManagerList.addWindow(
-                //     WindowConfig.DEVICE_CHECK,
-                //     delayTime = WindowManagerList.WINDOW_SHOW_LONG_DELAY
-                // ) {
-                //     showNormalDialog("DEVICE_CHECK")
-                // }
-                //
-                // WindowManagerList.addWindow(
-                //     WindowConfig.PERMISSION_HINT,
-                //     delayTime = WindowManagerList.WINDOW_SHOW_LONG_DELAY
-                // ) {
-                //     showNormalDialog("PERMISSION_HINT")
-                // }
+                WindowManagerList.addWindow(
+                    WindowConfig.DEVICE_CHECK,
+                ) {
+                    showNormalDialog("DEVICE_CHECK")
+                }
+
+                WindowManagerList.addWindow(
+                    WindowConfig.PERMISSION_HINT,
+                ) {
+                    showNormalDialog("PERMISSION_HINT")
+                }
 
                 Handler(Looper.getMainLooper()).postDelayed({
                     WindowManagerList.addWindow(
@@ -63,7 +61,7 @@ class ToolFragment : BaseFragment() {
                     ) {
                         ARouter.getInstance().build(Router.PICTURE_SELECT).navigation()
                     }
-                }, 100)
+                }, 1000)
 
                 Handler(Looper.getMainLooper()).postDelayed({
                     WindowManagerList.addWindow(
@@ -71,7 +69,7 @@ class ToolFragment : BaseFragment() {
                     ) {
                         showNormalDialog("CIPHER")
                     }
-                }, 1000)
+                }, 2000)
 
                 Handler(Looper.getMainLooper()).postDelayed({
                     WindowManagerList.addWindow(
@@ -79,7 +77,7 @@ class ToolFragment : BaseFragment() {
                     ) {
                         showNormalDialog("UPDATE")
                     }
-                }, 2000)
+                }, 3000)
 
                 // Handler(Looper.getMainLooper()).postDelayed({
                 //     WindowManagerList.clear()
