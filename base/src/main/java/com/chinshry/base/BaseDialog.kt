@@ -65,7 +65,7 @@ open class BaseDialog(
         setOnDismissListener {
             // 弹窗消失 置弹窗显示标志为false
             WindowManagerList.isDialogShowing = false
-            LogUtils.d("csTest showWindow")
+            LogUtils.dTag(WindowManagerList.TAG, "showWindow")
             WindowManager.showWindow()
             WindowManagerList.showWindow()
         }

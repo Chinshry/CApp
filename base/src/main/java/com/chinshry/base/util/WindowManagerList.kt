@@ -1,6 +1,7 @@
 package com.chinshry.base.util
 
 import com.blankj.utilcode.util.ActivityUtils
+import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.LogUtils
 import kotlinx.coroutines.*
 
@@ -44,16 +45,22 @@ enum class WindowConfig(
     QUICK_LOGIN(WindowType.LOW, 93),
     HIGH_POPUP(WindowType.MIDDLE, 10),
     LOW_POPUP(WindowType.LOW, 9),
-    INSIDE_PUSH(WindowType.MIDDLE, 1),
+    INSIDE_PUSH(WindowType.MIDDLE, 1);
+
+    override fun toString(): String {
+        return "$name type = $type priority = $priority"
+    }
 }
 
 /** 页面注解 标志其是否为绑定认证流程相关页面 **/
 @Retention(AnnotationRetention.RUNTIME)
-annotation class AccountPage(val isAccountPage: Boolean = false)
+annotation class MyPage(val isAccountPage: Boolean = false)
 
 object WindowManagerList {
+    const val TAG = "MyWindowManagerList"
 
-    /** 窗口展示延时 = **/
+    /** 窗口展示延时 **/
+    private const val WINDOW_SHOW_LONG_DELAY: Long = 3000
     private const val WINDOW_SHOW_DELAY: Long = 500
 
     /** 不展示WindowType.MIDDLE级别窗口的activity列表 **/
@@ -87,7 +94,8 @@ object WindowManagerList {
         windowConfig: WindowConfig,
         function: (() -> Unit),
     ) {
-        LogUtils.d("csTest windowConfig $windowConfig")
+        LogUtils.dTag(TAG, "$windowConfig")
+
         windowList ?: return
 
         // 将窗口加入列表
@@ -98,43 +106,48 @@ object WindowManagerList {
 
         // 此次为新窗口入空队 展示窗口
         if (windowList?.size == 1) {
-            showWindow()
+            val delay = when (windowConfig) {
+                WindowConfig.JUMP -> 0
+                WindowConfig.DEVICE_CHECK, WindowConfig.PERMISSION_HINT -> WINDOW_SHOW_LONG_DELAY
+                else -> WINDOW_SHOW_DELAY
+            }
+            LogUtils.dTag(TAG, "showWindow delay = $delay")
+            showWindow(delay)
         }
     }
 
     /**
      * 准备执行任务 使只有一个任务在执行
      */
-    fun showWindow() {
+    fun showWindow(
+        delayTime: Long = WINDOW_SHOW_DELAY
+    ) {
         windowList ?: return
 
-        windowShowJob?.apply {
-            if (isCompleted) {
-                windowShowJob = windowShowJob()
-            }
-            if (!isActive) {
-                start()
-            }
-        } ?: let {
-            windowShowJob = windowShowJob()
+        // 未初始化的任务 或 初始化后已完成的任务
+        if (windowShowJob?.isCompleted != false) {
+            windowShowJob = windowShowJob(delayTime)
+            windowShowJob?.start()
         }
     }
 
     /**
      * 延时[WINDOW_SHOW_DELAY]后 遍历展示一个窗口
      */
-    private fun windowShowJob() = MainScope().launch {
-        LogUtils.d("csTest windowShowJob")
+    private fun windowShowJob(
+        delayTime: Long
+    ) = MainScope().launch(start = CoroutineStart.LAZY) {
+        LogUtils.dTag(TAG, "windowShowJob ready delay = $delayTime")
 
-        delay(WINDOW_SHOW_DELAY)
+        delay(delayTime)
 
-        LogUtils.d("csTest windowShowJob delay over isDialogShowing = $isDialogShowing windowList = ${windowList.toString()}")
+        LogUtils.dTag(TAG, "windowShowJob delay over \n isDialogShowing = $isDialogShowing \n windowList = ${windowList.toString()}")
 
-        if (isDialogShowing) return@launch
+        // 无弹窗展示中 任务列表不为空
+        // 防止延时过程中应用到后台 页面跳转会失败
+        if (isDialogShowing || windowList.isNullOrEmpty() || !AppUtils.isAppForeground()) return@launch
 
-        if (windowList?.size ?: 0 == 0) return@launch
-
-        windowList?.forEach { window ->
+        windowList?.toMutableList()?.forEach { window ->
             // 是否可展示
             if (canShowWindow(window.type)) {
                 // 执行窗口展示
@@ -149,17 +162,17 @@ object WindowManagerList {
      * @param window MyWindowList 需要展示的窗口
      */
     private fun doWindowShow(window: MyWindowList) {
-        LogUtils.d("csTest window $window ")
+        LogUtils.dTag(TAG, "doWindowShow $window ")
 
-        windowList ?: return
+        // 移出列表成功
+        if (windowList?.remove(window) == true) {
+            // 执行任务
+            window.function()
 
-        // 移出列表 并执行窗口展示
-        windowList?.remove(window)
-        window.function()
-
-        // 本次非跳转页面 置弹窗显示标志为true
-        if (window.type != WindowType.JUMP) {
-            isDialogShowing = true
+            // 本次非跳转页面 置弹窗显示标志为true
+            if (window.type != WindowType.JUMP) {
+                isDialogShowing = true
+            }
         }
     }
 
@@ -169,18 +182,18 @@ object WindowManagerList {
      * @return Boolean 当前是否可展示
      */
     private fun canShowWindow(type: WindowType): Boolean {
-        // 当前activity名
-        val currentActivity = ActivityUtils.getTopActivity().javaClass
+        // 当前activity
+        val currentActivity = ActivityUtils.getTopActivity()?.javaClass
         return when(type) {
             WindowType.LOW -> {
-                currentActivity.name == "com.chinshry.application.MainActivity"
+                currentActivity?.name == "com.chinshry.application.MainActivity"
             }
             WindowType.MIDDLE -> {
-                /** 带[AccountPage]注解为true的activity **/
-                val isAccountPage = currentActivity.getAnnotation(AccountPage::class.java)?.isAccountPage ?: false
+                /** 带[MyPage]注解isAccountPage为true的activity **/
+                val isAccountPage = currentActivity?.getAnnotation(MyPage::class.java)?.isAccountPage ?: false
                 /** 阿里活体sdk里的页面 **/
-                val isFaceAuthPage = currentActivity.name.contains("com.alibaba.security")
-                !(disableWindowShowActivityList.contains(currentActivity.name) || isAccountPage || isFaceAuthPage)
+                val isFaceAuthPage = currentActivity?.name?.contains("com.alibaba.security") ?: false
+                !(disableWindowShowActivityList.contains(currentActivity?.name) || isAccountPage || isFaceAuthPage)
             }
             WindowType.HIGH, WindowType.JUMP -> {
                 true

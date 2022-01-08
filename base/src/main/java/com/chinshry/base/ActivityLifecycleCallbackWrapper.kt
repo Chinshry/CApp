@@ -20,7 +20,7 @@ class ActivityLifecycleCallbackWrapper : Application.ActivityLifecycleCallbacks 
     }
 
     override fun onActivityResumed(activity: Activity) {
-        LogUtils.d("csTest showWindow")
+        LogUtils.dTag(WindowManagerList.TAG, "showWindow")
         WindowManagerList.showWindow()
     }
 
