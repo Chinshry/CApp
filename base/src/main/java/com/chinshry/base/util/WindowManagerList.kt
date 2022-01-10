@@ -122,7 +122,7 @@ object WindowManagerList {
     fun showWindow(
         delayTime: Long = WINDOW_SHOW_DELAY
     ) {
-        windowList ?: return
+        if (windowList.isNullOrEmpty()) return
 
         // 未初始化的任务 或 初始化后已完成的任务
         if (windowShowJob?.isCompleted != false) {
@@ -168,11 +168,6 @@ object WindowManagerList {
         if (windowList?.remove(window) == true) {
             // 执行任务
             window.function()
-
-            // 本次非跳转页面 置弹窗显示标志为true
-            if (window.type != WindowType.JUMP) {
-                isDialogShowing = true
-            }
         }
     }
 

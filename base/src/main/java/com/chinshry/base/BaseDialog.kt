@@ -61,17 +61,6 @@ open class BaseDialog(
         return this
     }
 
-    open fun showWindowOnDismiss(): BaseDialog {
-        setOnDismissListener {
-            // 弹窗消失 置弹窗显示标志为false
-            WindowManagerList.isDialogShowing = false
-            LogUtils.dTag(WindowManagerList.TAG, "showWindow")
-            WindowManager.showWindow()
-            WindowManagerList.showWindow()
-        }
-        return this
-    }
-
     open fun setWidth(@IntRange(from = -2) width: Int): BaseDialog {
         this.dialogWidth = width
         return this
@@ -157,6 +146,7 @@ open class BaseDialog(
     override fun show() {
         if (!isShowing) {
             super.show()
+            WindowManagerList.isDialogShowing = true
             showParams()
             logBuryPoint(pageBuryPoint)
         }
@@ -165,6 +155,13 @@ open class BaseDialog(
     override fun dismiss() {
         window?.let { KeyboardUtils.hideSoftInput(it) }
         super.dismiss()
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        WindowManagerList.isDialogShowing = false
+        LogUtils.dTag(WindowManagerList.TAG, "showWindow")
+        WindowManagerList.showWindow()
     }
 
 }

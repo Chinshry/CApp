@@ -59,7 +59,7 @@ class ToolFragment : BaseFragment() {
                     WindowManagerList.addWindow(
                         WindowConfig.JUMP
                     ) {
-                        ARouter.getInstance().build(Router.PICTURE_SELECT).navigation()
+                        showNormalDialog("JUMP")
                     }
                 }, 1000)
 
@@ -164,7 +164,6 @@ class ToolFragment : BaseFragment() {
                 ARouter.getInstance().build(Router.PICTURE_SELECT).navigation()
             }
             .setCancelBtn("CANCEL")
-            .showWindowOnDismiss()
             .show()
     }
 
