@@ -26,8 +26,6 @@ enum class WindowType {
     MIDDLE,
     /** 在任意位置弹出 **/
     HIGH,
-    /** 跳转 **/
-    JUMP
 }
 
 /** 弹窗枚举 后续迭代为可配置列表 **/
@@ -35,7 +33,6 @@ enum class WindowConfig(
     val type: WindowType,
     val priority: Int,
 ) {
-    JUMP(WindowType.JUMP, 999),
     ACCOUNT(WindowType.HIGH, 99),
     UPDATE(WindowType.LOW, 98),
     DEVICE_CHECK(WindowType.MIDDLE, 97),
@@ -107,7 +104,6 @@ object WindowManagerList {
         // 此次为新窗口入空队 展示窗口
         if (windowList?.size == 1) {
             val delay = when (windowConfig) {
-                WindowConfig.JUMP -> 0
                 WindowConfig.DEVICE_CHECK, WindowConfig.PERMISSION_HINT -> WINDOW_SHOW_LONG_DELAY
                 else -> WINDOW_SHOW_DELAY
             }
@@ -190,7 +186,7 @@ object WindowManagerList {
                 val isFaceAuthPage = currentActivity?.name?.contains("com.alibaba.security") ?: false
                 !(disableWindowShowActivityList.contains(currentActivity?.name) || isAccountPage || isFaceAuthPage)
             }
-            WindowType.HIGH, WindowType.JUMP -> {
+            WindowType.HIGH -> {
                 true
             }
         }

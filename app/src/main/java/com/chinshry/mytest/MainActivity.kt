@@ -1,4 +1,4 @@
-package com.chinshry.application
+package com.chinshry.mytest
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

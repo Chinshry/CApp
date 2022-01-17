@@ -56,11 +56,7 @@ class ToolFragment : BaseFragment() {
                 }
 
                 Handler(Looper.getMainLooper()).postDelayed({
-                    WindowManagerList.addWindow(
-                        WindowConfig.JUMP
-                    ) {
-                        showNormalDialog("JUMP")
-                    }
+                    showNormalDialog("JUMP")
                 }, 1000)
 
                 Handler(Looper.getMainLooper()).postDelayed({
