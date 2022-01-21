@@ -120,7 +120,9 @@ open class BaseDialog(
     private fun showParams() {
         window?.run {
             setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
             decorView.setBackgroundColor(Color.TRANSPARENT)
+            decorView.setPadding(0, 0, 0, 0)
 
             attributes = attributes.apply {
                 val screenWidth = ScreenUtils.getAppScreenWidth()

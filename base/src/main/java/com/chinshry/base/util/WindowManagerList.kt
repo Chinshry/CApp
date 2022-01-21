@@ -71,9 +71,6 @@ object WindowManagerList {
 
     var isDialogShowing: Boolean = false
 
-    /** 进入首页前的历史站内推送数据 只保留最新的 **/
-    // var historyInsidePushData : InsidePushData? = null
-
     /**
      * 强更弹窗展示 清空列表 并且不允许再添加
      */
@@ -182,9 +179,7 @@ object WindowManagerList {
             WindowType.MIDDLE -> {
                 /** 带[MyPage]注解isAccountPage为true的activity **/
                 val isAccountPage = currentActivity?.getAnnotation(MyPage::class.java)?.isAccountPage ?: false
-                /** 阿里活体sdk里的页面 **/
-                val isFaceAuthPage = currentActivity?.name?.contains("com.alibaba.security") ?: false
-                !(disableWindowShowActivityList.contains(currentActivity?.name) || isAccountPage || isFaceAuthPage)
+                !(disableWindowShowActivityList.contains(currentActivity?.name) || isAccountPage)
             }
             WindowType.HIGH -> {
                 true
