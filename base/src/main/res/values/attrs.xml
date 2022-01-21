@@ -26,6 +26,27 @@
         <attr name="margin_status_bar" format="boolean" />
     </declare-styleable>
 
+    <declare-styleable name="MaskingText">
+        <!-- 脱敏样式 -->
+        <attr name="mask_type" format="reference">
+            <enum name="custom" value="0" />
+            <enum name="mobile" value="1" />
+            <enum name="name" value="2" />
+            <enum name="cert" value="3" />
+            <enum name="bankCard" value="4" />
+        </attr>
+
+        <!-- custom有效 -->
+        <!-- 脱敏起始index 从开头起数 -->
+        <attr name="mask_start" format="integer" />
+        <!-- 脱敏结束index 从末尾起数 -->
+        <attr name="mask_end" format="integer" />
+        <!-- 脱敏字符 -->
+        <attr name="mask_replacement" format="string" />
+        <!-- 脱敏字符替代所有 -->
+        <attr name="mask_replace_all" format="boolean" />
+    </declare-styleable>
+
     <declare-styleable name="VerCodeEditText">
         <attr name="verCodeCount" format="integer" />
         <attr name="verCodeNormalBackground" format="reference" />

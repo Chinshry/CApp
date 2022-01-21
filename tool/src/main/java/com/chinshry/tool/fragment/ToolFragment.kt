@@ -116,6 +116,12 @@ class ToolFragment : BaseFragment() {
                 ARouter.getInstance().build(Router.PICTURE_SELECT).navigation()
             }
         }
+
+        ll_btn.addButton("脱敏测试") {
+            it.clickWithTrigger {
+                ARouter.getInstance().build(Router.MASKING).navigation()
+            }
+        }
     }
 
     @BuryPoint(pageName = "验证码输入组件弹框")

@@ -16,6 +16,15 @@ object MaskingUtil {
     }
 
     /**
+     * 姓名脱敏 脱敏规则：姓**，忽略复姓，英文则只保留第一个字母
+     * @param source String?
+     * @return String
+     */
+    fun getMaskingName(source: String?): String {
+        return getMaskingString(source, 1, 0)
+    }
+
+    /**
      * 手机号脱敏 前3后4
      * @param source String?
      * @return String
@@ -53,7 +62,12 @@ object MaskingUtil {
      * @param replacement 替换字符
      * @return String
      */
-    fun getMaskingString(source: String?, startIndex: Int, endIndex: Int, replacement: String = "*"): String {
+    fun getMaskingString(
+        source: String?,
+        startIndex: Int,
+        endIndex: Int,
+        replacement: String = "*"
+    ): String {
         if (source.isNullOrBlank()) return ""
         return StringBuffer(source).replace(
             Regex("(?<=\\w{$startIndex})\\w(?=\\w{$endIndex})"),
@@ -70,7 +84,12 @@ object MaskingUtil {
      * @param replacement 替换字符
      * @return String
      */
-    fun getMaskingStringAll(source: String?, startIndex: Int, endIndex: Int, replacement: String): String {
+    fun getMaskingStringAll(
+        source: String?,
+        startIndex: Int,
+        endIndex: Int,
+        replacement: String
+    ): String {
         if (source.isNullOrBlank()) return ""
         return StringBuffer(source).replace(
             Regex("(?<=\\w{$startIndex})(\\w+)(?=\\w{$endIndex})"),
