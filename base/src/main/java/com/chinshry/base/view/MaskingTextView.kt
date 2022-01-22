@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatEditText
-import androidx.core.widget.doAfterTextChanged
 import com.chinshry.base.util.MaskingUtil
 import com.chinshry.base.view.MaskingTextView.MaskType.Companion.getMaskType
 import com.example.base.R
@@ -13,8 +12,12 @@ import com.example.base.R
  * Created by chinshry on 2022/01/21.
  * Describe：脱敏文本框自定义组件
  */
-open class MaskingTextView(context: Context, attrs: AttributeSet) :
-    AppCompatEditText(context, attrs) {
+open class MaskingTextView(context: Context, private val attrs: AttributeSet?, private val defStyleAttr: Int) :
+    AppCompatEditText(context, attrs, defStyleAttr) {
+
+    constructor(context: Context) : this(context, null)
+
+    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
 
     var maskType: MaskType? = null
     var maskStart: Int? = null
@@ -33,8 +36,9 @@ open class MaskingTextView(context: Context, attrs: AttributeSet) :
     }
 
     init {
-        initStyle(attrs)
+        initStyle()
         initView()
+        isFocusableInTouchMode = true
     }
 
     enum class MaskType {
@@ -51,8 +55,8 @@ open class MaskingTextView(context: Context, attrs: AttributeSet) :
     }
 
     @SuppressLint("CustomViewStyleable")
-    private fun initStyle(attrs: AttributeSet) {
-        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.MaskingText)
+    private fun initStyle() {
+        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.MaskingText, defStyleAttr, 0)
 
         maskType = getMaskType(typedArray.getInteger(R.styleable.MaskingText_mask_type, MaskTypeDef.ordinal))
         maskStart = typedArray.getInteger(R.styleable.MaskingText_mask_start, MaskStartDef)
@@ -64,20 +68,21 @@ open class MaskingTextView(context: Context, attrs: AttributeSet) :
     }
 
     private fun initView() {
-        doAfterTextChanged {
-            if (isFocused) {
-                value = it.toString()
-            }
-        }
+        focusChangeListener()
 
         setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) {
-                this.setText(value)
-            } else {
-                this.setText(getMaskText())
-            }
+            focusChangeListener(hasFocus)
         }
 
+    }
+
+    private fun focusChangeListener(hasFocus: Boolean = isFocused) {
+        if (hasFocus) {
+            this.setText(value)
+        } else {
+            value = text.toString()
+            this.setText(getMaskText())
+        }
     }
 
     private fun getMaskText(): String {

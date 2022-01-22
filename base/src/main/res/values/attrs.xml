@@ -26,6 +26,8 @@
         <attr name="margin_status_bar" format="boolean" />
     </declare-styleable>
 
+    <attr name="CustomViewStyle" format="reference" />
+
     <declare-styleable name="MaskingText">
         <!-- 脱敏样式 -->
         <attr name="mask_type" format="reference">
