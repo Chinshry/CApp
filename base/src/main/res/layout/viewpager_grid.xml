@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipChildren="false"
+        android:clipToPadding="false">
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewpager2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:clipChildren="false"
+            android:clipToPadding="false"/>
+
+        <View
+            android:id="@+id/maskL"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_alignTop="@+id/viewpager2"
+            android:layout_alignBottom="@+id/viewpager2"
+            android:layout_alignParentEnd="true"/>
+
+        <View
+            android:id="@+id/maskR"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_alignTop="@+id/viewpager2"
+            android:layout_alignBottom="@+id/viewpager2"
+            android:layout_alignParentStart="true"/>
+
+        <com.chinshry.base.view.ViewPagerIndicator
+            android:id="@+id/indicator"
+            android:layout_width="36dp"
+            android:layout_height="2dp"
+            android:layout_below="@+id/viewpager2"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:visibility="visible"
+            app:trackColor="#d8d8d8"
+            app:indicatorColor="#3557f9" />
+
+    </RelativeLayout>
+
+</merge>

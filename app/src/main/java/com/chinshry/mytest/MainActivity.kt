@@ -3,6 +3,7 @@ package com.chinshry.mytest
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.launcher.ARouter
+import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.ResourceUtils
 import com.chinshry.base.BaseActivity
 import com.chinshry.base.bean.FragmentBean
@@ -18,6 +19,8 @@ import kotlinx.android.synthetic.main.activity_main.*
  */
 open class MainActivity : BaseActivity() {
 
+    private lateinit var currentFragment: Fragment
+
     private val fragments = listOf(
         FragmentBean(
             fragment = HomeFragment(),
@@ -31,16 +34,21 @@ open class MainActivity : BaseActivity() {
 
     private val tabData = listOf(
         TabBean(
-            model = 1,
-            title = "工具",
-            normalIcon = R.mipmap.ic_tab_util,
-            selectIcon = R.mipmap.ic_tab_util_selected,
-        ),
-        TabBean(
             model = 0,
-            title = "首页",
+            normalTitle = "首页",
+            selectTitle = "首页1",
             normalIcon = R.mipmap.ic_tab_home,
             selectIcon = R.mipmap.ic_tab_home_selected,
+            normalTextColor = R.color.green,
+            selectTextColor = R.color.red,
+            badge = R.drawable.badge_red
+        ),
+        TabBean(
+            model = 1,
+            normalTitle = "工具",
+            selectTitle = "工具1",
+            normalIcon = R.mipmap.ic_tab_util,
+            selectIcon = R.mipmap.ic_tab_util_selected,
             badge = R.drawable.badge_red
         ),
     )
@@ -69,10 +77,15 @@ open class MainActivity : BaseActivity() {
             if (it.model == null) return@forEach
             custom_tab.addTab(
                 CustomTabView.Tab()
-                    .setTabText(it.title)
+                    .setTabText(
+                        normal = it.normalTitle,
+                        select = it.selectTitle)
                     .setIcon(
                         normal = it.normalIcon?.let { it1 -> ResourceUtils.getDrawable(it1) },
                         select = it.selectIcon?.let { it1 -> ResourceUtils.getDrawable(it1) })
+                    .setTextColor(
+                        normal = it.normalTextColor?.let { it1 -> ColorUtils.getColor(it1) },
+                        select = it.selectTextColor?.let { it1 -> ColorUtils.getColor(it1) })
                     .setBadge(it.badge?.let { it1 -> ResourceUtils.getDrawable(it1) })
                     .onTabSelect {
                         changeFragment(it.model!!)
@@ -84,12 +97,25 @@ open class MainActivity : BaseActivity() {
     }
 
     private fun changeFragment(position: Int) {
-        val fragment: Fragment? = getFragmentByModel(position)
-        if (fragment != null) {
+        val fragment: Fragment = getFragmentByModel(position) ?: return
+
+        if (supportFragmentManager.fragments.isEmpty()) {
             supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.fragment_container, fragment)
+                .replace(R.id.fragment_container, fragment, fragment.javaClass.simpleName)
                 .commit()
+            currentFragment = fragment
+
+        } else {
+            if (currentFragment != fragment) {
+                val transaction = supportFragmentManager.beginTransaction()
+                if (fragment.isAdded)
+                    transaction.hide(currentFragment).show(fragment)
+                else
+                    transaction.hide(currentFragment).add(R.id.fragment_container, fragment, fragment.javaClass.simpleName)
+                transaction.commit()
+                currentFragment = fragment
+            }
         }
 
     }

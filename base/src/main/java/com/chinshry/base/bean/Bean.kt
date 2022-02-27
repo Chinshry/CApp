@@ -68,8 +68,11 @@ data class PageParamsBean(
 
 data class TabBean(
     var model: Int? = null,
-    var title: String? = null,
+    var normalTitle: String? = null,
+    var selectTitle: String? = null,
     var normalIcon: Int? = null,
     var selectIcon: Int? = null,
+    var normalTextColor: Int? = null,
+    var selectTextColor: Int? = null,
     var badge: Int? = null
 )

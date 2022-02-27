@@ -73,7 +73,6 @@ open class MaskingTextView(context: Context, private val attrs: AttributeSet?, p
         setOnFocusChangeListener { _, hasFocus ->
             focusChangeListener(hasFocus)
         }
-
     }
 
     private fun focusChangeListener(hasFocus: Boolean = isFocused) {
@@ -93,14 +92,14 @@ open class MaskingTextView(context: Context, private val attrs: AttributeSet?, p
                         text.toString(),
                         maskStart ?: MaskStartDef,
                         maskEnd ?: MaskEndDef,
-                        maskReplacement ?: MaskReplacementDef
+                        maskReplacement?.ifBlank{ MaskReplacementDef } ?: MaskReplacementDef
                     )
                 } else {
                     MaskingUtil.getMaskingString(
                         text.toString(),
                         maskStart ?: MaskStartDef,
                         maskEnd ?: MaskEndDef,
-                        maskReplacement ?: MaskReplacementDef
+                        maskReplacement?.ifBlank { MaskReplacementDef } ?: MaskReplacementDef
                     )
                 }
             }

@@ -12,10 +12,9 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.ColorInt
-import androidx.core.view.isVisible
 import com.blankj.utilcode.util.ColorUtils
 import com.example.base.R
-import java.util.*
+
 
 /**
  * Created by chinshry on 2021/12/23.
@@ -27,7 +26,8 @@ class CustomTabView(context: Context, attrs: AttributeSet? = null) : LinearLayou
     }
 
     class Tab(
-        var tabText: String? = null,
+        var textNormal: String? = null,
+        var textSelect: String? = null,
         var iconNormal: Drawable? = null,
         var iconSelect: Drawable? = null,
         var badge: Drawable? = null,
@@ -35,19 +35,15 @@ class CustomTabView(context: Context, attrs: AttributeSet? = null) : LinearLayou
         @ColorInt var textColorSelect: Int = ColorUtils.getColor(R.color.black),
         var selectFunction: () -> Unit = {}
     ) {
-        fun setTabText(text: String?): Tab {
-            this.tabText = text
+        fun setTabText(normal: String?, select: String?): Tab {
+            this.textNormal = normal
+            this.textSelect = select
             return this
         }
 
         fun setIcon(normal: Drawable?, select: Drawable?): Tab {
             this.iconNormal = normal
             this.iconSelect = select
-            return this
-        }
-
-        fun setBadge(badgeDrawable: Drawable?): Tab {
-            this.badge = badgeDrawable
             return this
         }
 
@@ -58,6 +54,11 @@ class CustomTabView(context: Context, attrs: AttributeSet? = null) : LinearLayou
             if (select != null) {
                 this.textColorSelect = select
             }
+            return this
+        }
+
+        fun setBadge(badgeDrawable: Drawable?): Tab {
+            this.badge = badgeDrawable
             return this
         }
 
@@ -74,8 +75,8 @@ class CustomTabView(context: Context, attrs: AttributeSet? = null) : LinearLayou
     private fun initView() {
         orientation = HORIZONTAL
         gravity = Gravity.CENTER
-        mTabViews = ArrayList()
-        mTabs = ArrayList<Tab>()
+        mTabViews = mutableListOf()
+        mTabs = mutableListOf()
     }
 
     /**
@@ -84,35 +85,21 @@ class CustomTabView(context: Context, attrs: AttributeSet? = null) : LinearLayou
      */
     @SuppressLint("InflateParams")
     fun addTab(tab: Tab) {
-        val view: View = LayoutInflater.from(context).inflate(R.layout.custom_tab_item, null)
+        val tabView: View = LayoutInflater.from(context).inflate(R.layout.custom_tab_item, null)
+        val position = mTabs.size
+        updateTabView(tabView, tab, false)
 
-        val textView = view.findViewById<TextView>(R.id.custom_tab_text)
-        val iconView = view.findViewById<ImageView>(R.id.custom_tab_icon)
-        val badgeView = view.findViewById<ImageView>(R.id.custom_tab_badge)
-
-        tab.apply {
-            iconView.setImageDrawable(tab.iconNormal)
-
-            textView.text = tab.tabText
-            textView.setTextColor(tab.textColorNormal)
-
-            badgeView.isVisible = true
-            badgeView.setImageDrawable(tab.badge)
-
-            view.tag = mTabViews.size
-            view.clickWithTrigger {
-                tab.selectFunction()
-                updateState(it.tag as Int)
-            }
-
-            mTabViews.add(view)
-            mTabs.add(tab)
-
-            val layoutParams = LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1f)
-
-            addView(view, layoutParams)
-
+        tabView.clickWithTrigger{
+            tab.selectFunction()
+            updateTab(position)
         }
+
+        mTabViews.add(tabView)
+        mTabs.add(tab)
+
+        val layoutParams = LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1f)
+        addView(tabView, layoutParams)
+
     }
 
     /**
@@ -121,35 +108,67 @@ class CustomTabView(context: Context, attrs: AttributeSet? = null) : LinearLayou
      */
     fun setCurrentItem(position: Int) {
         var mPosition = position
-        if (position >= mTabs.size || position < 0) {
+        if (position >= mTabViews.size || position < 0) {
             mPosition = 0
         }
         mTabViews.getOrNull(mPosition)?.performClick()
-        updateState(mPosition)
     }
 
     /**
-     * 更新状态
-     * @param position
+     * 更新TAB UI
+     * @param view View TabView
+     * @param tabData ElementAttribute? Tab数据
+     * @param isSelected Boolean 是否Selected
      */
-    private fun updateState(position: Int) {
-        mTabViews.forEachIndexed { index, view ->
-            val textView = view.findViewById<View>(R.id.custom_tab_text) as TextView
-            val iconView = view.findViewById<View>(R.id.custom_tab_icon) as ImageView
-            val badgeView = view.findViewById<View>(R.id.custom_tab_badge) as ImageView
-            if (index == position) {
-                mTabs.getOrNull(index)?.apply {
-                    badgeView.isVisible = false
-                    iconView.setImageDrawable(iconSelect)
-                    textView.setTextColor(textColorSelect)
-                }
+    @SuppressLint("ResourceAsColor")
+    private fun updateTabView(view: View, tabData: Tab?, isSelected: Boolean) {
+        val textView = view.findViewById<TextView>(R.id.custom_tab_text)
+        val iconView = view.findViewById<ImageView>(R.id.custom_tab_icon)
+        val badgeView = view.findViewById<ImageView>(R.id.custom_tab_badge)
+
+        tabData?.apply {
+            // tab标题文字
+            if (isSelected) {
+                textView?.text = textSelect
             } else {
-                mTabs.getOrNull(index)?.apply {
-                    iconView.setImageDrawable(iconNormal)
-                    textView.setTextColor(textColorNormal)
-                }
+                textView?.text = textNormal
             }
 
+            // tab标题颜色
+            if (isSelected) {
+                textView.setTextColor(textColorSelect)
+            } else {
+                textView.setTextColor(textColorNormal)
+            }
+
+            // tab icon
+            if (isSelected) {
+                iconView.setImageDrawable(iconSelect)
+            } else {
+                iconView.setImageDrawable(iconNormal)
+            }
+
+            // tab badge
+            if (isSelected) {
+                badgeView?.visibility = View.GONE
+            } else {
+                badgeView?.visibility = View.VISIBLE
+                badgeView.setImageDrawable(badge)
+            }
+
+        }
+    }
+
+
+    /**
+     * 更新TAB
+     * @param position
+     */
+    @SuppressLint("ResourceAsColor")
+    fun updateTab(position: Int) {
+        mTabViews.forEachIndexed { index, tabView ->
+            val tabItemBean = mTabs.getOrNull(index) ?: return
+            updateTabView(tabView, tabItemBean, index == position)
         }
     }
 

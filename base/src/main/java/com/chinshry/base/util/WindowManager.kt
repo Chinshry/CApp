@@ -15,12 +15,11 @@ data class MyWindow(
     val level: WindowLevel,
     /** window优先级 同level情况下 priority数字越大 优先级更高 **/
     val priority: Int,
+    /** 任务 **/
     val function: (() -> Unit),
 )
 
-/**
- * 弹窗优先级
- */
+/** window等级 **/
 enum class WindowLevel {
     /** 仅能在首页弹出 eg: 低优先级运营弹窗 **/
     LOW,

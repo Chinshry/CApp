@@ -5,11 +5,11 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/item_badge"
-        android:layout_width="50dp"
+        android:id="@+id/element_badge"
+        android:layout_width="41dp"
         android:layout_height="16dp"
-        android:layout_marginTop="-5dp"
         android:scaleType="fitStart"
-        android:background="@drawable/badge_red"/>
+        android:background="@drawable/badge_red"
+        android:layout_marginTop="-6dp"/>
 
 </RelativeLayout>

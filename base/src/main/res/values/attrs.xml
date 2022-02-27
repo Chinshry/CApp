@@ -26,6 +26,11 @@
         <attr name="margin_status_bar" format="boolean" />
     </declare-styleable>
 
+    <declare-styleable name="ViewPagerIndicator">
+        <attr name="trackColor" format="color"/>
+        <attr name="indicatorColor" format="color"/>
+    </declare-styleable>
+
     <attr name="CustomViewStyle" format="reference" />
 
     <declare-styleable name="MaskingText">
