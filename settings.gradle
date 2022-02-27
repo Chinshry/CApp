@@ -1,4 +1,4 @@
-rootProject.name = "MyTest"
+rootProject.name = "CApp"
 include ':app'
 include ':base'
 include ':home'

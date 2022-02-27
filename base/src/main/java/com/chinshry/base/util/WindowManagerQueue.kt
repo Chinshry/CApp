@@ -31,7 +31,7 @@ enum class WindowLevel {
     JUMP
 }
 
-object WindowManager {
+object WindowManagerQueue {
 
     private const val HIGH_WINDOW_SHOW_DELAY: Long = 2 * 1000
     private const val CHECK_WINDOW_INTERVAL: Long = 1 * 1000

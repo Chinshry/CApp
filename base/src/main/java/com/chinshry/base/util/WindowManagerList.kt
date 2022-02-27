@@ -25,7 +25,7 @@ enum class WindowType {
     /** 可以在除了登录绑定认证以外的流程弹出 **/
     MIDDLE,
     /** 在任意位置弹出 **/
-    HIGH,
+    HIGH
 }
 
 /** 弹窗枚举 后续迭代为可配置列表 **/
@@ -59,6 +59,7 @@ object WindowManagerList {
     /** 窗口展示延时 **/
     private const val WINDOW_SHOW_LONG_DELAY: Long = 3000
     private const val WINDOW_SHOW_DELAY: Long = 500
+    const val WINDOW_SHOW_RESUMED_DELAY: Long = 1000
 
     /** 不展示WindowType.MIDDLE级别窗口的activity列表 **/
     private val disableWindowShowActivityList = listOf(
@@ -98,15 +99,15 @@ object WindowManagerList {
         // 排序
         windowList?.sortByDescending { it.priority }
 
-        // 此次为新窗口入空队 展示窗口
-        if (windowList?.size == 1) {
-            val delay = when (windowConfig) {
-                WindowConfig.DEVICE_CHECK, WindowConfig.PERMISSION_HINT -> WINDOW_SHOW_LONG_DELAY
-                else -> WINDOW_SHOW_DELAY
-            }
-            LogUtils.dTag(TAG, "showWindow delay = $delay")
-            showWindow(delay)
-        }
+        val delay =
+            if (windowList?.size == 1) {
+                // 此次为新窗口入空队 添加延时
+                when (windowConfig) {
+                    WindowConfig.DEVICE_CHECK, WindowConfig.PERMISSION_HINT -> WINDOW_SHOW_LONG_DELAY
+                    else -> WINDOW_SHOW_DELAY
+                }
+            } else 0
+        showWindow(delay)
     }
 
     /**
@@ -165,6 +166,14 @@ object WindowManagerList {
     }
 
     /**
+     * 供function内调用 若弹窗未成功展示 取列表头任务执行
+     */
+    fun doNextWindowShow() {
+        val window = windowList?.getOrNull(0) ?: return
+        doWindowShow(window)
+    }
+
+    /**
      * 窗口是否可展示
      * @param type WindowType 窗口类型
      * @return Boolean 当前是否可展示
@@ -172,9 +181,10 @@ object WindowManagerList {
     private fun canShowWindow(type: WindowType): Boolean {
         // 当前activity
         val currentActivity = ActivityUtils.getTopActivity()?.javaClass
+
         return when(type) {
             WindowType.LOW -> {
-                currentActivity?.name == "com.chinshry.application.MainActivity"
+                currentActivity?.simpleName == "MainActivity"
             }
             WindowType.MIDDLE -> {
                 /** 带[MyPage]注解isAccountPage为true的activity **/

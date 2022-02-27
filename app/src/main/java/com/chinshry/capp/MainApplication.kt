@@ -1,4 +1,4 @@
-package com.chinshry.mytest
+package com.chinshry.capp
 
 import android.app.Application
 import com.chinshry.base.ActivityLifecycleCallbackWrapper

@@ -1,5 +1,5 @@
 <resources>
-    <style name="Theme.MyTest" parent="QMUI.Compat.NoActionBar">
+    <style name="Theme.CApp" parent="QMUI.Compat.NoActionBar">
         <item name="colorPrimary">@color/white</item>
         <item name="colorPrimaryDark">@color/grey</item>
         <item name="colorAccent">@color/pink</item>

@@ -166,6 +166,7 @@ class ToolFragment : BaseFragment() {
                 ARouter.getInstance().build(Router.PICTURE_SELECT).navigation()
             }
             .setCancelBtn("CANCEL")
+            .setWindowShow(true)
             .show()
     }
 

@@ -17,7 +17,6 @@ import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ScreenUtils
 import com.chinshry.base.bean.BuryPointInfo
 import com.chinshry.base.util.CommonUtils.getTrackBuryPoint
-import com.chinshry.base.util.WindowManager
 import com.chinshry.base.util.WindowManagerList
 import com.chinshry.base.util.logBuryPoint
 import com.chinshry.base.util.setNotBlankText
@@ -39,6 +38,8 @@ open class BaseDialog(
     private var dialogWidthPercent: Float? = null
     // dialog gravity
     private var dialogGravity: Int? = null
+    // dialog 消失是否执行弹窗任务 且不与弹窗管理内弹窗重叠
+    private var windowShow: Boolean = false
     // 自定义埋点
     private var pageBuryPoint: BuryPointInfo = BuryPointInfo()
 
@@ -61,18 +62,44 @@ open class BaseDialog(
         return this
     }
 
+    /**
+     * 设置弹窗宽度 不设置默认占屏幕宽度90%
+     * @param width Int
+     * @return BaseDialog
+     */
     open fun setWidth(@IntRange(from = -2) width: Int): BaseDialog {
         this.dialogWidth = width
         return this
     }
 
+    /**
+     * 设置弹窗宽度与屏幕宽度占比 1.0为宽度撑满 不设置默认为0.9
+     * @param widthPercent Float
+     * @return BaseDialog
+     */
     open fun setWidthPercent(@FloatRange(from = 0.0, to = 1.0) widthPercent: Float): BaseDialog {
         this.dialogWidthPercent = widthPercent
         return this
     }
 
+    /**
+     * 设置弹窗gravity
+     * @param gravity Int
+     * @return BaseDialog
+     */
     open fun setGravity(gravity: Int): BaseDialog {
         this.dialogGravity = gravity
+        return this
+    }
+
+    /**
+     * 设置本消失后是否执行弹窗任务 且不与弹窗管理内弹窗重叠
+     * 弹窗任务内弹窗及影响其的中间弹窗（三方提示、绑定、认证弹窗等）需设置为true
+     * @param show Boolean
+     * @return BaseDialog
+     */
+    open fun setWindowShow(show: Boolean): BaseDialog {
+        this.windowShow = show
         return this
     }
 
@@ -82,13 +109,19 @@ open class BaseDialog(
     }
 
     /**
-     * 清除灰色背景
+     * 清除弹窗灰色背景
+     * @return BaseDialog
      */
     open fun setDialogTransparent(): BaseDialog {
         window?.setDimAmount(0f)
         return this
     }
 
+    /**
+     * 设置弹窗动画为从下往上弹出 从上往下收起
+     * @param resId Int
+     * @return BaseDialog
+     */
     open fun setWindowAnimations(
         @StyleRes resId: Int = R.style.WindowAnimationBottomToTop
     ): BaseDialog {
@@ -148,7 +181,9 @@ open class BaseDialog(
     override fun show() {
         if (!isShowing) {
             super.show()
-            WindowManagerList.isDialogShowing = true
+            if (windowShow) {
+                WindowManagerList.isDialogShowing = true
+            }
             showParams()
             logBuryPoint(pageBuryPoint)
         }
@@ -161,9 +196,11 @@ open class BaseDialog(
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-        WindowManagerList.isDialogShowing = false
-        LogUtils.dTag(WindowManagerList.TAG, "showWindow")
-        WindowManagerList.showWindow()
+        if (windowShow) {
+            WindowManagerList.isDialogShowing = false
+            LogUtils.dTag(WindowManagerList.TAG, "showWindow")
+            WindowManagerList.showWindow()
+        }
     }
 
 }

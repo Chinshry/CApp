@@ -10,7 +10,7 @@ android {
     buildToolsVersion project.BUILD_TOOLS_VERSION
 
     defaultConfig {
-        applicationId "com.chinshry.mytest"
+        applicationId "com.chinshry.capp"
         minSdkVersion project.MIN_SDK_VERSION.toInteger()
         targetSdkVersion project.TARGET_SDK_VERSION.toInteger()
         versionCode 1
@@ -44,12 +44,12 @@ android {
 dependencies {
 
     api "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    api 'androidx.core:core-ktx:1.3.1'
-    api 'androidx.appcompat:appcompat:1.3.1'
-    api 'com.google.android.material:material:1.4.0'
-    api 'androidx.constraintlayout:constraintlayout:2.1.2'
-    api 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
-    api 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
+    api 'androidx.core:core-ktx:1.7.0'
+    api 'androidx.appcompat:appcompat:1.4.1'
+    api 'com.google.android.material:material:1.5.0'
+    api 'androidx.constraintlayout:constraintlayout:2.1.3'
+    api 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
+    api 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
     api 'androidx.legacy:legacy-support-v4:1.0.0'
 
     testImplementation 'junit:junit:4.13.2'
