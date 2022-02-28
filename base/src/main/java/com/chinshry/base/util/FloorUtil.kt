@@ -26,8 +26,9 @@ object FloorUtil {
 
         parent.addView(itemView, layoutParams)
 
-        // 添加右边距
-        layoutParams.rightMargin = SizeUtils.dp2px(itemDividerVerticalHeight ?: 0f)
+        // 添加左右边距
+        layoutParams.leftMargin = SizeUtils.dp2px(itemDividerVerticalHeight ?: 0f) / 2
+        layoutParams.rightMargin = SizeUtils.dp2px(itemDividerVerticalHeight ?: 0f) / 2
         // 非第一行item 添加上边距
         if (isFirstColumnItem == false) {
             layoutParams.topMargin = SizeUtils.dp2px(itemDividerHorizontalHeight ?: 0f)

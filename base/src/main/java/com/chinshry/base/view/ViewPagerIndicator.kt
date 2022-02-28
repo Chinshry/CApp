@@ -40,7 +40,7 @@ class ViewPagerIndicator @JvmOverloads constructor(
     var currentIndex = 0
         set(value) {
             field = if (currentIndex + 1 > count) {
-                count
+                count - 1
             } else {
                 value
             }

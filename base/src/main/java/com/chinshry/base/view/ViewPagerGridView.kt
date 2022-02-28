@@ -100,7 +100,7 @@ class ViewPagerGridView(context: Context, attrs: AttributeSet?) :
         itemLayout: Int,
         buryPointInfo: BuryPointInfo?
     ) {
-        setRecyclerViewWidth()
+        setRecyclerViewWidth(itemLayout)
 
         adapter = GridAdapter(
             dealData(itemDataList),
@@ -114,44 +114,46 @@ class ViewPagerGridView(context: Context, attrs: AttributeSet?) :
         viewpager2.offscreenPageLimit = adapter?.itemCount ?: 1
     }
 
-    private fun setRecyclerViewWidth() {
+    private fun setRecyclerViewWidth(itemLayout: Int) {
         val recyclerView = (viewpager2.getChildAt(0) as? RecyclerView)
 
         recyclerView?.let { view ->
-            view.clipChildren = false
-            view.clipToPadding = false
-
             if (scrollScreen) {
+                // 卡片组件无badge 且防止边缘露出
+                if (itemLayout != R.layout.common_floor_grid_img_item) {
+                    view.clipChildren = false
+                    view.clipToPadding = false
+                }
+
                 view.setPadding(
-                    pagerPadding,
+                    pagerPadding - SizeUtils.dp2px(itemDividerVerticalHeight) / 2,
                     view.paddingTop,
-                pagerPadding - SizeUtils.dp2px(itemDividerVerticalHeight),
+                    pagerPadding - SizeUtils.dp2px(itemDividerVerticalHeight) / 2,
                     view.paddingBottom
                 )
-
-                maskL.layoutParams = maskL.layoutParams.apply { width = pagerPadding }
-                maskL.background = viewpager2.background
-
-                maskR.layoutParams = maskR.layoutParams.apply { width = pagerPadding }
-                maskR.background = viewpager2.background
             } else {
+                view.clipChildren = false
+                view.clipToPadding = false
+
                 val percent = 1 / gridColumnsNum
                 val screenAppWidth = ScreenUtils.getAppScreenWidth()
 
                 // 屏幕上显示的间距总宽度
                 val dividerWidth = SizeUtils.dp2px(itemDividerVerticalHeight) * gridColumnsNum.toInt()
 
-                // 一个item的宽度 = (屏幕宽度 - pager左边距 - 屏幕上显示的间距总宽度) * item显示占比
+                // 一个item的宽度 = (屏幕宽度 - 控件左边距 - 屏幕上显示的间距总宽度) * item显示占比
                 scrollItemWidth = ((screenAppWidth - pagerPadding - dividerWidth) * percent).toInt()
                 // pager宽度
                 val pagerWidth = (scrollItemWidth + SizeUtils.dp2px(itemDividerVerticalHeight)) * scrollOffset
-                // pager右边距 = 屏幕宽度 - pager左边距 - pager宽度
-                val pageViewPadding = screenAppWidth - pagerPadding - pagerWidth
+                // pager左边距 = 控件左边距 - (item间距/2)
+                val pagePaddingLeft = pagerPadding - SizeUtils.dp2px(itemDividerVerticalHeight) / 2
+                // pager右边距 = 屏幕宽度 - pager宽度 - pager左边距
+                val pagePaddingRight = screenAppWidth - pagerWidth - pagePaddingLeft
 
                 view.setPadding(
-                    pagerPadding,
+                    pagePaddingLeft,
                     view.paddingTop,
-                    pageViewPadding,
+                    pagePaddingRight,
                     view.paddingBottom
                 )
             }
@@ -175,16 +177,15 @@ class ViewPagerGridView(context: Context, attrs: AttributeSet?) :
 
         val pageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
-                val currentIndex = if (pageCount == 1) {
+                indicator.currentIndex = if (pageCount == 1) {
                     0
                 } else {
                     position
                 }
 
-                indicator.currentIndex = currentIndex
-
-                if (currentIndex + 1 > indicator.count) {
-                    viewpager2.currentItem = scrollableCount - 1
+                if (!scrollScreen && indicator.progress == 1f) {
+                    viewpager2.currentItem = indicator.count - 2
+                    scrollLast(true)
                 }
             }
 
