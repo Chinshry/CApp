@@ -20,6 +20,7 @@ import com.chinshry.base.bean.ElementAttribute
 import com.chinshry.base.bean.FloorData
 import com.example.base.R
 import kotlinx.android.synthetic.main.viewpager_grid.view.*
+import kotlin.math.abs
 import kotlin.math.ceil
 
 
@@ -223,35 +224,40 @@ class ViewPagerGridView(context: Context, attrs: AttributeSet?) :
     }
 
     override fun onInterceptTouchEvent(event: MotionEvent): Boolean {
-        // 整页滚动 不拦截
-        if (scrollScreen) {
-            return false
-        }
+        val moveX = event.x.toInt() - startX
+        val moveY = event.y.toInt() - startY
 
-        var intercepted = false
-        val x = event.x.toInt()
-        val y = event.y.toInt()
+        startX = event.x.toInt()
+        startY = event.y.toInt()
 
         when (event.action) {
             MotionEvent.ACTION_MOVE -> {
-                if (x - startX > RecyclerView.TOUCH_SLOP_PAGING) {
-                    if (indicator.progress == 1f) {
-                        scrollLast(toLast = false)
-                        intercepted = true
-                    }
-                } else if (x - startX < -RecyclerView.TOUCH_SLOP_PAGING) {
-                    if (indicator.currentIndex + 2 >= indicator.count) {
-                        if (indicator.progress < 1f) {
-                            scrollLast(toLast = true)
+                // 横向滑动距离 > 竖向滑动距离
+                if (abs(moveX) > abs(moveY)) {
+                    // 在viewpager内消费事件 parent不再处理
+                    parent.requestDisallowInterceptTouchEvent(true)
+
+                    // 非整页滑动 最后一项滑动处理
+                    if (!scrollScreen) {
+                        if (moveX > RecyclerView.TOUCH_SLOP_PAGING) {
+                            if (indicator.progress == 1f) {
+                                scrollLast(toLast = false)
+                                return true
+                            }
+                        } else if (moveX < -RecyclerView.TOUCH_SLOP_PAGING) {
+                            if (indicator.currentIndex + 2 >= indicator.count) {
+                                if (indicator.progress < 1f) {
+                                    scrollLast(toLast = true)
+                                }
+                                return true
+                            }
                         }
-                        intercepted = true
                     }
                 }
             }
         }
-        startX = x
-        startY = y
-        return intercepted
+
+        return super.onInterceptTouchEvent(event)
     }
 
     /**
