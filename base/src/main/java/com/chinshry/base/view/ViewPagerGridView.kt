@@ -31,18 +31,22 @@ class ViewPagerGridView(context: Context, attrs: AttributeSet?) :
     RelativeLayout(context, attrs) {
     private var adapter: BaseQuickAdapter<MutableList<ElementAttribute>, BaseViewHolder>? = null
     /** 楼层水平间距 **/
-    private var pagerPadding: Int = SizeUtils.dp2px(15f)
+    var viewPadding: Int = SizeUtils.dp2px(15f)
         set(value) {
             field = value
             invalidate()
         }
 
+    /** 是否整屏滚动 **/
+    var scrollScreen: Boolean = true
+    /** 每个pager可展示的列数 **/
+    var pagerColumnCount = 0
+    /** item横间距 **/
+    var itemDividerHorizontalHeight: Float = 0f
+    /** item竖间距 **/
+    var itemDividerVerticalHeight: Float = 0f
     /** 每次滚动移动pager 当前默认每次滚动1个pager **/
     private var scrollOffset: Int = 1
-    /** item横间距 **/
-    private var itemDividerHorizontalHeight: Float = 0f
-    /** item竖间距 **/
-    private var itemDividerVerticalHeight: Float = 0f
     /** 一屏展示行个数 **/
     private var gridRowNum: Int = 1
     /** 一屏展示列个数 **/
@@ -53,10 +57,6 @@ class ViewPagerGridView(context: Context, attrs: AttributeSet?) :
             pagerColumnCount = if (scrollScreen) gridColumnsNum.toInt() else scrollOffset
         }
 
-    /** 是否整屏滚动 **/
-    private var scrollScreen: Boolean = true
-    /** 每个pager可展示的列数 **/
-    private var pagerColumnCount = 0
     /** 最后一屏占位符个数 **/
     private var lastPageSpaceColumnCount = 0
 
@@ -77,6 +77,7 @@ class ViewPagerGridView(context: Context, attrs: AttributeSet?) :
      * 初始化楼层数据
      * @param floorData FloorData? 楼层数据
      * @param itemLayout Int 子元素布局
+     * @param buryPointInfo BuryPointInfo? 埋点
      */
     fun initData(
         floorData: FloorData?,
@@ -88,6 +89,7 @@ class ViewPagerGridView(context: Context, attrs: AttributeSet?) :
         itemDividerHorizontalHeight = floorData.itemDividerH ?: 0f
         itemDividerVerticalHeight = floorData.itemDividerW ?: 0f
         scrollOffset = floorData.scrollOffset ?: 1
+
         gridColumnsNum = floorData.gridColumnsNum ?: itemDataList.size.toFloat()
         gridRowNum = floorData.gridRowNum?.toInt() ?: 1
 
@@ -100,41 +102,33 @@ class ViewPagerGridView(context: Context, attrs: AttributeSet?) :
         itemLayout: Int,
         buryPointInfo: BuryPointInfo?
     ) {
-        setRecyclerViewWidth(itemLayout)
+        setRecyclerViewWidth()
 
         adapter = GridAdapter(
-            dealData(itemDataList),
-            itemLayout,
-            buryPointInfo,
-            pagerColumnCount,
-            itemDividerVerticalHeight,
-            itemDividerHorizontalHeight,
+            data = dealData(itemDataList),
+            view = this,
+            itemLayout = itemLayout,
+            buryPointInfo = buryPointInfo
         )
         viewpager2.adapter = adapter
         viewpager2.offscreenPageLimit = adapter?.itemCount ?: 1
     }
 
-    private fun setRecyclerViewWidth(itemLayout: Int) {
+    private fun setRecyclerViewWidth() {
         val recyclerView = (viewpager2.getChildAt(0) as? RecyclerView)
 
         recyclerView?.let { view ->
-            if (scrollScreen) {
-                // 卡片组件无badge 且防止边缘露出
-                if (itemLayout != R.layout.common_floor_grid_img_item) {
-                    view.clipChildren = false
-                    view.clipToPadding = false
-                }
+            view.clipChildren = false
+            view.clipToPadding = false
 
+            if (scrollScreen) {
                 view.setPadding(
-                    pagerPadding - SizeUtils.dp2px(itemDividerVerticalHeight) / 2,
+                    0,
                     view.paddingTop,
-                    pagerPadding - SizeUtils.dp2px(itemDividerVerticalHeight) / 2,
+                    0,
                     view.paddingBottom
                 )
             } else {
-                view.clipChildren = false
-                view.clipToPadding = false
-
                 val percent = 1 / gridColumnsNum
                 val screenAppWidth = ScreenUtils.getAppScreenWidth()
 
@@ -142,11 +136,11 @@ class ViewPagerGridView(context: Context, attrs: AttributeSet?) :
                 val dividerWidth = SizeUtils.dp2px(itemDividerVerticalHeight) * gridColumnsNum.toInt()
 
                 // 一个item的宽度 = (屏幕宽度 - 控件左边距 - 屏幕上显示的间距总宽度) * item显示占比
-                scrollItemWidth = ((screenAppWidth - pagerPadding - dividerWidth) * percent).toInt()
+                scrollItemWidth = ((screenAppWidth - viewPadding - dividerWidth) * percent).toInt()
                 // pager宽度
                 val pagerWidth = (scrollItemWidth + SizeUtils.dp2px(itemDividerVerticalHeight)) * scrollOffset
                 // pager左边距 = 控件左边距 - (item间距/2)
-                val pagePaddingLeft = pagerPadding - SizeUtils.dp2px(itemDividerVerticalHeight) / 2
+                val pagePaddingLeft = viewPadding - SizeUtils.dp2px(itemDividerVerticalHeight) / 2
                 // pager右边距 = 屏幕宽度 - pager宽度 - pager左边距
                 val pagePaddingRight = screenAppWidth - pagerWidth - pagePaddingLeft
 
@@ -183,7 +177,9 @@ class ViewPagerGridView(context: Context, attrs: AttributeSet?) :
                     position
                 }
 
-                if (!scrollScreen && indicator.progress == 1f) {
+                // 非整页滑动 && 超过一页 && 为最后一页
+                if (!scrollScreen && indicator.count != 0 && indicator.progress == 1f ) {
+                    // 快速滑动超页处理
                     viewpager2.currentItem = indicator.count - 2
                     scrollLast(true)
                 }
@@ -207,8 +203,8 @@ class ViewPagerGridView(context: Context, attrs: AttributeSet?) :
         val invisibleItemWidth = invisibleItemCount * (scrollItemWidth + SizeUtils.dp2px(itemDividerVerticalHeight))
         // 半item未显示宽度
         val lastViewInvisibleWidth = scrollItemWidth * (1 - gridColumnsNum % 1)
-        // 移动距离 = 半item未显示宽度 + 未显示item宽度 + pager横向padding
-        val lastViewOffset = lastViewInvisibleWidth + invisibleItemWidth + pagerPadding
+        // 移动距离 = 半item未显示宽度 + 未显示item宽度 + 控件横向padding
+        val lastViewOffset = lastViewInvisibleWidth + invisibleItemWidth + viewPadding
 
         var animatorOffsetList = listOf(0f, - lastViewOffset )
         if (!toLast) {

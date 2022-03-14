@@ -6,12 +6,14 @@ import android.widget.GridLayout
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.chinshry.base.bean.BuryPointInfo
 import com.chinshry.base.bean.ElementAttribute
 import com.chinshry.base.util.FloorUtil
+import com.chinshry.base.view.ViewPagerGridView
 import com.chinshry.base.view.clickWithTrigger
 import com.example.base.R
 
@@ -21,11 +23,9 @@ import com.example.base.R
  */
 class GridAdapter(
     data: MutableList<MutableList<ElementAttribute>>,
+    private val view: ViewPagerGridView,
     private val itemLayout: Int,
     private val buryPointInfo: BuryPointInfo?,
-    private val pagerColumnCount: Int,
-    private val itemDividerVerticalHeight: Float?,
-    private val itemDividerHorizontalHeight: Float?,
 ) : BaseQuickAdapter<MutableList<ElementAttribute>, BaseViewHolder>(0, data) {
 
     override fun onCreateDefViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
@@ -35,7 +35,17 @@ class GridAdapter(
             RelativeLayout.LayoutParams.MATCH_PARENT
         )
 
-        gridView.columnCount = pagerColumnCount
+        if (view.scrollScreen) {
+            gridView.let {
+               it.setPadding(
+                   view.viewPadding - SizeUtils.dp2px(view.itemDividerVerticalHeight) / 2,
+                   it.top,
+                   view.viewPadding - SizeUtils.dp2px(view.itemDividerVerticalHeight) / 2,
+                   it.bottom
+               )
+            }
+        }
+        gridView.columnCount = view.pagerColumnCount
 
         gridView.orientation = GridLayout.HORIZONTAL
         gridView.clipChildren = false
@@ -57,13 +67,13 @@ class GridAdapter(
             itemView.clickWithTrigger {
                 ToastUtils.showShort("click " + element.elementTitle)
             }
-            if (element.elementVisible == false) {
+            if (!element.elementVisible) {
                 itemView.visibility = View.INVISIBLE
             }
 
             itemColumnSpanSum += element.occupiesColumns ?: 1
 
-            val isFirstColumnItem = itemColumnSpanSum <= pagerColumnCount
+            val isFirstColumnItem = itemColumnSpanSum <= view.pagerColumnCount
 
             FloorUtil.addGridItem(
                 holder.itemView as GridLayout,
@@ -71,8 +81,8 @@ class GridAdapter(
                 isFirstColumnItem,
                 element.occupiesColumns,
                 element.occupiesRows,
-                itemDividerVerticalHeight,
-                itemDividerHorizontalHeight
+                view.itemDividerVerticalHeight,
+                view.itemDividerHorizontalHeight
             )
 
         }

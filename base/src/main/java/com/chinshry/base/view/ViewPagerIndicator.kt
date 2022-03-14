@@ -39,12 +39,12 @@ class ViewPagerIndicator @JvmOverloads constructor(
     // 当前位置index
     var currentIndex = 0
         set(value) {
-            field = if (currentIndex + 1 > count) {
+            field = if (value + 1 > count) {
                 count - 1
             } else {
                 value
             }
-            progress = currentIndex / (count - 1).toFloat()
+            progress = field / (count - 1).toFloat()
         }
 
     // thumb长度比例
