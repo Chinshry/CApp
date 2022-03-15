@@ -8,18 +8,18 @@
         android:clipChildren="false"
         android:clipToPadding="false">
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/viewpager2"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clipChildren="false"
             android:clipToPadding="false"/>
 
-        <com.chinshry.base.view.ViewPagerIndicator
+        <com.chinshry.base.view.ScrollGridIndicator
             android:id="@+id/indicator"
             android:layout_width="36dp"
             android:layout_height="2dp"
-            android:layout_below="@+id/viewpager2"
+            android:layout_below="@+id/recyclerView"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"
             android:visibility="visible"

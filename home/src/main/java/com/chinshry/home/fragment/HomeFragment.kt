@@ -6,7 +6,7 @@ import com.chinshry.base.BaseFragment
 import com.chinshry.base.bean.BuryPoint
 import com.chinshry.base.bean.ElementAttribute
 import com.chinshry.base.bean.FloorData
-import com.chinshry.base.view.ViewPagerGridView
+import com.chinshry.base.view.ScrollGridView
 import com.chinshry.home.R
 import kotlinx.android.synthetic.main.fragment_home.*
 
@@ -30,7 +30,6 @@ class HomeFragment: BaseFragment() {
         val data0 = FloorData(
             gridColumnsNum = 3F,
             gridRowNum = 4F,
-            scrollOffset = 1,
             itemDividerH = 4f,
             itemDividerW = 10f,
             elementAttributes = listOf(
@@ -52,7 +51,6 @@ class HomeFragment: BaseFragment() {
         val data1 = FloorData(
             gridColumnsNum = 3F,
             gridRowNum = 1F,
-            scrollOffset = 1,
             itemDividerW = 10f,
             elementAttributes = listOf(
                 ElementAttribute(occupiesColumns = 1, occupiesRows = 1, elementTitle = "1"),
@@ -68,7 +66,6 @@ class HomeFragment: BaseFragment() {
         val data2 = FloorData(
             gridColumnsNum = 3.5F,
             gridRowNum = 1F,
-            scrollOffset = 1,
             itemDividerW = 10f,
             elementAttributes = listOf(
                 ElementAttribute(occupiesColumns = 1, occupiesRows = 1, elementTitle = "1"),
@@ -84,27 +81,8 @@ class HomeFragment: BaseFragment() {
         )
 
         val data3 = FloorData(
-            gridColumnsNum = 3.5F,
-            gridRowNum = 1F,
-            scrollOffset = 2,
-            itemDividerW = 10f,
-            elementAttributes = listOf(
-                ElementAttribute(occupiesColumns = 1, occupiesRows = 1, elementTitle = "1"),
-                ElementAttribute(occupiesColumns = 1, occupiesRows = 1, elementTitle = "2"),
-                ElementAttribute(occupiesColumns = 1, occupiesRows = 1, elementTitle = "3"),
-                ElementAttribute(occupiesColumns = 1, occupiesRows = 1, elementTitle = "4"),
-                ElementAttribute(occupiesColumns = 1, occupiesRows = 1, elementTitle = "5"),
-                ElementAttribute(occupiesColumns = 1, occupiesRows = 1, elementTitle = "6"),
-                ElementAttribute(occupiesColumns = 1, occupiesRows = 1, elementTitle = "7"),
-                ElementAttribute(occupiesColumns = 1, occupiesRows = 1, elementTitle = "8"),
-                ElementAttribute(occupiesColumns = 1, occupiesRows = 1, elementTitle = "9"),
-            )
-        )
-
-        val data4 = FloorData(
             gridColumnsNum = 2.5F,
             gridRowNum = 2F,
-            scrollOffset = 1,
             itemDividerH = 4f,
             itemDividerW = 10f,
             elementAttributes = listOf(
@@ -126,12 +104,11 @@ class HomeFragment: BaseFragment() {
         addGridView(data1)
         addGridView(data2)
         addGridView(data3)
-        addGridView(data4)
         addGridView(data0)
     }
 
     private fun addGridView(testDate: FloorData) {
-        val view = ViewPagerGridView(requireContext())
+        val view = ScrollGridView(requireContext())
         // view.initData(testDate, R.layout.common_floor_grid_item)
         view.initData(testDate, R.layout.common_floor_grid_img_item, null)
         view.clipChildren = false

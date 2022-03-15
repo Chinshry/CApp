@@ -13,7 +13,7 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.chinshry.base.bean.BuryPointInfo
 import com.chinshry.base.bean.ElementAttribute
 import com.chinshry.base.util.FloorUtil
-import com.chinshry.base.view.ViewPagerGridView
+import com.chinshry.base.view.ScrollGridView
 import com.chinshry.base.view.clickWithTrigger
 import com.example.base.R
 
@@ -23,7 +23,8 @@ import com.example.base.R
  */
 class GridAdapter(
     data: MutableList<MutableList<ElementAttribute>>,
-    private val view: ViewPagerGridView,
+    private val view: ScrollGridView,
+    private val viewWidth: Int,
     private val itemLayout: Int,
     private val buryPointInfo: BuryPointInfo?,
 ) : BaseQuickAdapter<MutableList<ElementAttribute>, BaseViewHolder>(0, data) {
@@ -31,7 +32,7 @@ class GridAdapter(
     override fun onCreateDefViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         val gridView = GridLayout(context)
         gridView.layoutParams = RelativeLayout.LayoutParams(
-            RelativeLayout.LayoutParams.MATCH_PARENT,
+            viewWidth,
             RelativeLayout.LayoutParams.MATCH_PARENT
         )
 
@@ -55,6 +56,9 @@ class GridAdapter(
     }
 
     override fun convert(holder: BaseViewHolder, item: MutableList<ElementAttribute>) {
+        val gridView = holder.itemView as? GridLayout ?: return
+        gridView.removeAllViews()
+
         var itemColumnSpanSum = 0
 
         item.forEach { element ->
@@ -76,7 +80,7 @@ class GridAdapter(
             val isFirstColumnItem = itemColumnSpanSum <= view.pagerColumnCount
 
             FloorUtil.addGridItem(
-                holder.itemView as GridLayout,
+                gridView,
                 itemView,
                 isFirstColumnItem,
                 element.occupiesColumns,

@@ -5,7 +5,6 @@ class FloorData(
     var gridRowNum: Float? = null,
     var itemDividerW: Float? = null, // 竖向分割线高度
     var itemDividerH: Float? = null, // 横向分割线高度
-    var scrollOffset: Int? = null, // 每次滚动offset
     val elementAttributes: List<ElementAttribute>? = null,
 )
 

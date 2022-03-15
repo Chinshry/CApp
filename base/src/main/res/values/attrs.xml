@@ -26,7 +26,7 @@
         <attr name="margin_status_bar" format="boolean" />
     </declare-styleable>
 
-    <declare-styleable name="ViewPagerIndicator">
+    <declare-styleable name="ScrollGridIndicator">
         <attr name="trackColor" format="color"/>
         <attr name="indicatorColor" format="color"/>
     </declare-styleable>

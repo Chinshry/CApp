@@ -16,7 +16,7 @@ import com.example.base.R
  * Created by chinshry on 2022/01/23.
  * Describe：滚动组件指示器
  */
-class ViewPagerIndicator @JvmOverloads constructor(
+class ScrollGridIndicator @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
@@ -36,24 +36,6 @@ class ViewPagerIndicator @JvmOverloads constructor(
             ratio = 1f / count
         }
 
-    // 当前位置index
-    var currentIndex = 0
-        set(value) {
-            field = if (value + 1 > count) {
-                count - 1
-            } else {
-                value
-            }
-            progress = field / (count - 1).toFloat()
-        }
-
-    // thumb长度比例
-    var ratio = 1f
-        set(value) {
-            field = value
-            invalidate()
-        }
-
     // 滑动进度比例
     var progress: Float = 0f
         set(value) {
@@ -61,10 +43,17 @@ class ViewPagerIndicator @JvmOverloads constructor(
             invalidate()
         }
 
+    // thumb长度比例
+    private var ratio = 1f
+        set(value) {
+            field = value
+            invalidate()
+        }
+
     init {
-        val typedArray: TypedArray = context.obtainStyledAttributes(attrs, R.styleable.ViewPagerIndicator)
-        mTrackColor = typedArray.getColor(R.styleable.ViewPagerIndicator_trackColor, mTrackColor)
-        mIndicatorColor = typedArray.getColor(R.styleable.ViewPagerIndicator_indicatorColor, mIndicatorColor)
+        val typedArray: TypedArray = context.obtainStyledAttributes(attrs, R.styleable.ScrollGridIndicator)
+        mTrackColor = typedArray.getColor(R.styleable.ScrollGridIndicator_trackColor, mTrackColor)
+        mIndicatorColor = typedArray.getColor(R.styleable.ScrollGridIndicator_indicatorColor, mIndicatorColor)
         typedArray.recycle()
 
         mTrackPaint.color = mTrackColor
