@@ -1,21 +1,22 @@
 package com.chinshry.base.util
 
 import android.annotation.SuppressLint
+import android.content.Context
 import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.StringUtils
+import com.blankj.utilcode.util.Utils
 import com.chinshry.base.bean.BuryPointInfo
 import com.chinshry.base.bean.Constants
 import com.chinshry.base.bean.Module
 import com.chinshry.base.bean.Module.Companion.getBuryNameByModelName
-import com.example.base.R
+import com.chinshry.base.R
+import com.qmuiteam.qmui.util.QMUIDisplayHelper
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.BufferedInputStream
 import java.io.BufferedOutputStream
 import java.io.IOException
-import java.lang.Exception
-import java.lang.StringBuilder
 import java.lang.reflect.Type
 
 
@@ -24,6 +25,49 @@ import java.lang.reflect.Type
  * Describe：通用工具
  */
 object CommonUtils {
+    /**
+     * 比较版本大小
+     * @param targetVersion 目标版本
+     * @param targetVersionCode 目标versionCode
+     * @return Boolean 当前版本比目标版本小 true 当前版本等于或者大与目标版本 false
+     */
+    fun compareAppVersion(targetVersion: String?, targetVersionCode: String? = null): Boolean {
+        if (targetVersion.isNullOrBlank()) {
+            return false
+        }
+        val targetArr = targetVersion.split(".")
+        val currentArr = DeviceUtil.getVersionName(Utils.getApp()).split(".")
+
+        val length = if (currentArr.size < targetArr.size) {
+            currentArr.size
+        } else {
+            targetArr.size
+        }
+
+        for (i in 0 until length) {
+            when {
+                targetArr[i].toInt() > currentArr[i].toInt() -> {
+                    return true
+                }
+                targetArr[i].toInt() < currentArr[i].toInt() -> {
+                    return false
+                }
+                targetArr[i].toInt() == currentArr[i].toInt() -> {
+                    if (i == length - 1) {
+                        return if (currentArr.size == targetArr.size) {
+                            val currentCode = DeviceUtil.getVersionCode(Utils.getApp())
+                            val targetCode = targetVersionCode?.toIntOrNull() ?: 0
+                            currentCode < targetCode
+                        } else {
+                            currentArr.size < targetArr.size
+                        }
+                    }
+                }
+            }
+        }
+        return false
+    }
+
     fun getTrackClass(offset: Int = 0): Class<*>? {
         return Thread.currentThread().stackTrace.getOrNull(offset)?.className?.let {
             Class.forName(it)
@@ -270,4 +314,9 @@ object CommonUtils {
         }
         return result.toString()
     }
+
+    fun dp2px(context: Context?, dp: Float): Int {
+        return (QMUIDisplayHelper.getDensity(context) * dp + 0.5).toInt()
+    }
+
 }

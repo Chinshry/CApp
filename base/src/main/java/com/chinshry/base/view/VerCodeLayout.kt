@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.core.view.children
 import androidx.core.widget.doAfterTextChanged
 import com.blankj.utilcode.util.KeyboardUtils
-import com.example.base.R
+import com.chinshry.base.R
 
 /**
  * Created by chinshry on 2021/12/29.

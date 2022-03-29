@@ -48,7 +48,7 @@ fun getPageBuryPoint(className: String, methodName: String?): BuryPointInfo? {
 fun getClickBuryPoint(text: String?, offset: Int = 3): BuryPointInfo? {
     text?.let {
         // return getPageBuryPoint(CommonUtils.getTrackClass(offset))?.apply { buttonName = it }
-        return CommonUtils.getTrackBuryPoint(offset)?.apply { buttonName = it }
+        return CommonUtils.getTrackBuryPoint(offset)?.apply { viewName = it }
     }
     return null
 }

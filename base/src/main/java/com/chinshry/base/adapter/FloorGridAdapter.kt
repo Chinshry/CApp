@@ -3,25 +3,20 @@ package com.chinshry.base.adapter
 import android.view.View
 import android.view.ViewGroup
 import android.widget.GridLayout
-import android.widget.ImageView
 import android.widget.RelativeLayout
-import android.widget.TextView
-import com.blankj.utilcode.util.SizeUtils
-import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.chinshry.base.bean.BuryPointInfo
 import com.chinshry.base.bean.ElementAttribute
 import com.chinshry.base.util.FloorUtil
 import com.chinshry.base.view.ScrollGridView
-import com.chinshry.base.view.clickWithTrigger
-import com.example.base.R
+import com.chinshry.base.util.CommonUtils.dp2px
 
 /**
  * Created by chinshry on 2022/01/23.
- * Describe：楼层adapter
+ * Describe：楼层宫格 Adapter
  */
-class GridAdapter(
+class FloorGridAdapter(
     data: MutableList<MutableList<ElementAttribute>>,
     private val view: ScrollGridView,
     private val viewWidth: Int,
@@ -39,9 +34,9 @@ class GridAdapter(
         if (view.scrollScreen) {
             gridView.let {
                it.setPadding(
-                   view.viewPadding - SizeUtils.dp2px(view.itemDividerVerticalHeight) / 2,
+                   view.viewPadding - dp2px(context, view.itemDividerVerticalHeight / 2),
                    it.top,
-                   view.viewPadding - SizeUtils.dp2px(view.itemDividerVerticalHeight) / 2,
+                   view.viewPadding - dp2px(context, view.itemDividerVerticalHeight / 2),
                    it.bottom
                )
             }
@@ -62,26 +57,18 @@ class GridAdapter(
         var itemColumnSpanSum = 0
 
         item.forEach { element ->
-            val itemView = View.inflate(context, itemLayout, null)
-            itemView.findViewById<TextView>(R.id.tv_title_text)?.text = element.elementTitle
-            itemView.findViewById<ImageView>(R.id.iv_element)?.let {
-                // Glide.with(context).load(pictureUrl).into(it)
-                // Glide.with(context).load(R.mipmap.img_2).into(it)
-            }
-            itemView.clickWithTrigger {
-                ToastUtils.showShort("click " + element.elementTitle)
-            }
-            if (!element.elementVisible) {
-                itemView.visibility = View.INVISIBLE
-            }
+            val elementItemView = View.inflate(context, itemLayout, null)
+            FloorUtil.initFloorItem(
+                element,
+                elementItemView,
+            )
 
             itemColumnSpanSum += element.occupiesColumns ?: 1
-
             val isFirstColumnItem = itemColumnSpanSum <= view.pagerColumnCount
 
             FloorUtil.addGridItem(
                 gridView,
-                itemView,
+                elementItemView,
                 isFirstColumnItem,
                 element.occupiesColumns,
                 element.occupiesRows,

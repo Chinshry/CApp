@@ -6,7 +6,7 @@ import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatEditText
 import com.chinshry.base.util.MaskingUtil
 import com.chinshry.base.view.MaskingTextView.MaskType.Companion.getMaskType
-import com.example.base.R
+import com.chinshry.base.R
 
 /**
  * Created by chinshry on 2022/01/21.

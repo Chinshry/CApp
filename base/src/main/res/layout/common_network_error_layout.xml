@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <ImageView
+        android:id="@+id/img_net"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:adjustViewBounds="true" />
+
+    <TextView
+        android:id="@+id/tv_net"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/img_net"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/text_color"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:text="无可用网络"/>
+
+    <TextView
+        android:id="@+id/tv_check_net"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_net"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/grey_light"
+        android:textSize="15sp"
+        android:text="请检查网络后重试"/>
+
+    <TextView
+        android:id="@+id/btn_reload"
+        android:layout_width="100dp"
+        android:layout_height="36dp"
+        android:layout_below="@id/tv_check_net"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="36dp"
+        android:background="@drawable/bg_btn"
+        android:gravity="center"
+        android:text="重试"
+        android:textStyle="bold"
+        android:visibility="visible" />
+
+</RelativeLayout>

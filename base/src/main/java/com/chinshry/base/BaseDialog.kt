@@ -21,7 +21,6 @@ import com.chinshry.base.util.WindowManagerList
 import com.chinshry.base.util.logBuryPoint
 import com.chinshry.base.util.setNotBlankText
 import com.chinshry.base.view.CustomHeaderBar.Companion.initCustomHeaderBar
-import com.example.base.R
 
 /**
  * Created by chinshry on 2022/01/01.

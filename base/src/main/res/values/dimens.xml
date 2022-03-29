@@ -1,3 +1,6 @@
 <resources>
     <dimen name="badge_top_margin">0dp</dimen>
+    <dimen name="badge_end_margin">-6dp</dimen>
+    <dimen name="floor_margin_vertical">12dp</dimen>
+    <dimen name="floor_margin_horizontal">15dp</dimen>
 </resources>

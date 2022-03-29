@@ -12,11 +12,12 @@ import com.blankj.utilcode.util.ScreenUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
-import com.chinshry.base.adapter.GridAdapter
 import com.chinshry.base.bean.BuryPointInfo
 import com.chinshry.base.bean.ElementAttribute
 import com.chinshry.base.bean.FloorData
-import com.example.base.R
+import com.chinshry.base.util.CommonUtils.dp2px
+import com.chinshry.base.R
+import com.chinshry.base.adapter.FloorGridAdapter
 import kotlinx.android.synthetic.main.scroll_gridview.view.*
 import kotlin.math.abs
 import kotlin.math.ceil
@@ -86,12 +87,19 @@ class ScrollGridView(context: Context, attrs: AttributeSet?) :
         initIndicator()
     }
 
+    /**
+     * 红点刷新 重设数据
+     */
+    fun refreshBadgeStatus() {
+        adapter?.let{ it.setList(it.data) }
+    }
+
     private fun initPage(
         itemDataList: List<ElementAttribute>,
         itemLayout: Int,
         buryPointInfo: BuryPointInfo?
     ) {
-        adapter = GridAdapter(
+        adapter = FloorGridAdapter(
             data = dealData(itemDataList),
             view = this,
             viewWidth = getItemViewWidth(),
@@ -114,7 +122,7 @@ class ScrollGridView(context: Context, attrs: AttributeSet?) :
             LayoutParams.MATCH_PARENT
         } else {
             // 头尾padding = 控件左边距 - (item间距/2)
-            val pagePaddingHorizontal = viewPadding - SizeUtils.dp2px(itemDividerVerticalHeight) / 2
+            val pagePaddingHorizontal = viewPadding - dp2px(context, itemDividerVerticalHeight) / 2
 
             recyclerView.let { view ->
                 view.setPadding(
@@ -129,10 +137,10 @@ class ScrollGridView(context: Context, attrs: AttributeSet?) :
             val screenAppWidth = ScreenUtils.getAppScreenWidth()
 
             // 屏幕上显示的子元素横向间距总宽度
-            val dividerWidth = SizeUtils.dp2px(itemDividerVerticalHeight) * gridColumnsNum.toInt()
+            val dividerWidth = dp2px(context, itemDividerVerticalHeight) * gridColumnsNum.toInt()
 
             // 一个item的宽度 = (屏幕宽度 - 控件边距 - 屏幕上显示的子元素横向间距总宽度) * item显示占比 + 子元素横向间距
-            ((screenAppWidth - viewPadding - dividerWidth) * percent).toInt() + SizeUtils.dp2px(itemDividerVerticalHeight)
+            ((screenAppWidth - viewPadding - dividerWidth) * percent).toInt() + dp2px(context, itemDividerVerticalHeight)
         }
     }
 

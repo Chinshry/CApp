@@ -13,15 +13,28 @@ import android.widget.LinearLayout.LayoutParams
 import android.widget.TextView
 import androidx.annotation.*
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
-import com.example.base.R
+import com.chinshry.base.R
 
 
 /**
  * Created by chinshry on 2022/01/01.
  * Describe：控件背景效果扩展
  */
+
+@IntDef(value = [ShapeType.RECTANGLE, ShapeType.OVAL])
+@Retention(AnnotationRetention.SOURCE)
+annotation class ShapeType {
+    companion object {
+        const val RECTANGLE: Int = GradientDrawable.RECTANGLE
+        const val OVAL: Int = GradientDrawable.OVAL
+        //TODO  根据需求添加形状
+    }
+}
+
 @SuppressLint("UseCompatLoadingForDrawables")
 fun View.setBgSelectorByRes(
     @DrawableRes idNormal: Int = -1,
@@ -197,18 +210,6 @@ private fun getShapeByColor(
     return gradientDrawable
 }
 
-
-@IntDef(value = [ShapeType.RECTANGLE, ShapeType.OVAL])
-@Retention(AnnotationRetention.SOURCE)
-annotation class ShapeType {
-    companion object {
-        const val RECTANGLE: Int = GradientDrawable.RECTANGLE
-        const val OVAL: Int = GradientDrawable.OVAL
-        //TODO  根据需求添加形状
-    }
-}
-
-
 fun TextView.setTextColorByString(
     textColor: String?,
     @ColorInt defaultTextColor: Int? = null
@@ -263,4 +264,26 @@ fun LinearLayout.addButton(
 
     viewFunction?.invoke(newButton)
     addView(newButton, layoutParams)
+}
+
+/**
+ * 计算RecyclerView滑动的距离
+ * @param hasHead 是否有头部
+ * @param headerHeight RecyclerView的头部高度
+ * @return 滑动的距离
+ */
+fun RecyclerView.getScrollYHeight(
+    hasHead: Boolean = false,
+    headerHeight: Int = 0
+): Int {
+    val layoutManager = layoutManager as? LinearLayoutManager ?: return 0
+    val position = layoutManager.findFirstVisibleItemPosition()
+    val firstVisibleChildView = layoutManager.findViewByPosition(position)
+    val itemHeight = firstVisibleChildView?.height ?: 0
+    val childTop = firstVisibleChildView?.top ?: 0
+    return if (hasHead) {
+        headerHeight + itemHeight * position - childTop
+    } else {
+        itemHeight * position - childTop
+    }
 }

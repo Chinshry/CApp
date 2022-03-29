@@ -16,7 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.SizeUtils
-import com.example.base.R
+import com.chinshry.base.R
 import kotlinx.android.synthetic.main.custom_bar.view.*
 
 /**

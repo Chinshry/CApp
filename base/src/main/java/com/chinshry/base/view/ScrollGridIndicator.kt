@@ -10,7 +10,7 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.annotation.ColorInt
 import androidx.core.view.isVisible
-import com.example.base.R
+import com.chinshry.base.R
 
 /**
  * Created by chinshry on 2022/01/23.

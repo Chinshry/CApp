@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/common_floor"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/common_floor_bg"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_alignTop="@+id/common_floor_ll"
+        android:layout_alignBottom="@+id/common_floor_ll"
+        android:scaleType="fitXY"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/common_floor_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:paddingVertical="@dimen/floor_margin_vertical">
+
+        <include
+            android:id="@+id/layout_header"
+            layout="@layout/common_floor_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/floor_margin_horizontal"
+            android:visibility="gone" />
+
+        <com.chinshry.base.view.ScrollGridView
+            android:id="@+id/layout_floor_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false" />
+
+    </LinearLayout>
+
+</RelativeLayout>

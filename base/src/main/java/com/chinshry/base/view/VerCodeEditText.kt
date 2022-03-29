@@ -14,7 +14,7 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.ColorInt
-import com.example.base.R
+import com.chinshry.base.R
 import android.graphics.drawable.ShapeDrawable
 
 /**

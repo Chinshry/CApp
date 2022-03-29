@@ -16,6 +16,12 @@ enum class Module(
     TOOL(2, "工具");
 
     companion object {
+        fun getBuryByModel(model: Int?): String? {
+            values().forEach {
+                if (it.model == model) return it.buryName
+            }
+            return null
+        }
 
         fun getBuryNameByModel(model: Int?): String? {
             values().forEach {
@@ -45,15 +51,15 @@ annotation class BuryPoint(val pageName: String = "")
 data class BuryPointInfo(
     var pageName: String = "",
     var pageChannel: String = "",
-    var buttonName: String = "",
+    var viewName: String = "",
 ) {
     fun toLogString(): String {
         var str = ""
         if (pageChannel.isNotBlank()) str += "pageChannel = $pageChannel"
         if (pageName.isNotBlank()) str += "  pageName = $pageName"
-        if (buttonName.isNotBlank()) {
-            str += "  buttonName = $buttonName"
-            str = "BUTTON BuryPoint | $str"
+        if (viewName.isNotBlank()) {
+            str += "  viewName = $viewName"
+            str = "View BuryPoint | $str"
         } else {
             str = "PAGE BuryPoint | $str"
         }

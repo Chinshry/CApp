@@ -7,7 +7,7 @@ import android.widget.TextView
 import com.blankj.utilcode.util.ActivityUtils
 import com.chinshry.base.BaseDialog
 import com.chinshry.base.view.clickWithTrigger
-import com.example.base.R
+import com.chinshry.base.R
 
 /**
  * Created by chinshry on 2022/01/01.

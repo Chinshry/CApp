@@ -59,6 +59,7 @@ class CustomSnapHelper : LinearSnapHelper() {
 
     override fun attachToRecyclerView(recyclerView: RecyclerView?) {
         mRecyclerView = recyclerView
+        mRecyclerView?.onFlingListener = null
         super.attachToRecyclerView(recyclerView)
     }
 
@@ -76,6 +77,7 @@ class CustomSnapHelper : LinearSnapHelper() {
         }
 
         // RecyclerView的边界x值 也就是左侧Padding值
+        // return helper.getDecoratedStart(targetView) - (if (layoutManager.clipToPadding) helper.startAfterPadding else 0)
         return helper.getDecoratedStart(targetView) - helper.startAfterPadding
     }
 
@@ -100,11 +102,6 @@ class CustomSnapHelper : LinearSnapHelper() {
         }
 
         var closestChild: View? = null
-        val start: Int = if (layoutManager.clipToPadding) {
-            helper.startAfterPadding
-        } else {
-            0
-        }
         var absClosest = Int.MAX_VALUE
 
         for (i in 0 until childCount) {
@@ -112,7 +109,7 @@ class CustomSnapHelper : LinearSnapHelper() {
             // ItemView 的左侧坐标
             val childStart = helper.getDecoratedStart(child)
             // 计算此ItemView 与 RecyclerView左侧的距离
-            val absDistance = abs(childStart - start)
+            val absDistance = abs(childStart - helper.startAfterPadding)
 
             // 找到那个最靠近左侧的ItemView然后返回
             if (absDistance < absClosest) {

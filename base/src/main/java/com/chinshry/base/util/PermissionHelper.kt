@@ -5,7 +5,7 @@ import com.blankj.utilcode.util.*
 import com.chinshry.base.bean.BuryPoint
 import com.chinshry.base.dialog.MyDialog
 import com.chinshry.base.util.PermissionMap.Companion.permissions2String
-import com.example.base.R
+import com.chinshry.base.R
 
 /**
  * Created by chinshry on 2022/1/3.

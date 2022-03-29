@@ -19,7 +19,7 @@ import android.content.ContextWrapper
 import android.view.View
 import android.widget.ImageView
 import com.bumptech.glide.request.transition.Transition
-import com.example.base.R
+import com.chinshry.base.R
 
 /**
  * Created by chinshry on 2021/12/23.

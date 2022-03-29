@@ -5,7 +5,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.chinshry.base.util.getClickBuryPoint
 import com.chinshry.base.util.logBuryPoint
-import com.example.base.R
+import com.chinshry.base.R
 
 
 const val CLICK_DELAY = 200L
@@ -50,7 +50,7 @@ private fun <T : View> T.clickEnable(): Boolean {
  * @return Unit
  */
 
-fun <T : View> T.clickFun(text: String, delay: Long, block: (T) -> Unit) {
+fun <T : View> T.clickFun(text: String?, delay: Long, block: (T) -> Unit) {
     triggerDelay = delay
     val viewBuryPoint = getClickBuryPoint(text)
     setOnClickListener {
@@ -62,7 +62,7 @@ fun <T : View> T.clickFun(text: String, delay: Long, block: (T) -> Unit) {
 }
 
 fun <T : View> T.clickWithTrigger(
-    text: String = "",
+    text: String? = "",
     delay: Long = CLICK_DELAY,
     block: (T) -> Unit
 ) {
@@ -80,5 +80,5 @@ fun <T : ImageView> T.clickWithTrigger(
     delay: Long = CLICK_DELAY,
     block: (T) -> Unit
 ) {
-    clickFun(this.contentDescription.toString(), delay, block)
+    clickFun(this.contentDescription?.toString(), delay, block)
 }

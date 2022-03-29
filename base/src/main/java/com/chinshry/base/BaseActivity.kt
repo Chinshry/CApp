@@ -12,7 +12,6 @@ import com.chinshry.base.util.CommonUtils.getModuleName
 import com.chinshry.base.util.getPageBuryPointByClass
 import com.chinshry.base.util.logBuryPoint
 import com.chinshry.base.view.CustomHeaderBar.Companion.initCustomHeaderBar
-import com.example.base.R
 import com.gyf.immersionbar.ImmersionBar
 
 /**

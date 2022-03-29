@@ -13,7 +13,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.ColorInt
 import com.blankj.utilcode.util.ColorUtils
-import com.example.base.R
+import com.chinshry.base.R
 
 
 /**
