@@ -235,7 +235,7 @@ object FloorUtil {
      * 优先级 buryPoint > elementTitle
      * @return String
      */
-    private fun getElementBury(title: String?, buryPoint: String? = null): String {
+    fun getElementBury(title: String?, buryPoint: String? = null): String {
         return if (!buryPoint.isNullOrBlank())
             buryPoint
         else

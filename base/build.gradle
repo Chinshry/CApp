@@ -73,7 +73,7 @@ dependencies {
     // QMUI
     api 'com.qmuiteam:qmui:2.0.0-alpha10'
     // 轮播图
-    api 'com.youth.banner:banner:2.1.0'
+    api 'io.github.youth5201314:banner:2.2.2'
     // 下拉刷新
     api 'com.scwang.smart:refresh-layout-kernel:2.0.3'// 核心必须依赖
     api 'com.scwang.smart:refresh-header-classics:2.0.3'// 经典刷新头

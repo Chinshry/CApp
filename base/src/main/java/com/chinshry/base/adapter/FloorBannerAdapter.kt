@@ -1,13 +1,10 @@
 package com.chinshry.base.adapter
 
-import android.content.Context
 import android.graphics.drawable.Drawable
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.blankj.utilcode.util.ActivityUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -27,11 +24,9 @@ import com.youth.banner.adapter.BannerAdapter
  */
 class FloorBannerAdapter(
     itemData: List<ElementAttribute>,
-    private val banner: Banner<String, FloorBannerAdapter>,
+    private val banner: Banner<ElementAttribute, FloorBannerAdapter>,
     private val buryPointInfo: BuryPointInfo? = null,
-) : BannerAdapter<ElementAttribute, FloorBannerAdapter.ImageHolder>(itemData as MutableList<ElementAttribute>) {
-
-    val context: Context = ActivityUtils.getTopActivity().applicationContext
+) : BannerAdapter<ElementAttribute, FloorBannerAdapter.ImageHolder>(itemData) {
 
     override fun onCreateHolder(parent: ViewGroup?, viewType: Int): ImageHolder {
         val imageView = ImageView(parent?.context)
@@ -40,7 +35,9 @@ class FloorBannerAdapter(
             ViewGroup.LayoutParams.MATCH_PARENT
         )
         imageView.layoutParams = params
-        imageView.scaleType = ImageView.ScaleType.FIT_XY
+        imageView.adjustViewBounds = true
+        imageView.scaleType = ImageView.ScaleType.FIT_CENTER
+        // imageView.scaleType = ImageView.ScaleType.FIT_XY
         return ImageHolder(imageView)
     }
 
@@ -68,23 +65,21 @@ class FloorBannerAdapter(
                 isFirstResource: Boolean
             ): Boolean {
                 // 多张Banner不固定比例 按第一张图拉伸
-                if (position == 0 && resource?.intrinsicWidth ?: 0 > 0) {
-                    val ratio = resource?.intrinsicWidth.toString() + ":" + resource?.intrinsicHeight.toString()
+                if (position == 0 && resource != null && resource.intrinsicWidth > 0) {
                     banner.layoutParams?.let {
-                        it.height = 0
-                        (it as ConstraintLayout.LayoutParams).dimensionRatio = ratio
+                        it.height = banner.width * resource.intrinsicHeight / resource.intrinsicWidth
                     }
                 }
                 return false
             }
         }
 
-        Glide.with(context)
+        Glide.with(holder.imageView.context)
             .load(FloorUtil.getImageUrl(itemData.elementPicture).ifBlank { R.color.empty })
             .listener(requestListener)
             .into(holder.imageView)
 
-        holder.imageView.clickWithTrigger {
+        holder.imageView.clickWithTrigger(FloorUtil.getElementBury(itemData.elementTitle, itemData.buryPoint)) {
             // TODO CLICK ITEM
         }
     }
