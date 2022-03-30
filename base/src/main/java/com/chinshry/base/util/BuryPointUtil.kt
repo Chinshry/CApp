@@ -3,6 +3,7 @@ package com.chinshry.base.util
 import com.blankj.utilcode.util.LogUtils
 import com.chinshry.base.bean.BuryPoint
 import com.chinshry.base.bean.BuryPointInfo
+import com.chinshry.base.bean.Module
 import com.chinshry.base.bean.Module.Companion.getNameByModelName
 import java.lang.Exception
 import java.lang.reflect.Method
@@ -29,6 +30,36 @@ fun getPageBuryPointByMethod(method: Method?): BuryPointInfo? {
     }
 }
 
+fun getTrackBuryPoint(offset: Int = 0): BuryPointInfo? {
+    Thread.currentThread().stackTrace.forEachIndexed { index, stackTraceElement ->
+        if (index >= offset) {
+            stackTraceElement?.let {
+                if (!it.isNativeMethod && isModuleClass(it.className)) {
+                    getPageBuryPoint(it.className, it.methodName) ?.let { classBuryPoint ->
+                        return classBuryPoint
+                    }
+                }
+            }
+        }
+    }
+    return null
+}
+
+fun getTrackClass(offset: Int = 0): Class<*>? {
+    return Thread.currentThread().stackTrace.getOrNull(offset)?.className?.let {
+        Class.forName(it)
+    }
+}
+
+fun isModuleClass(className: String?): Boolean {
+    if (className.isNullOrBlank()) return false
+    if (className.contains("$")) return false
+    if (className.contains("PermissionHelper")) return true
+
+    val modelName = getNameByModelName(CommonUtils.getModuleName(className))
+    return modelName != Module.Base.moduleName
+}
+
 fun getPageBuryPoint(className: String, methodName: String?): BuryPointInfo? {
     if (!methodName.isNullOrBlank()) {
         try {
@@ -45,12 +76,9 @@ fun getPageBuryPoint(className: String, methodName: String?): BuryPointInfo? {
     return getPageBuryPointByClass(Class.forName(className))
 }
 
-fun getClickBuryPoint(text: String?, offset: Int = 3): BuryPointInfo? {
-    text?.let {
-        // return getPageBuryPoint(CommonUtils.getTrackClass(offset))?.apply { buttonName = it }
-        return CommonUtils.getTrackBuryPoint(offset)?.apply { viewName = it }
-    }
-    return null
+fun getClickBuryPoint(offset: Int = 3): BuryPointInfo? {
+    // return getPageBuryPoint(CommonUtils.getTrackClass(offset))?.apply { buttonName = it }
+    return getTrackBuryPoint(offset)
 }
 
 fun logBuryPoint(buryPoint: BuryPointInfo?) {

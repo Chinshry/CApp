@@ -12,7 +12,6 @@ import com.chinshry.base.bean.BuryPointInfo
 const val CLICK_DELAY = 200L
 
 /**
- * get set
  * 给view添加一个上次触发时间的属性（用来屏蔽连击操作）
  */
 private var <T : View>T.triggerLastTime: Long
@@ -22,7 +21,6 @@ private var <T : View>T.triggerLastTime: Long
     }
 
 /**
- * get set
  * 给view添加一个延迟的属性（用来屏蔽连击操作）
  */
 private var <T : View> T.triggerDelay: Long
@@ -44,6 +42,9 @@ private fun <T : View> T.clickEnable(): Boolean {
     return clickable
 }
 
+/**
+ * 给view添加一个埋点的属性
+ */
 var <T : View> T.buryPoint: BuryPointInfo?
     get() = getTag(R.id.buryPoint) as? BuryPointInfo
     set(value) {
@@ -57,18 +58,16 @@ var <T : View> T.buryPoint: BuryPointInfo?
  * @return Unit
  */
 
-fun <T : View> T.clickFun(
+private fun <T : View> T.clickFun(
     text: String?,
     delay: Long,
     block: (T) -> Unit
 ) {
     triggerDelay = delay
-    val viewBuryPoint = getClickBuryPoint(text)
+    val pageBuryPoint = text ?.let { buryPoint ?: getClickBuryPoint() }
     setOnClickListener {
         if (clickEnable()) {
-            text?.let {
-                logBuryPoint(buryPoint ?.apply { viewName = it } ?: viewBuryPoint)
-            }
+            logBuryPoint(pageBuryPoint?.apply { viewName = text })
             block(this)
         }
     }
@@ -79,19 +78,19 @@ fun <T : View> T.clickWithTrigger(
     delay: Long = CLICK_DELAY,
     block: (T) -> Unit
 ) {
-    clickFun(text = text, delay = delay, block = block)
+    clickFun(text, delay, block)
 }
 
 fun <T : TextView> T.clickWithTrigger(
     delay: Long = CLICK_DELAY,
     block: (T) -> Unit
 ) {
-    clickFun(text = this.text.toString(), delay = delay, block = block)
+    clickFun(this.text.toString(), delay, block)
 }
 
 fun <T : ImageView> T.clickWithTrigger(
     delay: Long = CLICK_DELAY,
     block: (T) -> Unit
 ) {
-    clickFun(text = this.contentDescription?.toString(), delay = delay, block = block)
+    clickFun(this.contentDescription?.toString(), delay, block)
 }

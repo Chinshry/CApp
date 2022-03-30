@@ -16,7 +16,7 @@ import com.blankj.utilcode.util.KeyboardUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ScreenUtils
 import com.chinshry.base.bean.BuryPointInfo
-import com.chinshry.base.util.CommonUtils.getTrackBuryPoint
+import com.chinshry.base.util.getTrackBuryPoint
 import com.chinshry.base.util.WindowManagerList
 import com.chinshry.base.util.logBuryPoint
 import com.chinshry.base.util.setNotBlankText

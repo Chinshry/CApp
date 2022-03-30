@@ -3,10 +3,7 @@ package com.chinshry.base.util
 import android.annotation.SuppressLint
 import android.content.Context
 import com.blankj.utilcode.util.*
-import com.chinshry.base.bean.BuryPointInfo
 import com.chinshry.base.bean.Constants
-import com.chinshry.base.bean.Module
-import com.chinshry.base.bean.Module.Companion.getNameByModelName
 import com.chinshry.base.R
 import com.qmuiteam.qmui.util.QMUIDisplayHelper
 import org.json.JSONArray
@@ -63,35 +60,6 @@ object CommonUtils {
             }
         }
         return false
-    }
-
-    fun getTrackClass(offset: Int = 0): Class<*>? {
-        return Thread.currentThread().stackTrace.getOrNull(offset)?.className?.let {
-            Class.forName(it)
-        }
-    }
-
-    fun getTrackBuryPoint(offset: Int = 0): BuryPointInfo? {
-        Thread.currentThread().stackTrace.forEachIndexed { index, stackTraceElement ->
-            if (index >= offset) {
-                stackTraceElement?.let {
-                    if (!(it.isNativeMethod || isIgnoreClass(it.className))) {
-                        getPageBuryPoint(it.className, it.methodName) ?.let { classBuryPoint ->
-                            return classBuryPoint
-                        }
-                    }
-                }
-            }
-        }
-        return null
-    }
-
-    private fun isIgnoreClass(className: String): Boolean {
-        if (className.contains("$")) return true
-        if (className.contains("PermissionHelper")) return false
-
-        val modelName = getNameByModelName(getModuleName(className))
-        return modelName == "" || modelName == Module.Base.moduleName
     }
 
     fun getModuleName(className: String): String? {
