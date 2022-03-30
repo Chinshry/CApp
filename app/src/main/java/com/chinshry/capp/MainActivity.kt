@@ -6,7 +6,7 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.ResourceUtils
 import com.chinshry.base.BaseActivity
-import com.chinshry.base.bean.FragmentBean
+import com.chinshry.base.bean.Module
 import com.chinshry.base.bean.TabBean
 import com.chinshry.base.view.CustomTabView
 import com.chinshry.home.fragment.HomeFragment
@@ -21,20 +21,11 @@ open class MainActivity : BaseActivity() {
 
     private lateinit var currentFragment: Fragment
 
-    private val fragments = listOf(
-        FragmentBean(
-            fragment = HomeFragment(),
-            model = 0
-        ),
-        FragmentBean(
-            fragment = ToolFragment(),
-            model = 1
-        )
-    )
+    private val fragments = listOf(HomeFragment(), ToolFragment())
 
     private val tabData = listOf(
         TabBean(
-            model = 0,
+            model = 1,
             normalTitle = "首页",
             selectTitle = "首页1",
             normalIcon = R.mipmap.ic_tab_home,
@@ -44,7 +35,7 @@ open class MainActivity : BaseActivity() {
             badge = R.drawable.badge_red
         ),
         TabBean(
-            model = 1,
+            model = 2,
             normalTitle = "工具",
             selectTitle = "工具1",
             normalIcon = R.mipmap.ic_tab_util,
@@ -96,8 +87,8 @@ open class MainActivity : BaseActivity() {
         custom_tab.setCurrentItem(0)
     }
 
-    private fun changeFragment(position: Int) {
-        val fragment: Fragment = getFragmentByModel(position) ?: return
+    private fun changeFragment(model: Int) {
+        val fragment: Fragment = getFragmentByModel(model) ?: return
 
         if (supportFragmentManager.fragments.isEmpty()) {
             supportFragmentManager
@@ -121,8 +112,9 @@ open class MainActivity : BaseActivity() {
     }
 
     private fun getFragmentByModel(model: Int?): Fragment? {
+        val fragmentName = Module.getModuleByModel(model)?.name ?: return null
         fragments.forEach {
-            if (it.model == model) return it.fragment
+            if (it.javaClass.simpleName == fragmentName + "Fragment") return it
         }
         return null
     }

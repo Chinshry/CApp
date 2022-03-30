@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.fragment_home.*
 @BuryPoint(pageName = "主页Fragment")
 class HomeFragment: BaseFragment() {
 
-    private val floorAdapter: FloorAdapter by lazy { FloorAdapter() }
+    private val floorAdapter: FloorAdapter by lazy { FloorAdapter(pageBuryPoint) }
 
     override fun setLayout(): Int {
         return R.layout.fragment_home

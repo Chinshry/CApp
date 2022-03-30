@@ -1,11 +1,8 @@
 package com.chinshry.base.adapter
 
-import android.util.Log
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.DiffUtil
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
-import com.chinshry.base.bean.FloorData
-import com.chinshry.base.bean.FloorUIData
 import com.chinshry.base.bean.FloorUIData.Companion.getFloorType
 import com.chinshry.base.holder.FloorBannerViewHolder
 import com.chinshry.base.holder.FloorGridViewHolder
@@ -13,12 +10,13 @@ import com.chinshry.base.util.CommonUtils
 import com.chinshry.base.util.FloorUtil
 import com.chinshry.base.util.FloorUtil.getItemLayout
 import com.chinshry.base.R
+import com.chinshry.base.bean.*
 
 /**
  * Created by chinshry on 2022/03/21.
  * Describe：楼层Adapter
  */
-open class FloorAdapter(val model: Int = 0) :
+open class FloorAdapter(val buryPointInfo: BuryPointInfo? = null) :
     BaseMultiItemQuickAdapter<FloorData, BaseViewHolder>() {
 
     init {
@@ -39,27 +37,26 @@ open class FloorAdapter(val model: Int = 0) :
     }
 
     override fun convertHolder(holder: BaseViewHolder, item: FloorData, payloads: List<Any>) {
-        Log.i(model.toString(), holder.itemViewType.toString())
-
         if (CommonUtils.compareAppVersion(item.appVersion)) {
             return
         }
 
         FloorUtil.initFloorAddHeader(
             item,
-            holder.itemView
+            holder.itemView,
+            buryPointInfo
         )
 
         when (item.itemType) {
             FloorUIData.FloorType.GRID.value -> {
                 val itemLayout = getItemLayout(item.gridPlateType)
-                FloorGridViewHolder.holder(holder.itemView, item, itemLayout, payloads = payloads)
+                FloorGridViewHolder.holder(holder.itemView, item, itemLayout, buryPointInfo, payloads = payloads)
             }
             FloorUIData.FloorType.CARD.value -> {
-                FloorGridViewHolder.holder(holder.itemView, item, R.layout.common_floor_grid_img_item)
+                FloorGridViewHolder.holder(holder.itemView, item, R.layout.common_floor_grid_img_item, buryPointInfo = buryPointInfo)
             }
             FloorUIData.FloorType.BANNER.value -> {
-                FloorBannerViewHolder.holder(holder.itemView, item)
+                FloorBannerViewHolder.holder(holder.itemView, item, buryPointInfo = buryPointInfo)
             }
         }
     }
@@ -172,7 +169,7 @@ open class FloorAdapter(val model: Int = 0) :
 
             floorData.elementAttributes?.forEachIndexed { index, element ->
                 // 只刷新有配置时间值的item
-                if (element?.eliminationLogic ?: 0L > 0L) {
+                if (element.eliminationLogic ?: 0L > 0L) {
                     itemPositionList.add(index)
                 }
             }
@@ -180,8 +177,8 @@ open class FloorAdapter(val model: Int = 0) :
         }
     }
 
-    open fun setList(list: MutableList<FloorData>?) {
-        this.setDiffNewData(list)
+    open fun setList(list: List<FloorData>?) {
+        this.setDiffNewData(list?.toMutableList())
     }
 
 }

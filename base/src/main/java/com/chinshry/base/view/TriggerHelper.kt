@@ -6,6 +6,7 @@ import android.widget.TextView
 import com.chinshry.base.util.getClickBuryPoint
 import com.chinshry.base.util.logBuryPoint
 import com.chinshry.base.R
+import com.chinshry.base.bean.BuryPointInfo
 
 
 const val CLICK_DELAY = 200L
@@ -43,6 +44,12 @@ private fun <T : View> T.clickEnable(): Boolean {
     return clickable
 }
 
+var <T : View> T.buryPoint: BuryPointInfo?
+    get() = getTag(R.id.buryPoint) as? BuryPointInfo
+    set(value) {
+        setTag(R.id.buryPoint, value)
+    }
+
 /***
  * 带延迟过滤点击事件的 View 扩展
  * @param delay Long 延迟时间，默认200毫秒
@@ -50,12 +57,18 @@ private fun <T : View> T.clickEnable(): Boolean {
  * @return Unit
  */
 
-fun <T : View> T.clickFun(text: String?, delay: Long, block: (T) -> Unit) {
+fun <T : View> T.clickFun(
+    text: String?,
+    delay: Long,
+    block: (T) -> Unit
+) {
     triggerDelay = delay
     val viewBuryPoint = getClickBuryPoint(text)
     setOnClickListener {
         if (clickEnable()) {
-            logBuryPoint(viewBuryPoint)
+            text?.let {
+                logBuryPoint(buryPoint ?.apply { viewName = it } ?: viewBuryPoint)
+            }
             block(this)
         }
     }
@@ -66,19 +79,19 @@ fun <T : View> T.clickWithTrigger(
     delay: Long = CLICK_DELAY,
     block: (T) -> Unit
 ) {
-    clickFun(text, delay, block)
+    clickFun(text = text, delay = delay, block = block)
 }
 
 fun <T : TextView> T.clickWithTrigger(
     delay: Long = CLICK_DELAY,
     block: (T) -> Unit
 ) {
-    clickFun(this.text.toString(), delay, block)
+    clickFun(text = this.text.toString(), delay = delay, block = block)
 }
 
 fun <T : ImageView> T.clickWithTrigger(
     delay: Long = CLICK_DELAY,
     block: (T) -> Unit
 ) {
-    clickFun(this.contentDescription?.toString(), delay, block)
+    clickFun(text = this.contentDescription?.toString(), delay = delay, block = block)
 }

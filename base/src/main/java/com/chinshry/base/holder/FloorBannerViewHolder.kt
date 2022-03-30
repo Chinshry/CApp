@@ -1,13 +1,9 @@
 package com.chinshry.base.holder
 
-import android.R.attr.banner
 import android.content.Context
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.blankj.utilcode.util.ActivityUtils
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestOptions
 import com.chinshry.base.R
 import com.chinshry.base.adapter.FloorBannerAdapter
 import com.chinshry.base.bean.BuryPointInfo
@@ -15,10 +11,6 @@ import com.chinshry.base.bean.ElementAttribute
 import com.chinshry.base.bean.FloorData
 import com.chinshry.base.util.CommonUtils.dp2px
 import com.youth.banner.Banner
-import com.youth.banner.adapter.BannerAdapter
-import com.youth.banner.adapter.BannerImageAdapter
-import com.youth.banner.holder.BannerImageHolder
-import com.youth.banner.indicator.CircleIndicator
 import com.youth.banner.indicator.RectangleIndicator
 
 
@@ -40,7 +32,7 @@ class FloorBannerViewHolder {
             bannerViewHolder(
                 banner,
                 floorData.elementAttributes,
-                buryPointInfo = buryPointInfo
+                buryPointInfo
             )
         }
 

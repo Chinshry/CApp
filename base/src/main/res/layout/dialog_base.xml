@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_btn"
@@ -17,7 +17,8 @@
         android:textColor="@color/black"
         android:textStyle="bold"
         android:textSize="20sp"
-        android:text="标题"/>
+        android:visibility="gone"
+        tools:text="标题"/>
 
     <TextView
         android:id="@+id/tv_content"
@@ -29,7 +30,7 @@
         android:textColor="@color/grey"
         android:textSize="16sp"
         android:maxHeight="240dp"
-        android:text="内容"/>
+        tools:text="内容"/>
 
     <View
         android:layout_width="match_parent"

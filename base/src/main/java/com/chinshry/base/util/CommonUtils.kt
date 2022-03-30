@@ -2,14 +2,11 @@ package com.chinshry.base.util
 
 import android.annotation.SuppressLint
 import android.content.Context
-import com.blankj.utilcode.util.GsonUtils
-import com.blankj.utilcode.util.LogUtils
-import com.blankj.utilcode.util.StringUtils
-import com.blankj.utilcode.util.Utils
+import com.blankj.utilcode.util.*
 import com.chinshry.base.bean.BuryPointInfo
 import com.chinshry.base.bean.Constants
 import com.chinshry.base.bean.Module
-import com.chinshry.base.bean.Module.Companion.getBuryNameByModelName
+import com.chinshry.base.bean.Module.Companion.getNameByModelName
 import com.chinshry.base.R
 import com.qmuiteam.qmui.util.QMUIDisplayHelper
 import org.json.JSONArray
@@ -93,12 +90,12 @@ object CommonUtils {
         if (className.contains("$")) return true
         if (className.contains("PermissionHelper")) return false
 
-        val modelName = getBuryNameByModelName(getModuleName(className))
-        return modelName == "" || modelName == Module.BASE.buryName
+        val modelName = getNameByModelName(getModuleName(className))
+        return modelName == "" || modelName == Module.Base.moduleName
     }
 
-    fun getModuleName(packageName: String): String? {
-        return packageName.split(".").getOrNull(2)
+    fun getModuleName(className: String): String? {
+        return className.split(".").getOrNull(2)
     }
 
     /**

@@ -1,6 +1,5 @@
 package com.chinshry.base.bean
 
-import androidx.fragment.app.Fragment
 import java.util.*
 
 /**
@@ -9,41 +8,36 @@ import java.util.*
  */
 enum class Module(
     val model: Int,
-    val buryName: String
+    val moduleName: String
 ) {
-    BASE(0, "基础"),
-    HOME(1, "首页"),
-    TOOL(2, "工具");
+    Base(0, "基础"),
+    Home(1, "首页"),
+    Tool(2, "工具");
 
     companion object {
-        fun getBuryByModel(model: Int?): String? {
+        fun getModuleByModel(model: Int?): Module? {
             values().forEach {
-                if (it.model == model) return it.buryName
+                if (it.model == model) return it
             }
             return null
         }
 
-        fun getBuryNameByModel(model: Int?): String? {
+        fun getNameByModel(model: Int?): String? {
             values().forEach {
-                if (it.model == model) return it.buryName
+                if (it.model == model) return it.moduleName
             }
             return null
         }
 
-        fun getBuryNameByModelName(name: String?): String {
+        fun getNameByModelName(name: String?): String {
             values().forEach {
-                if (it.name.lowercase(Locale.getDefault()) == name) return it.buryName
+                if (it.name.lowercase(Locale.getDefault()) == name) return it.moduleName
             }
             return ""
         }
 
     }
 }
-
-data class FragmentBean(
-    val fragment: Fragment,
-    val model: Int
-)
 
 @Retention(AnnotationRetention.RUNTIME)
 annotation class BuryPoint(val pageName: String = "")

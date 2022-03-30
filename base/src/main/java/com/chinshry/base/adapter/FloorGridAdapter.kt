@@ -61,6 +61,7 @@ class FloorGridAdapter(
             FloorUtil.initFloorItem(
                 element,
                 elementItemView,
+                buryPointInfo
             )
 
             itemColumnSpanSum += element.occupiesColumns ?: 1

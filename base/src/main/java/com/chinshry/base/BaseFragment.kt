@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.chinshry.base.bean.BuryPointInfo
-import com.chinshry.base.bean.Module.Companion.getBuryNameByModelName
+import com.chinshry.base.bean.Module.Companion.getNameByModelName
 import com.chinshry.base.util.CommonUtils
 import com.chinshry.base.util.getPageBuryPointByClass
 import com.chinshry.base.util.logBuryPoint
@@ -27,7 +27,7 @@ abstract class BaseFragment: Fragment() {
         getPageBuryPointByClass(this::class.java)?.let {
             pageBuryPoint = BuryPointInfo(
                 pageName = it.pageName,
-                pageChannel = getBuryNameByModelName(CommonUtils.getModuleName(this.javaClass.name))
+                pageChannel = getNameByModelName(CommonUtils.getModuleName(this.javaClass.name))
             )
         }
 

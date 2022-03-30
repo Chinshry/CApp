@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.chinshry.base.bean.BuryPointInfo
-import com.chinshry.base.bean.Module.Companion.getBuryNameByModelName
+import com.chinshry.base.bean.Module.Companion.getNameByModelName
 import com.chinshry.base.bean.PageParamsBean
 import com.chinshry.base.util.CommonUtils
 import com.chinshry.base.util.CommonUtils.getModuleName
@@ -28,7 +28,7 @@ open class BaseActivity : AppCompatActivity() {
         getPageBuryPointByClass(this::class.java)?.let {
             pageBuryPoint = BuryPointInfo(
                 pageName = it.pageName,
-                pageChannel = getBuryNameByModelName(getModuleName(this.javaClass.name))
+                pageChannel = getNameByModelName(getModuleName(this.javaClass.name))
             )
         }
 

@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.chinshry.base.R
 import com.chinshry.base.bean.*
 import com.chinshry.base.util.CommonUtils.dp2px
+import com.chinshry.base.view.buryPoint
 import com.chinshry.base.view.clickWithTrigger
 
 /**
@@ -27,7 +28,8 @@ object FloorUtil {
      */
     fun initFloorAddHeader(
         floorData: FloorData?,
-        headerView: View
+        headerView: View,
+        buryPointInfo: BuryPointInfo?
     ) {
         floorData?.apply {
             val floorView = headerView.findViewById<LinearLayout>(R.id.common_floor_ll)
@@ -97,6 +99,7 @@ object FloorUtil {
                         moreImageView?.imageTintList =
                             ColorStateList.valueOf(Color.parseColor(hasMoreTextColor))
                     }
+                    moreLayout?.buryPoint = buryPointInfo
                     moreLayout?.clickWithTrigger(getElementBury(hasMoreText)) {
                         // TODO CLICK ITEM
                     }
@@ -119,6 +122,7 @@ object FloorUtil {
     fun initFloorItem(
         itemData: ElementAttribute?,
         itemView: View,
+        buryPointInfo: BuryPointInfo?,
     ) {
         val context: Context = ActivityUtils.getTopActivity().applicationContext
 
@@ -163,6 +167,7 @@ object FloorUtil {
                 badgeView?.visibility = View.GONE
             }
 
+            itemView.buryPoint = buryPointInfo
             itemView.clickWithTrigger(getElementBury(elementTitle, buryPoint)) {
                 // 红点逻辑
                 BadgeUtils.handleBadgeClick(BadgeType.FLOOR, badgeView, this)

@@ -14,6 +14,7 @@ import com.chinshry.base.R
 import com.chinshry.base.bean.BuryPointInfo
 import com.chinshry.base.bean.ElementAttribute
 import com.chinshry.base.util.FloorUtil
+import com.chinshry.base.view.buryPoint
 import com.chinshry.base.view.clickWithTrigger
 import com.youth.banner.Banner
 import com.youth.banner.adapter.BannerAdapter
@@ -79,6 +80,7 @@ class FloorBannerAdapter(
             .listener(requestListener)
             .into(holder.imageView)
 
+        holder.imageView.buryPoint = buryPointInfo
         holder.imageView.clickWithTrigger(FloorUtil.getElementBury(itemData.elementTitle, itemData.buryPoint)) {
             // TODO CLICK ITEM
         }

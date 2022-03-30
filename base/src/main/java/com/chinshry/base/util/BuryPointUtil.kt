@@ -3,7 +3,7 @@ package com.chinshry.base.util
 import com.blankj.utilcode.util.LogUtils
 import com.chinshry.base.bean.BuryPoint
 import com.chinshry.base.bean.BuryPointInfo
-import com.chinshry.base.bean.Module.Companion.getBuryNameByModelName
+import com.chinshry.base.bean.Module.Companion.getNameByModelName
 import java.lang.Exception
 import java.lang.reflect.Method
 
@@ -15,7 +15,7 @@ fun getPageBuryPointByClass(mClass: Class<*>?): BuryPointInfo? {
     return mClass?.getAnnotation(BuryPoint::class.java)?.run {
         BuryPointInfo(
             pageName = pageName,
-            pageChannel = getBuryNameByModelName(CommonUtils.getModuleName(mClass.name))
+            pageChannel = getNameByModelName(CommonUtils.getModuleName(mClass.name))
         )
     }
 }
@@ -24,7 +24,7 @@ fun getPageBuryPointByMethod(method: Method?): BuryPointInfo? {
     return method?.getAnnotation(BuryPoint::class.java)?.run {
         BuryPointInfo(
             pageName = pageName,
-            pageChannel = getBuryNameByModelName(CommonUtils.getModuleName(method.toString()))
+            pageChannel = getNameByModelName(CommonUtils.getModuleName(method.toString()))
         )
     }
 }
