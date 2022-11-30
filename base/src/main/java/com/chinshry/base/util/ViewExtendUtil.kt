@@ -15,6 +15,7 @@ import androidx.annotation.*
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.chinshry.base.R
@@ -287,3 +288,17 @@ fun RecyclerView.getScrollYHeight(
         itemHeight * position - childTop
     }
 }
+
+inline val Double.dp: Int
+    get() = run {
+        return toFloat().dp
+    }
+inline val Int.dp: Int
+    get() = run {
+        return toFloat().dp
+    }
+inline val Float.dp: Int
+    get() = run {
+        val context = ActivityUtils.getTopActivity()
+        return CommonUtils.dp2px(context, 6F)
+    }

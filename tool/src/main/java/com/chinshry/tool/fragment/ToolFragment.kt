@@ -122,6 +122,12 @@ class ToolFragment : BaseFragment() {
                 ARouter.getInstance().build(Router.MASKING).navigation()
             }
         }
+
+        ll_btn.addButton("测试页面") {
+            it.clickWithTrigger {
+                ARouter.getInstance().build(Router.TEST).navigation()
+            }
+        }
     }
 
     @BuryPoint(pageName = "验证码输入组件弹框")

@@ -4,5 +4,6 @@
     <application>
         <activity android:name=".activity.PictureSelectActivity" />
         <activity android:name=".activity.MaskingActivity" />
+        <activity android:name=".activity.TestActivity" />
     </application>
 </manifest>

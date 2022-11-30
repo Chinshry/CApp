@@ -12,7 +12,8 @@ import java.io.File
  */
 @Database(
     entities = [BadgeDataModel::class],
-    version = 1
+    version = 1,
+    exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun badgeDao(): BadgeDao
