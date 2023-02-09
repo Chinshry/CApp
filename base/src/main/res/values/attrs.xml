@@ -64,5 +64,10 @@
         <attr name="verCodeTextSize" format="dimension" />
         <attr name="verCodeTextColor" format="color" />
     </declare-styleable>
-
+    <declare-styleable name="FixedLineHeightTextView">
+        <attr name="fixedLineHeight" format="dimension" />
+    </declare-styleable>
+    <declare-styleable name="RoundImageView">
+        <attr name="round_radius" format="dimension" />
+    </declare-styleable>
 </resources>
