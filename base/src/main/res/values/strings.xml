@@ -4,4 +4,7 @@
     <string name="permission_request_message">请授予应用%s权限，以正常使用该功能。</string>
     <string name="permission_rationale_message">您上次拒绝了应用使用权限, 请同意授权，否则将无法正常使用本功能!</string>
     <string name="permission_denied">您已拒绝应用使用%s权限，请手动打开授权，否则将无法正常使用本功能！</string>
+
+    <string name="test_string_short">这是一条较长的消息这是一条较长的消息</string>
+    <string name="test_string_long">这是一条较长的消息这是一条较长的消息这是一条较长的消息这是这是一条较长的消息这是一条较长的消息这是一条较长的消息这是这是一条较长的消息这是一条较长的消息这是一条较长的消息这是这是一条较长的消息这是一条较长的消息这是一条较长的</string>
 </resources>

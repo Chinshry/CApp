@@ -74,4 +74,10 @@
         <attr name="label_color" format="color" />
         <attr name="label_text_size" format="dimension" />
     </declare-styleable>
+    <declare-styleable name="ScrollTextView">
+        <attr name="scroll_text" format="string" />
+        <attr name="scroll_text_size" format="dimension" />
+        <attr name="scroll_text_color" format="color" />
+        <attr name="scroll_text_line_height" format="dimension" />
+    </declare-styleable>
 </resources>

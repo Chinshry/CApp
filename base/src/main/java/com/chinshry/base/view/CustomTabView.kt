@@ -87,7 +87,7 @@ class CustomTabView(context: Context, attrs: AttributeSet? = null) : LinearLayou
      */
     @SuppressLint("InflateParams")
     fun addTab(tab: Tab) {
-        val tabViewBinding = CustomTabItemBinding.inflate(LayoutInflater.from(context), null, false)
+        val tabViewBinding = CustomTabItemBinding.inflate(LayoutInflater.from(context))
         val position = mTabs.size
         updateTabView(tabViewBinding.root, tab, false)
 

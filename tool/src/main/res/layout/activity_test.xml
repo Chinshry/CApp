@@ -15,6 +15,23 @@
         app:title_text="测试页面"
         app:layout_constraintTop_toTopOf="parent"/>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipChildren="false"
+        android:clipToPadding="false">
+
+        <com.chinshry.base.view.ScrollTextView
+            android:id="@+id/scroll_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:scroll_text="@string/test_string_short"
+            app:scroll_text_size="16sp"
+            app:scroll_text_line_height="20dp"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <LinearLayout
         android:id="@+id/ll_btn"
         android:layout_width="wrap_content"

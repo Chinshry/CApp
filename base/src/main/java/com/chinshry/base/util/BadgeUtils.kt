@@ -46,7 +46,7 @@ object BadgeUtils {
             // 此时距上次点击时间负差值
             val timeSpanNow = -TimeUtils.getTimeSpanByNow(lastBadgeData.clickHideTime, TimeConstants.DAY)
             // 大于等于给定差值 展示； 反之 不展示
-            return timeSpanNow >= eliminationLogic ?: 0L
+            return timeSpanNow >= eliminationLogic
         }
         return false
     }

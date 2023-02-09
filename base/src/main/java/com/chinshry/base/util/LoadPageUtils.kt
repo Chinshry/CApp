@@ -20,7 +20,7 @@ object LoadPageUtils {
         extraText: String? = null,
         extraTextFun: (() -> Unit)? = null,
     ): View {
-        val emptyViewBinding = CommonEmptyLayoutBinding.inflate(LayoutInflater.from(context), null, false)
+        val emptyViewBinding = CommonEmptyLayoutBinding.inflate(LayoutInflater.from(context))
         emptyViewBinding.tvEmpty.text = emptyText
         emptyImg?.let {
             emptyViewBinding.imgEmpty.setImageResource(it)
@@ -43,7 +43,7 @@ object LoadPageUtils {
         reloadText: String? = "重试",
         errorImg: Int? = null,
     ): View {
-        val netErrorViewBinding = CommonNetworkErrorLayoutBinding.inflate(LayoutInflater.from(context), null, false)
+        val netErrorViewBinding = CommonNetworkErrorLayoutBinding.inflate(LayoutInflater.from(context))
         errorImg?.let {
             netErrorViewBinding.imgNet.setImageResource(it)
         }

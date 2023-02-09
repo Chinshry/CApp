@@ -2,9 +2,12 @@ package com.chinshry.tool.activity
 
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.blankj.utilcode.util.StringUtils
 import com.chinshry.base.BaseActivity
+import com.chinshry.base.R
 import com.chinshry.base.bean.BuryPoint
 import com.chinshry.base.bean.Router
+import com.chinshry.base.util.dp
 import com.chinshry.tool.databinding.ActivityTestBinding
 
 /**
@@ -19,5 +22,13 @@ class TestActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(viewBinding.root)
+        init()
     }
+
+    private fun init() {
+        viewBinding.scrollText.setTextSize(16.dp.toFloat())
+        viewBinding.scrollText.setTextLineHeight(20.dp)
+        viewBinding.scrollText.setText(StringUtils.getString(R.string.test_string_long))
+    }
+
 }

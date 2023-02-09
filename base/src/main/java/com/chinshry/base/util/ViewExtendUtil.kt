@@ -326,5 +326,5 @@ inline val Int.dp: Int
 inline val Float.dp: Int
     get() = run {
         val context = ActivityUtils.getTopActivity()
-        return CommonUtils.dp2px(context, 6F)
+        return CommonUtils.dp2px(context, this)
     }
