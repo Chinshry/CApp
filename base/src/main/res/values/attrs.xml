@@ -70,4 +70,8 @@
     <declare-styleable name="RoundImageView">
         <attr name="round_radius" format="dimension" />
     </declare-styleable>
+    <declare-styleable name="LabelTextView">
+        <attr name="label_color" format="color" />
+        <attr name="label_text_size" format="dimension" />
+    </declare-styleable>
 </resources>

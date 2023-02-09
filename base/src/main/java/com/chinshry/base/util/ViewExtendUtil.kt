@@ -211,6 +211,32 @@ private fun getShapeByColor(
     return gradientDrawable
 }
 
+/**
+ * 获取Drawable
+ * @param strokeWith Int?
+ * @param strokeColor Int?
+ * @param solidColor Int?
+ * @param radius Float
+ * @return Drawable
+ */
+fun getShape(
+    strokeWith: Int? = null,
+    @ColorInt strokeColor: Int? = null,
+    @ColorInt solidColor: Int? = null,
+    radius: Float = 0F
+): Drawable {
+    val gradientDrawable = GradientDrawable()
+    gradientDrawable.cornerRadius = radius
+
+    gradientDrawable.setColor(solidColor ?: Color.TRANSPARENT)
+
+    strokeWith?.apply {
+        gradientDrawable.setStroke(strokeWith, strokeColor ?: Color.TRANSPARENT)
+    }
+
+    return gradientDrawable
+}
+
 fun TextView.setTextColorByString(
     textColor: String?,
     @ColorInt defaultTextColor: Int? = null
