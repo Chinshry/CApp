@@ -21,6 +21,7 @@ import com.chinshry.base.util.GlideEngine
 import com.chinshry.base.util.PermissionHelper
 import com.chinshry.base.util.addButton
 import com.chinshry.base.view.clickWithTrigger
+import com.chinshry.tool.databinding.ActivityPictureSelectBinding
 import com.luck.picture.lib.PictureMediaScannerConnection
 import com.luck.picture.lib.PictureSelectionModel
 import com.luck.picture.lib.PictureSelector
@@ -30,7 +31,6 @@ import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.listener.OnResultCallbackListener
 import com.luck.picture.lib.thread.PictureThreadUtils
 import com.luck.picture.lib.tools.MediaUtils
-import kotlinx.android.synthetic.main.activity_picture_select.*
 import java.io.File
 
 
@@ -41,15 +41,17 @@ import java.io.File
 @BuryPoint(pageName = "图片选择器")
 @Route(path = Router.PICTURE_SELECT)
 class PictureSelectActivity : BaseActivity() {
+    private val viewBinding by lazy { ActivityPictureSelectBinding.inflate(layoutInflater) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_picture_select)
+        setContentView(viewBinding.root)
         initView()
     }
 
     @SuppressLint("InflateParams", "SetTextI18n")
     private fun initView() {
-        ll_btn.addButton("选择图片") {
+        viewBinding.llBtn.addButton("选择图片") {
             it.clickWithTrigger {
                 PermissionHelper.request(
                     function = { gallerySelect() },
@@ -58,7 +60,7 @@ class PictureSelectActivity : BaseActivity() {
             }
         }
 
-        ll_btn.addButton("拍摄照片") {
+        viewBinding.llBtn.addButton("拍摄照片") {
             it.clickWithTrigger {
                 PermissionHelper.request(
                     function = { takePicture() },
@@ -68,7 +70,7 @@ class PictureSelectActivity : BaseActivity() {
             }
         }
 
-        ll_btn.addButton("清除缓存") {
+        viewBinding.llBtn.addButton("清除缓存") {
             it.clickWithTrigger {
                 clearCache()
             }
@@ -148,7 +150,7 @@ class PictureSelectActivity : BaseActivity() {
             .setCropDimmedColor(ColorUtils.getColor(R.color.half_black))// 设置圆形裁剪背景色值
             // .freeStyleCropMode(OverlayView.FREESTYLE_CROP_MODE_ENABLE_WITH_PASS_THROUGH) // 裁剪框拖动模式
             // .isCropDragSmoothToCenter(true) // 裁剪框拖动时图片自动跟随居中
-            .forResult(MyResultCallback(this, iv_preview))
+            .forResult(MyResultCallback(this, viewBinding.ivPreview))
     }
 
     /**
@@ -215,7 +217,5 @@ class PictureSelectActivity : BaseActivity() {
         override fun onCancel() {
             LogUtils.d("PictureSelector Cancel")
         }
-
     }
-
 }

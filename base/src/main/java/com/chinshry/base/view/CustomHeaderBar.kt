@@ -17,7 +17,7 @@ import androidx.navigation.fragment.findNavController
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.chinshry.base.R
-import kotlinx.android.synthetic.main.custom_bar.view.*
+import com.chinshry.base.databinding.CustomBarBinding
 
 /**
  * Created by chinshry on 2021/12/23.
@@ -25,12 +25,14 @@ import kotlinx.android.synthetic.main.custom_bar.view.*
  * 需要设置id为custom_header_bar才可自动初始化点击监听
  */
 open class CustomHeaderBar(context: Context, attrs: AttributeSet) : RelativeLayout(context, attrs) {
+    private val viewBinding: CustomBarBinding
 
     init {
         if (id == NO_ID) {
             id = R.id.custom_header_bar
 
         }
+        viewBinding = CustomBarBinding.inflate(LayoutInflater.from(context), this, true)
         initView(context, attrs)
     }
 
@@ -71,9 +73,7 @@ open class CustomHeaderBar(context: Context, attrs: AttributeSet) : RelativeLayo
 
     @SuppressLint("CustomViewStyleable")
     private fun initView(context: Context, attrs: AttributeSet) {
-        LayoutInflater.from(context).inflate(R.layout.custom_bar, this)
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.CustomBar)
-
 
         // 返回按钮 默认显示
         val showBackBtn = typedArray.getBoolean(R.styleable.CustomBar_show_back, true)
@@ -132,68 +132,68 @@ open class CustomHeaderBar(context: Context, attrs: AttributeSet) : RelativeLayo
     }
 
     open fun setTitleTextSize(size: Float) {
-        header_text_title.setTextSize(TypedValue.COMPLEX_UNIT_PX, size)
+        viewBinding.headerTextTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, size)
     }
 
     open fun setPageTitle(str: String?) {
         if (!str.isNullOrEmpty()) {
-            header_text_title?.text = str
+            viewBinding.headerTextTitle.text = str
         }
     }
 
     open fun setRightTitle(str: String?) {
         if (!str.isNullOrEmpty()) {
-            header_btn_right?.visibility = VISIBLE
-            header_btn_right?.text = str
+            viewBinding.headerBtnRight.visibility = VISIBLE
+            viewBinding.headerBtnRight.text = str
         }
     }
 
     open fun setLeftImg(drawable: Drawable?) {
         if (drawable != null) {
-            header_btn_back?.visibility = VISIBLE
-            header_btn_back?.setImageDrawable(drawable)
+            viewBinding.headerBtnBack.visibility = VISIBLE
+            viewBinding.headerBtnBack.setImageDrawable(drawable)
         }
     }
 
     open fun setRightImg(drawable: Drawable?) {
         if (drawable != null) {
-            header_btn_close?.visibility = VISIBLE
-            header_btn_close?.setImageDrawable(drawable)
+            viewBinding.headerBtnClose.visibility = VISIBLE
+            viewBinding.headerBtnClose.setImageDrawable(drawable)
         }
     }
 
     open fun setBackVisible(visible: Boolean) {
-        header_btn_back?.isVisible = visible
+        viewBinding.headerBtnBack.isVisible = visible
     }
 
     open fun setCloseVisible(visible: Boolean) {
-        header_btn_close?.isVisible = visible
+        viewBinding.headerBtnClose.isVisible = visible
     }
 
     open fun setRightTextVisible(visible: Boolean) {
-        header_btn_right?.isVisible = visible
+        viewBinding.headerBtnRight.isVisible = visible
     }
 
     open fun setBackOnClickListener(listener: OnClickListener) {
-        header_btn_back?.clickWithTrigger {
+        viewBinding.headerBtnBack.clickWithTrigger {
             listener.onClick(it)
         }
     }
 
     open fun setCloseOnClickListener(listener: OnClickListener) {
-        header_btn_close?.clickWithTrigger {
+        viewBinding.headerBtnClose.clickWithTrigger {
             listener.onClick(it)
         }
     }
 
     open fun setRightTextOnClickListener(listener: OnClickListener) {
-        header_btn_right?.clickWithTrigger {
+        viewBinding.headerBtnRight.clickWithTrigger {
             listener.onClick(it)
         }
     }
 
     open fun setTransparentBarTheme(transparent: Boolean = true) {
-        header_bar_container?.setBackgroundColor(
+        viewBinding.headerBarContainer.setBackgroundColor(
             if (transparent) {
                 Color.TRANSPARENT
             } else {
@@ -206,27 +206,27 @@ open class CustomHeaderBar(context: Context, attrs: AttributeSet) : RelativeLayo
     open fun setWhiteBarTheme(white: Boolean = true) {
         val textColor: Int
         val color = if (white) {
-            header_bar_container?.setBackgroundColor(Color.TRANSPARENT)
+            viewBinding.headerBarContainer.setBackgroundColor(Color.TRANSPARENT)
             textColor = Color.WHITE
             Color.WHITE
         } else {
-            header_bar_container?.setBackgroundColor(Color.WHITE)
+            viewBinding.headerBarContainer.setBackgroundColor(Color.WHITE)
             textColor = Color.parseColor("#333333")
             Color.parseColor("#4F4F4F")
         }
         setShadowLineVisible(!white)
-        header_text_title?.setTextColor(textColor)
-        header_btn_right?.setTextColor(textColor)
-        header_btn_close?.imageTintList = ColorStateList.valueOf(color)
-        header_btn_back?.imageTintList = ColorStateList.valueOf(color)
+        viewBinding.headerTextTitle.setTextColor(textColor)
+        viewBinding.headerBtnRight.setTextColor(textColor)
+        viewBinding.headerBtnClose.imageTintList = ColorStateList.valueOf(color)
+        viewBinding.headerBtnBack.imageTintList = ColorStateList.valueOf(color)
     }
 
     open fun setShadowLineVisible(visible: Boolean) {
-        header_shadow_line.isVisible = visible
+        viewBinding.headerShadowLine.isVisible = visible
     }
 
     open fun setHeaderMargin() {
-        header_bar_container?.layoutParams?.let {
+        viewBinding.headerBarContainer.layoutParams?.let {
             (it as MarginLayoutParams).topMargin = BarUtils.getStatusBarHeight()
         }
     }

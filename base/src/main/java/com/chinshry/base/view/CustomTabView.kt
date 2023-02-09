@@ -12,8 +12,10 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.ColorInt
+import androidx.core.view.isVisible
 import com.blankj.utilcode.util.ColorUtils
 import com.chinshry.base.R
+import com.chinshry.base.databinding.CustomTabItemBinding
 
 
 /**
@@ -85,20 +87,20 @@ class CustomTabView(context: Context, attrs: AttributeSet? = null) : LinearLayou
      */
     @SuppressLint("InflateParams")
     fun addTab(tab: Tab) {
-        val tabView: View = LayoutInflater.from(context).inflate(R.layout.custom_tab_item, null)
+        val tabViewBinding = CustomTabItemBinding.inflate(LayoutInflater.from(context), null, false)
         val position = mTabs.size
-        updateTabView(tabView, tab, false)
+        updateTabView(tabViewBinding.root, tab, false)
 
-        tabView.clickWithTrigger{
+        tabViewBinding.root.clickWithTrigger{
             tab.selectFunction()
             updateTab(position)
         }
 
-        mTabViews.add(tabView)
+        mTabViews.add(tabViewBinding.root)
         mTabs.add(tab)
 
         val layoutParams = LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1f)
-        addView(tabView, layoutParams)
+        addView(tabViewBinding.root, layoutParams)
 
     }
 
@@ -128,32 +130,18 @@ class CustomTabView(context: Context, attrs: AttributeSet? = null) : LinearLayou
 
         tabData?.apply {
             // tab标题文字
-            if (isSelected) {
-                textView?.text = textSelect
-            } else {
-                textView?.text = textNormal
-            }
+            textView?.text = if (isSelected) textSelect else textNormal
 
             // tab标题颜色
-            if (isSelected) {
-                textView.setTextColor(textColorSelect)
-            } else {
-                textView.setTextColor(textColorNormal)
-            }
+            textView?.setTextColor(if (isSelected) textColorSelect else textColorNormal)
 
             // tab icon
-            if (isSelected) {
-                iconView.setImageDrawable(iconSelect)
-            } else {
-                iconView.setImageDrawable(iconNormal)
-            }
+            iconView?.setImageDrawable(if (isSelected) iconSelect else iconNormal)
 
             // tab badge
-            if (isSelected) {
-                badgeView?.visibility = View.GONE
-            } else {
-                badgeView?.visibility = View.VISIBLE
-                badgeView.setImageDrawable(badge)
+            badgeView?.isVisible = !isSelected
+            if (!isSelected) {
+                badgeView?.setImageDrawable(badge)
             }
 
         }

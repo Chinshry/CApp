@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.viewbinding.ViewBinding
 import com.chinshry.base.bean.BuryPointInfo
 import com.chinshry.base.bean.Module.Companion.getNameByModelName
 import com.chinshry.base.util.CommonUtils
@@ -15,7 +16,12 @@ import com.chinshry.base.view.CustomHeaderBar.Companion.initCustomHeaderBar
 /**
  * Created by chinshry on 2021/12/23.
  */
-abstract class BaseFragment: Fragment() {
+abstract class BaseFragment<VB : ViewBinding>(
+    val bindingBlock:(LayoutInflater, ViewGroup?,Boolean) -> VB
+) : Fragment() {
+    private var _binding: VB? = null
+    val viewBinding get() = _binding!!
+
     open var pageBuryPoint: BuryPointInfo = BuryPointInfo()
 
     override fun onCreateView(
@@ -33,7 +39,8 @@ abstract class BaseFragment: Fragment() {
 
         logBuryPoint(pageBuryPoint)
 
-        return inflater.inflate(setLayout(), container, false)
+        _binding = bindingBlock(inflater, container, false)
+        return viewBinding.root
     }
 
     override fun onHiddenChanged(hidden: Boolean) {
@@ -49,5 +56,8 @@ abstract class BaseFragment: Fragment() {
         initCustomHeaderBar(this)
     }
 
-    abstract fun setLayout(): Int
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
 }

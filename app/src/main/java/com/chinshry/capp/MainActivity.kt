@@ -9,21 +9,28 @@ import com.chinshry.base.BaseActivity
 import com.chinshry.base.bean.Module
 import com.chinshry.base.bean.TabBean
 import com.chinshry.base.view.CustomTabView
+import com.chinshry.capp.databinding.ActivityMainBinding
 import com.chinshry.home.fragment.HomeFragment
 import com.chinshry.tool.fragment.ToolFragment
-import kotlinx.android.synthetic.main.activity_main.*
 
 /**
  * Created by chinshry on 2021/12/23.
  * Describe： 主Activity
  */
 open class MainActivity : BaseActivity() {
-
+    private val viewBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     private lateinit var currentFragment: Fragment
-
     private val fragments = listOf(HomeFragment(), ToolFragment())
 
     private val tabData = listOf(
+        TabBean(
+            model = 2,
+            normalTitle = "工具",
+            selectTitle = "工具1",
+            normalIcon = R.mipmap.ic_tab_util,
+            selectIcon = R.mipmap.ic_tab_util_selected,
+            badge = R.drawable.badge_red
+        ),
         TabBean(
             model = 1,
             normalTitle = "首页",
@@ -34,19 +41,11 @@ open class MainActivity : BaseActivity() {
             selectTextColor = R.color.red,
             badge = R.drawable.badge_red
         ),
-        TabBean(
-            model = 2,
-            normalTitle = "工具",
-            selectTitle = "工具1",
-            normalIcon = R.mipmap.ic_tab_util,
-            selectIcon = R.mipmap.ic_tab_util_selected,
-            badge = R.drawable.badge_red
-        ),
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(viewBinding.root)
 
         initApp()
         initCustomTab()
@@ -66,7 +65,7 @@ open class MainActivity : BaseActivity() {
     private fun initCustomTab() {
         tabData.forEach {
             if (it.model == null) return@forEach
-            custom_tab.addTab(
+            viewBinding.customTab.addTab(
                 CustomTabView.Tab()
                     .setTabText(
                         normal = it.normalTitle,
@@ -84,7 +83,7 @@ open class MainActivity : BaseActivity() {
             )
         }
 
-        custom_tab.setCurrentItem(0)
+        viewBinding.customTab.setCurrentItem(0)
     }
 
     private fun changeFragment(model: Int) {

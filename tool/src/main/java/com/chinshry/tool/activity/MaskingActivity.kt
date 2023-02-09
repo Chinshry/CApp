@@ -13,10 +13,9 @@ import com.chinshry.base.bean.BuryPoint
 import com.chinshry.base.bean.Router
 import com.chinshry.base.view.MaskingTextView
 import com.chinshry.base.view.MaskingTextView.MaskType
-import com.chinshry.tool.R
+import com.chinshry.tool.databinding.ActivityMaskingBinding
 import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView
 import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView
-import kotlinx.android.synthetic.main.activity_masking.*
 
 
 /**
@@ -26,14 +25,16 @@ import kotlinx.android.synthetic.main.activity_masking.*
 @BuryPoint(pageName = "脱敏测试")
 @Route(path = Router.MASKING)
 class MaskingActivity : BaseActivity() {
+    private val viewBinding by lazy { ActivityMaskingBinding.inflate(layoutInflater) }
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_masking)
+        setContentView(viewBinding.root)
         initGroupListView()
 
-        rl_activity.setOnTouchListener { _, _ ->
-            rl_activity.requestFocus()
+        viewBinding.rlActivity.setOnTouchListener { _, _ ->
+            viewBinding.rlActivity.requestFocus()
         }
     }
 
@@ -45,17 +46,17 @@ class MaskingActivity : BaseActivity() {
             .addItemView(getGroupMaskingItemView("证件号", MaskType.CRT), null)
             .addItemView(getGroupMaskingItemView("银行卡", MaskType.BANKCARD), null)
             .setMiddleSeparatorInset(SizeUtils.dp2px(16F), SizeUtils.dp2px(16F))
-            .addTo(groupListView)
+            .addTo(viewBinding.groupListView)
 
         val itemCustomMaskView = getGroupMaskingItemView("脱敏字符串", MaskType.CUSTOM)
         val itemCustomMaskInputView = itemCustomMaskView.accessoryContainerView.getChildAt(0) as? MaskingTextView
 
         val refreshMaskView = {
             itemCustomMaskInputView?.requestFocus()
-            rl_activity.requestFocus()
+            viewBinding.rlActivity.requestFocus()
         }
 
-        val itemWithSwitch = groupListView.createItemView("脱敏字符替代所有")
+        val itemWithSwitch = viewBinding.groupListView.createItemView("脱敏字符替代所有")
         itemWithSwitch.accessoryType = QMUICommonListItemView.ACCESSORY_TYPE_SWITCH
         itemWithSwitch.switch.setOnCheckedChangeListener { _, isChecked ->
             itemCustomMaskInputView?.maskReplacementAll = isChecked
@@ -97,7 +98,7 @@ class MaskingActivity : BaseActivity() {
             )
             .addItemView(itemWithSwitch, null)
             .setMiddleSeparatorInset(SizeUtils.dp2px(16F), SizeUtils.dp2px(16F))
-            .addTo(groupListView)
+            .addTo(viewBinding.groupListView)
     }
 
     private fun getGroupMaskingItemView(title: String, type: MaskType): QMUICommonListItemView {
@@ -106,7 +107,7 @@ class MaskingActivity : BaseActivity() {
         maskingView.maskType = type
         maskingView.gravity = Gravity.END
 
-        val groupItemView: QMUICommonListItemView = groupListView.createItemView(title)
+        val groupItemView: QMUICommonListItemView = viewBinding.groupListView.createItemView(title)
         groupItemView.accessoryType = QMUICommonListItemView.ACCESSORY_TYPE_CUSTOM
         groupItemView.addAccessoryCustomView(maskingView)
 
@@ -132,7 +133,7 @@ class MaskingActivity : BaseActivity() {
             }
         }
 
-        val groupItemView: QMUICommonListItemView = groupListView.createItemView(title)
+        val groupItemView: QMUICommonListItemView = viewBinding.groupListView.createItemView(title)
         groupItemView.accessoryType = QMUICommonListItemView.ACCESSORY_TYPE_CUSTOM
         groupItemView.addAccessoryCustomView(editTextView)
 

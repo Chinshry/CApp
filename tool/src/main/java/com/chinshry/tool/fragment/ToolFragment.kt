@@ -19,8 +19,8 @@ import com.chinshry.base.util.*
 import com.chinshry.base.view.VerCodeEditText
 import com.chinshry.base.view.VerCodeLayout
 import com.chinshry.base.view.clickWithTrigger
-import kotlinx.android.synthetic.main.fragment_tool.*
 import com.chinshry.tool.R
+import com.chinshry.tool.databinding.FragmentToolBinding
 
 
 /**
@@ -28,11 +28,7 @@ import com.chinshry.tool.R
  * Describe：工具Fragment
  */
 @BuryPoint(pageName = "工具Fragment")
-class ToolFragment : BaseFragment() {
-    override fun setLayout(): Int {
-        return R.layout.fragment_tool
-    }
-
+class ToolFragment : BaseFragment<FragmentToolBinding>(FragmentToolBinding::inflate) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -41,7 +37,7 @@ class ToolFragment : BaseFragment() {
 
     @SuppressLint("InflateParams", "SetTextI18n")
     private fun initView() {
-        ll_btn.addButton("测试弹窗") {
+        viewBinding.llBtn.addButton("测试弹窗") {
             it.clickWithTrigger {
                 WindowManagerList.addWindow(
                     WindowConfig.DEVICE_CHECK,
@@ -91,13 +87,13 @@ class ToolFragment : BaseFragment() {
             }
         }
 
-        ll_btn.addButton("系统设置") {
+        viewBinding.llBtn.addButton("系统设置") {
             it.clickWithTrigger {
                 AppUtils.launchAppDetailsSettings()
             }
         }
 
-        ll_btn.addButton("ROOT和模拟器检测") {
+        viewBinding.llBtn.addButton("ROOT和模拟器检测") {
             it.clickWithTrigger {
                 if (!DevicesCheckUtil.checkRootAndEmulator(requireContext())) {
                     ToastUtils.showShort("您的设备未root，且为真机")
@@ -105,25 +101,25 @@ class ToolFragment : BaseFragment() {
             }
         }
 
-        ll_btn.addButton("验证码输入框组件") {
+        viewBinding.llBtn.addButton("验证码输入框组件") {
             it.clickWithTrigger {
                 showCodeInputDialog()
             }
         }
 
-        ll_btn.addButton("图片选择器") {
+        viewBinding.llBtn.addButton("图片选择器") {
             it.clickWithTrigger {
                 ARouter.getInstance().build(Router.PICTURE_SELECT).navigation()
             }
         }
 
-        ll_btn.addButton("脱敏测试") {
+        viewBinding.llBtn.addButton("脱敏测试") {
             it.clickWithTrigger {
                 ARouter.getInstance().build(Router.MASKING).navigation()
             }
         }
 
-        ll_btn.addButton("测试页面") {
+        viewBinding.llBtn.addButton("测试页面") {
             it.clickWithTrigger {
                 ARouter.getInstance().build(Router.TEST).navigation()
             }
@@ -146,7 +142,7 @@ class ToolFragment : BaseFragment() {
                         ToastUtils.showShort(code)
                     }
 
-                    override fun onInput() {}
+                    override fun onInput() = Unit
                 })
             }
             .initViewById<TextView>(

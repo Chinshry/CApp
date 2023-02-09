@@ -20,19 +20,19 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import com.chinshry.base.R
 import com.chinshry.base.bean.FloatingWindowData
+import com.chinshry.base.databinding.LayoutTabFloatBinding
 import com.chinshry.base.util.FloorUtil.getImageUrl
-import kotlinx.android.synthetic.main.layout_tab_float.view.*
 
 /**
  * Created by chinshry on 2022/03/21.
  * Describe：tab浮窗组件
  */
 class FloatView(context: Context, attrs: AttributeSet) : RelativeLayout(context, attrs) {
+    private val viewBinding: LayoutTabFloatBinding
 
     init {
-        initView(context)
+        viewBinding = LayoutTabFloatBinding.inflate(LayoutInflater.from(context), this, true)
     }
 
     companion object {
@@ -46,10 +46,6 @@ class FloatView(context: Context, attrs: AttributeSet) : RelativeLayout(context,
     private var state = 0
     private var dataId: String? = null
     private var mHandler = Handler(Looper.getMainLooper())
-
-    private fun initView(context: Context) {
-        LayoutInflater.from(context).inflate(R.layout.layout_tab_float, this)
-    }
 
     /**
      * 初始化浮窗
@@ -68,14 +64,14 @@ class FloatView(context: Context, attrs: AttributeSet) : RelativeLayout(context,
             dataId = floatingWindowData.id
         }
 
-        iv_close.isVisible = floatingWindowData.closed ?: true
+        viewBinding.ivClose.isVisible = floatingWindowData.closed ?: true
 
-        iv_close.clickWithTrigger {
+        viewBinding.ivClose.clickWithTrigger {
             remove(recyclerView)
         }
 
-        iv_image.contentDescription = floatingWindowData.buryPoint
-        iv_image.clickWithTrigger(floatingWindowData.buryPoint) {
+        viewBinding.ivImage.contentDescription = floatingWindowData.buryPoint
+        viewBinding.ivImage.clickWithTrigger(floatingWindowData.buryPoint) {
             // TODO CLICK ITEM
         }
 
@@ -172,7 +168,7 @@ class FloatView(context: Context, attrs: AttributeSet) : RelativeLayout(context,
         Glide.with(context)
             .load(getImageUrl(pictureUrl))
             .listener(requestListener)
-            .into(iv_image)
+            .into(viewBinding.ivImage)
     }
 
     /**
@@ -181,7 +177,7 @@ class FloatView(context: Context, attrs: AttributeSet) : RelativeLayout(context,
      */
     private fun changeFloatState(isShowAnim: Boolean) {
         // 折叠收起动画
-        var moveList = listOf(0f, (iv_image.width / 2 + iv_image.marginEnd).toFloat())
+        var moveList = listOf(0f, (viewBinding.ivImage.width / 2 + viewBinding.ivImage.marginEnd).toFloat())
         var alphaList = listOf(1.0f, 0.3f)
 
         // 若现在非展示状态 要展开 动画反转

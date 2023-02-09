@@ -16,9 +16,8 @@ import com.chinshry.base.bean.BuryPointInfo
 import com.chinshry.base.bean.ElementAttribute
 import com.chinshry.base.bean.FloorData
 import com.chinshry.base.util.CommonUtils.dp2px
-import com.chinshry.base.R
 import com.chinshry.base.adapter.FloorGridAdapter
-import kotlinx.android.synthetic.main.scroll_gridview.view.*
+import com.chinshry.base.databinding.ScrollGridviewBinding
 import kotlin.math.abs
 import kotlin.math.ceil
 
@@ -30,6 +29,8 @@ import kotlin.math.ceil
 class ScrollGridView(context: Context, attrs: AttributeSet?) :
     RelativeLayout(context, attrs) {
     private var adapter: BaseQuickAdapter<MutableList<ElementAttribute>, BaseViewHolder>? = null
+    private val viewBinding: ScrollGridviewBinding
+
     /** 楼层水平间距 **/
     var viewPadding: Int = SizeUtils.dp2px(15f)
         set(value) {
@@ -61,7 +62,7 @@ class ScrollGridView(context: Context, attrs: AttributeSet?) :
     constructor(context: Context) : this(context, null)
 
     init {
-        LayoutInflater.from(context).inflate(R.layout.scroll_gridview, this)
+        viewBinding = ScrollGridviewBinding.inflate(LayoutInflater.from(context), this)
     }
 
     /**
@@ -108,9 +109,9 @@ class ScrollGridView(context: Context, attrs: AttributeSet?) :
         )
 
         val snapHelper = CustomSnapHelper()
-        snapHelper.attachToRecyclerView(recyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
-        recyclerView.adapter = adapter
+        snapHelper.attachToRecyclerView(viewBinding.recyclerView)
+        viewBinding.recyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+        viewBinding.recyclerView.adapter = adapter
     }
 
     /**
@@ -124,7 +125,7 @@ class ScrollGridView(context: Context, attrs: AttributeSet?) :
             // 头尾padding = 控件左边距 - (item间距/2)
             val pagePaddingHorizontal = viewPadding - dp2px(context, itemDividerVerticalHeight) / 2
 
-            recyclerView.let { view ->
+            viewBinding.recyclerView.let { view ->
                 view.setPadding(
                     pagePaddingHorizontal,
                     view.paddingTop,
@@ -146,26 +147,26 @@ class ScrollGridView(context: Context, attrs: AttributeSet?) :
 
     private fun initIndicator() {
         // 半页滚动 不显示指示器
-        indicator.isVisible = scrollScreen
+        viewBinding.indicator.isVisible = scrollScreen
 
-        indicator.count =
+        viewBinding.indicator.count =
             if (scrollScreen) {
                 adapter?.itemCount ?: 1
             } else {
                 // 暂未用到 因目前半屏滚动不显示指示器
-                val columnCountSum = adapter?.itemCount ?: 1 * pagerColumnCount
+                val columnCountSum = adapter?.itemCount ?: (1 * pagerColumnCount)
                 // 滑动page = ceil((总column个数 - floor(一屏显示个数)) / 一次滚动个数) + 1
                 ceil((columnCountSum - gridColumnsNum.toInt()) / pagerColumnCount.toFloat()).toInt() + 1
             }
 
-        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        viewBinding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 val offsetX = recyclerView.computeHorizontalScrollOffset()
                 val range = recyclerView.computeHorizontalScrollRange()
                 val extend = recyclerView.computeHorizontalScrollExtent()
                 val progress: Float = offsetX * 1.0f / (range - extend)
-                indicator.progress = progress
+                viewBinding.indicator.progress = progress
             }
         })
     }

@@ -3,10 +3,9 @@ package com.chinshry.base.util
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
-import com.chinshry.base.R
+import com.chinshry.base.databinding.CommonEmptyLayoutBinding
+import com.chinshry.base.databinding.CommonNetworkErrorLayoutBinding
 import com.chinshry.base.view.clickWithTrigger
-import kotlinx.android.synthetic.main.common_empty_layout.view.*
-import kotlinx.android.synthetic.main.common_network_error_layout.view.*
 
 /**
  * Created by chinshry on 2021/5/23.
@@ -21,21 +20,21 @@ object LoadPageUtils {
         extraText: String? = null,
         extraTextFun: (() -> Unit)? = null,
     ): View {
-        val emptyView: View = LayoutInflater.from(context).inflate(R.layout.common_empty_layout, null)
-        emptyView.tv_empty.text = emptyText
+        val emptyViewBinding = CommonEmptyLayoutBinding.inflate(LayoutInflater.from(context), null, false)
+        emptyViewBinding.tvEmpty.text = emptyText
         emptyImg?.let {
-            emptyView.img_empty.setImageResource(it)
+            emptyViewBinding.imgEmpty.setImageResource(it)
         }
         if (!extraText.isNullOrEmpty()) {
-            emptyView.btn_empty.visibility = View.VISIBLE
-            emptyView.btn_empty.text = extraText
+            emptyViewBinding.btnEmpty.visibility = View.VISIBLE
+            emptyViewBinding.btnEmpty.text = extraText
             extraTextFun?.let {
-                emptyView.btn_empty.clickWithTrigger {
+                emptyViewBinding.btnEmpty.clickWithTrigger {
                     extraTextFun()
                 }
             }
         }
-        return emptyView
+        return emptyViewBinding.root
     }
 
     fun getNetErrorView(
@@ -44,16 +43,15 @@ object LoadPageUtils {
         reloadText: String? = "重试",
         errorImg: Int? = null,
     ): View {
-        val netErrorView: View =
-            LayoutInflater.from(context).inflate(R.layout.common_network_error_layout, null)
+        val netErrorViewBinding = CommonNetworkErrorLayoutBinding.inflate(LayoutInflater.from(context), null, false)
         errorImg?.let {
-            netErrorView.img_net.setImageResource(it)
+            netErrorViewBinding.imgNet.setImageResource(it)
         }
-        netErrorView.btn_reload.text = reloadText
-        netErrorView.btn_reload.clickWithTrigger {
+        netErrorViewBinding.btnReload.text = reloadText
+        netErrorViewBinding.btnReload.clickWithTrigger {
             reloadFun()
         }
-        return netErrorView
+        return netErrorViewBinding.root
     }
 
 }

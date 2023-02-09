@@ -12,21 +12,15 @@ import com.chinshry.base.util.CommonUtils.dp2px
 import com.chinshry.base.util.getScrollYHeight
 import com.chinshry.base.view.FloorDivider
 import com.chinshry.base.view.CRefreshHeader
-import com.chinshry.home.R
-import kotlinx.android.synthetic.main.fragment_home.*
+import com.chinshry.home.databinding.FragmentHomeBinding
 
 /**
  * Created by chinshry on 2021/12/23.
  * Describe： 主页Fragment
  */
 @BuryPoint(pageName = "主页Fragment")
-class HomeFragment: BaseFragment() {
-
+class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
     private val floorAdapter: FloorAdapter by lazy { FloorAdapter(pageBuryPoint) }
-
-    override fun setLayout(): Int {
-        return R.layout.fragment_home
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -34,27 +28,27 @@ class HomeFragment: BaseFragment() {
     }
 
     private fun initView() {
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.isNestedScrollingEnabled = false
-        recyclerView.itemAnimator?.changeDuration = 0
-        recyclerView.setItemViewCacheSize(Constants.VIEW_CACHE_SIZE)
-        recyclerView.addItemDecoration(FloorDivider())
-        (recyclerView.itemAnimator as SimpleItemAnimator?)?.supportsChangeAnimations = false
+        viewBinding.recyclerView.layoutManager = LinearLayoutManager(context)
+        viewBinding.recyclerView.isNestedScrollingEnabled = false
+        viewBinding.recyclerView.itemAnimator?.changeDuration = 0
+        viewBinding.recyclerView.setItemViewCacheSize(Constants.VIEW_CACHE_SIZE)
+        viewBinding.recyclerView.addItemDecoration(FloorDivider())
+        (viewBinding.recyclerView.itemAnimator as SimpleItemAnimator?)?.supportsChangeAnimations = false
 
-        recyclerView.adapter = floorAdapter
+        viewBinding.recyclerView.adapter = floorAdapter
 
-        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        viewBinding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 initToolbar(recyclerView.getScrollYHeight())
                 super.onScrolled(recyclerView, dx, dy)
             }
         })
 
-        refreshLayout.setOnRefreshListener { getFloorData() }
-        refreshLayout.autoRefresh()
+        viewBinding.refreshLayout.setOnRefreshListener { getFloorData() }
+        viewBinding.refreshLayout.autoRefresh()
         // 适配刘海屏
-        refreshLayout.refreshHeader?.let {
-            refreshLayout.setRefreshHeader((it as CRefreshHeader).marginStatusBar())
+        viewBinding.refreshLayout.refreshHeader?.let {
+            viewBinding.refreshLayout.setRefreshHeader((it as CRefreshHeader).marginStatusBar())
         }
     }
 
@@ -63,23 +57,23 @@ class HomeFragment: BaseFragment() {
 
         val toolBarAlpha = when {
             scrollYHeight >= baseHeight -> {
-                toolbar.visibility = View.VISIBLE
+                viewBinding.toolbar.visibility = View.VISIBLE
                 1f
             }
             scrollYHeight == 0 -> {
-                toolbar.visibility = View.GONE
+                viewBinding.toolbar.visibility = View.GONE
                 0f
             }
             else -> {
-                toolbar.visibility = View.VISIBLE
+                viewBinding.toolbar.visibility = View.VISIBLE
                 scrollYHeight / (baseHeight * 1f)
             }
         }
 
         // changeStatusBarColor()
 
-        toolbar.alpha = toolBarAlpha
-        tv_toolbar.alpha = toolBarAlpha
+        viewBinding.toolbar.alpha = toolBarAlpha
+        viewBinding.tvToolbar.alpha = toolBarAlpha
     }
 
     private fun getFloorData() {
@@ -209,7 +203,7 @@ class HomeFragment: BaseFragment() {
             )
         )
 
-        refreshLayout.finishRefresh(1000)
+        viewBinding.refreshLayout.finishRefresh(1000)
 
 
         // tab浮窗展示
@@ -219,7 +213,7 @@ class HomeFragment: BaseFragment() {
             delayShowTime = 3
         )
 
-        floatView.initFloat(recyclerView, floatData)
+        viewBinding.floatView.initFloat(viewBinding.recyclerView, floatData)
     }
 
 }
