@@ -4,14 +4,21 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.view.View
-import android.widget.*
+import android.widget.GridLayout
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.text.isDigitsOnly
 import com.blankj.utilcode.util.ActivityUtils
-import com.blankj.utilcode.util.SizeUtils
 import com.bumptech.glide.Glide
 import com.chinshry.base.R
-import com.chinshry.base.bean.*
+import com.chinshry.base.bean.BuryPointInfo
+import com.chinshry.base.bean.Constants
+import com.chinshry.base.bean.ElementAttribute
+import com.chinshry.base.bean.FloorData
+import com.chinshry.base.bean.FloorUIData
 import com.chinshry.base.util.CommonUtils.dp2px
 import com.chinshry.base.view.buryPoint
 import com.chinshry.base.view.clickWithTrigger
@@ -196,11 +203,11 @@ object FloorUtil {
         parent.addView(itemView, layoutParams)
 
         // 添加左右边距
-        layoutParams.leftMargin = SizeUtils.dp2px(itemDividerVerticalHeight ?: 0f) / 2
-        layoutParams.rightMargin = SizeUtils.dp2px(itemDividerVerticalHeight ?: 0f) / 2
+        layoutParams.leftMargin = ((itemDividerVerticalHeight ?: 0f) / 2).dp
+        layoutParams.rightMargin = ((itemDividerVerticalHeight ?: 0f) / 2).dp
         // 非第一行item 添加上边距
         if (isFirstColumnItem == false) {
-            layoutParams.topMargin = SizeUtils.dp2px(itemDividerHorizontalHeight ?: 0f)
+            layoutParams.topMargin = (itemDividerHorizontalHeight ?: 0f).dp
         }
     }
 

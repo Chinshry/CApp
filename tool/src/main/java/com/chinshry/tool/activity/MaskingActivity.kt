@@ -4,13 +4,14 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.Gravity
 import android.view.inputmethod.EditorInfo
-import android.widget.EditText
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.blankj.utilcode.util.ScreenUtils
-import com.blankj.utilcode.util.SizeUtils
 import com.chinshry.base.BaseActivity
 import com.chinshry.base.bean.BuryPoint
 import com.chinshry.base.bean.Router
+import com.chinshry.base.util.dp
+import com.chinshry.base.util.getGroupInputItemView
+import com.chinshry.base.util.getGroupSwitchItemView
 import com.chinshry.base.view.MaskingTextView
 import com.chinshry.base.view.MaskingTextView.MaskType
 import com.chinshry.tool.databinding.ActivityMaskingBinding
@@ -33,8 +34,8 @@ class MaskingActivity : BaseActivity() {
         setContentView(viewBinding.root)
         initGroupListView()
 
-        viewBinding.rlActivity.setOnTouchListener { _, _ ->
-            viewBinding.rlActivity.requestFocus()
+        viewBinding.llActivity.setOnTouchListener { _, _ ->
+            viewBinding.llActivity.requestFocus()
         }
     }
 
@@ -45,7 +46,7 @@ class MaskingActivity : BaseActivity() {
             .addItemView(getGroupMaskingItemView("姓名", MaskType.NAME), null)
             .addItemView(getGroupMaskingItemView("证件号", MaskType.CRT), null)
             .addItemView(getGroupMaskingItemView("银行卡", MaskType.BANKCARD), null)
-            .setMiddleSeparatorInset(SizeUtils.dp2px(16F), SizeUtils.dp2px(16F))
+            .setMiddleSeparatorInset(16.dp, 16.dp)
             .addTo(viewBinding.groupListView)
 
         val itemCustomMaskView = getGroupMaskingItemView("脱敏字符串", MaskType.CUSTOM)
@@ -53,21 +54,14 @@ class MaskingActivity : BaseActivity() {
 
         val refreshMaskView = {
             itemCustomMaskInputView?.requestFocus()
-            viewBinding.rlActivity.requestFocus()
-        }
-
-        val itemWithSwitch = viewBinding.groupListView.createItemView("脱敏字符替代所有")
-        itemWithSwitch.accessoryType = QMUICommonListItemView.ACCESSORY_TYPE_SWITCH
-        itemWithSwitch.switch.setOnCheckedChangeListener { _, isChecked ->
-            itemCustomMaskInputView?.maskReplacementAll = isChecked
-            refreshMaskView()
+            viewBinding.llActivity.requestFocus()
         }
 
         QMUIGroupListView.newSection(this)
             .setTitle("自定义脱敏")
             .addItemView(itemCustomMaskView, null)
             .addItemView(
-                getGroupItemView(
+                viewBinding.groupListView.getGroupInputItemView(
                     title = "脱敏起始index 从开头起数",
                     inputType = EditorInfo.TYPE_CLASS_NUMBER
                 ) {
@@ -77,7 +71,7 @@ class MaskingActivity : BaseActivity() {
                 null
             )
             .addItemView(
-                getGroupItemView(
+                viewBinding.groupListView.getGroupInputItemView(
                     title = "脱敏结尾index 从末尾起数",
                     inputType = EditorInfo.TYPE_CLASS_NUMBER
                 ) {
@@ -87,7 +81,7 @@ class MaskingActivity : BaseActivity() {
                 null
             )
             .addItemView(
-                getGroupItemView(
+                viewBinding.groupListView.getGroupInputItemView(
                     title = "脱敏字符",
                     inputType = EditorInfo.TYPE_CLASS_TEXT
                 ) {
@@ -96,8 +90,16 @@ class MaskingActivity : BaseActivity() {
                 },
                 null
             )
-            .addItemView(itemWithSwitch, null)
-            .setMiddleSeparatorInset(SizeUtils.dp2px(16F), SizeUtils.dp2px(16F))
+            .addItemView(
+                viewBinding.groupListView.getGroupSwitchItemView(
+                    "脱敏字符替代所有"
+                ) { _, isChecked ->
+                    itemCustomMaskInputView?.maskReplacementAll = isChecked
+                    refreshMaskView()
+                },
+                null
+            )
+            .setMiddleSeparatorInset(16.dp, 16.dp)
             .addTo(viewBinding.groupListView)
     }
 
@@ -113,31 +115,4 @@ class MaskingActivity : BaseActivity() {
 
         return groupItemView
     }
-
-    private fun getGroupItemView(
-        title: String,
-        inputType: Int,
-        focusFunction: (EditText) -> Unit
-    ): QMUICommonListItemView {
-        val editTextView = EditText(this)
-        editTextView.width = ScreenUtils.getAppScreenWidth() / 3
-        editTextView.gravity = Gravity.END
-        editTextView.inputType = inputType
-        editTextView.background = null
-
-        editTextView.let {
-            it.setOnFocusChangeListener { _, hasFocus ->
-                if (!hasFocus) {
-                    focusFunction(it)
-                }
-            }
-        }
-
-        val groupItemView: QMUICommonListItemView = viewBinding.groupListView.createItemView(title)
-        groupItemView.accessoryType = QMUICommonListItemView.ACCESSORY_TYPE_CUSTOM
-        groupItemView.addAccessoryCustomView(editTextView)
-
-        return groupItemView
-    }
-
 }

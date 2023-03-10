@@ -4,5 +4,10 @@
     <dimen name="floor_margin_vertical">12dp</dimen>
     <dimen name="floor_margin_horizontal">15dp</dimen>
 
-    <dimen name="round_imageview_radius">4dp</dimen>
+    <dimen name="default_round_imageview_radius">4dp</dimen>
+
+    <dimen name="default_edge_transparent_width">10dp</dimen>
+
+    <dimen name="default_scroll_text_view_text_size">14dp</dimen>
+    <dimen name="default_scroll_text_view_text_line_height">20dp</dimen>
 </resources>

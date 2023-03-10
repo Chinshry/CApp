@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <bool name="default_scroll_bar_enable">true</bool>
+    <bool name="default_scroll_fading_edge_enable">true</bool>
+</resources>

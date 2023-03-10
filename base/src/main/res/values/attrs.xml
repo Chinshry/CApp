@@ -74,7 +74,19 @@
         <attr name="label_color" format="color" />
         <attr name="label_text_size" format="dimension" />
     </declare-styleable>
+    <declare-styleable name="EdgeTransparentView">
+        <attr name="edge_position">
+            <flag name="top" value="0x01"/>
+            <flag name="bottom" value="0x02"/>
+            <flag name="left" value="0x04"/>
+            <flag name="right" value="0x08"/>
+        </attr>
+        <attr name="edge_width" format="dimension"/>
+    </declare-styleable>
     <declare-styleable name="ScrollTextView">
+        <attr name="scroll_bar_enable" format="boolean" />
+        <attr name="scroll_fading_edge_enable" format="boolean" />
+        <attr name="scroll_text_max_lines" format="integer" />
         <attr name="scroll_text" format="string" />
         <attr name="scroll_text_size" format="dimension" />
         <attr name="scroll_text_color" format="color" />

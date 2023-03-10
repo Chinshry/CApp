@@ -9,7 +9,6 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.ScreenUtils
-import com.blankj.utilcode.util.SizeUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.chinshry.base.bean.BuryPointInfo
@@ -18,6 +17,7 @@ import com.chinshry.base.bean.FloorData
 import com.chinshry.base.util.CommonUtils.dp2px
 import com.chinshry.base.adapter.FloorGridAdapter
 import com.chinshry.base.databinding.ScrollGridviewBinding
+import com.chinshry.base.util.dp
 import kotlin.math.abs
 import kotlin.math.ceil
 
@@ -32,7 +32,7 @@ class ScrollGridView(context: Context, attrs: AttributeSet?) :
     private val viewBinding: ScrollGridviewBinding
 
     /** 楼层水平间距 **/
-    var viewPadding: Int = SizeUtils.dp2px(15f)
+    var viewPadding: Int = 15.dp
         set(value) {
             field = value
             invalidate()

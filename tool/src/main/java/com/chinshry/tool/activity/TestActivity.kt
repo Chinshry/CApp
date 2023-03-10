@@ -26,9 +26,9 @@ class TestActivity : BaseActivity() {
     }
 
     private fun init() {
-        viewBinding.scrollText.setTextSize(16.dp.toFloat())
+        viewBinding.scrollText.setScrollTextSize(16.dp.toFloat())
         viewBinding.scrollText.setTextLineHeight(20.dp)
-        viewBinding.scrollText.setText(StringUtils.getString(R.string.test_string_long))
+        viewBinding.scrollText.setScrollText(StringUtils.getString(R.string.test_string_long))
     }
 
 }

@@ -28,7 +28,7 @@ class RoundImageView(
     
         radius = typedArray.getDimension(
             R.styleable.RoundImageView_round_radius,
-            context.resources.getDimension(R.dimen.round_imageview_radius)
+            context.resources.getDimension(R.dimen.default_round_imageview_radius)
         )
         typedArray.recycle()
     }

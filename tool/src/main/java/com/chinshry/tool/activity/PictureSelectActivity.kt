@@ -49,7 +49,6 @@ class PictureSelectActivity : BaseActivity() {
         initView()
     }
 
-    @SuppressLint("InflateParams", "SetTextI18n")
     private fun initView() {
         viewBinding.llBtn.addButton("选择图片") {
             it.clickWithTrigger {

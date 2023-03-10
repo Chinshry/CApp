@@ -9,14 +9,21 @@
     android:orientation="vertical"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    tools:context=".activity.MaskingActivity">
+    tools:context=".activity.ScrollTextActivity">
 
     <com.chinshry.base.view.CustomHeaderBar
         android:id="@id/custom_header_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title_text="脱敏测试"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:title_text="滚动文本组件"/>
+
+    <com.chinshry.base.view.ScrollTextView
+        android:id="@+id/tv_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="30dp"
+        android:background="@drawable/bg_card_blue"
+        app:scroll_text="@string/test_string_long" />
 
     <ScrollView
         android:layout_width="match_parent"

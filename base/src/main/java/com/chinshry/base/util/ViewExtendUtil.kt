@@ -5,11 +5,7 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.*
-import android.view.Gravity
 import android.view.View
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.LinearLayout.LayoutParams
 import android.widget.TextView
 import androidx.annotation.*
 import androidx.core.view.isVisible
@@ -17,8 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ColorUtils
-import com.blankj.utilcode.util.SizeUtils
-import com.chinshry.base.R
 
 
 /**
@@ -116,6 +110,7 @@ fun TextView.setColorSelector(
     states[5] = intArrayOf()
     setTextColor(ColorStateList(states, colors))
 }
+
 //TODO 可自己根据需求添加属性
 fun View.setShape(
     @ShapeType shapeType: Int = ShapeType.RECTANGLE,
@@ -270,29 +265,6 @@ fun TextView.setNotBlankText(
 
 }
 
-fun LinearLayout.addButton(
-    name: String,
-    layoutParams: LayoutParams =
-        LayoutParams(
-            LayoutParams.WRAP_CONTENT,
-            LayoutParams.WRAP_CONTENT
-        ),
-    viewFunction: ((Button) -> Unit)? = null,
-) = this.apply {
-    val newButton = Button(context)
-    newButton.text = name
-    newButton.textSize = 16F
-    newButton.setTextColor(Color.BLACK)
-    newButton.setBackgroundResource(R.drawable.bg_btn)
-    newButton.gravity = Gravity.CENTER
-    newButton.gravity = Gravity.CENTER
-    newButton.setPadding(SizeUtils.dp2px(20F), 0, SizeUtils.dp2px(20F), 0)
-    newButton.stateListAnimator = null
-
-    viewFunction?.invoke(newButton)
-    addView(newButton, layoutParams)
-}
-
 /**
  * 计算RecyclerView滑动的距离
  * @param hasHead 是否有头部
@@ -314,17 +286,3 @@ fun RecyclerView.getScrollYHeight(
         itemHeight * position - childTop
     }
 }
-
-inline val Double.dp: Int
-    get() = run {
-        return toFloat().dp
-    }
-inline val Int.dp: Int
-    get() = run {
-        return toFloat().dp
-    }
-inline val Float.dp: Int
-    get() = run {
-        val context = ActivityUtils.getTopActivity()
-        return CommonUtils.dp2px(context, this)
-    }

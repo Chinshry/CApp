@@ -107,6 +107,12 @@ class ToolFragment : BaseFragment<FragmentToolBinding>(FragmentToolBinding::infl
             }
         }
 
+        viewBinding.llBtn.addButton("滚动文本组件") {
+            it.clickWithTrigger {
+                ARouter.getInstance().build(Router.SCROLL_TEXT).navigation()
+            }
+        }
+
         viewBinding.llBtn.addButton("图片选择器") {
             it.clickWithTrigger {
                 ARouter.getInstance().build(Router.PICTURE_SELECT).navigation()

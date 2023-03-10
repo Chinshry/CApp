@@ -15,9 +15,9 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.blankj.utilcode.util.BarUtils
-import com.blankj.utilcode.util.SizeUtils
 import com.chinshry.base.R
 import com.chinshry.base.databinding.CustomBarBinding
+import com.chinshry.base.util.dp
 
 /**
  * Created by chinshry on 2021/12/23.
@@ -102,7 +102,7 @@ open class CustomHeaderBar(context: Context, attrs: AttributeSet) : RelativeLayo
         // 标题字号
         val titleTextSize = typedArray.getDimensionPixelSize(
             R.styleable.CustomBar_title_text_size,
-            SizeUtils.sp2px(17F)
+            17.dp
         ).toFloat()
         setTitleTextSize(titleTextSize)
 

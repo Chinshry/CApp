@@ -32,7 +32,14 @@ class FixedLineHeightTextView @JvmOverloads constructor(
     fun setFixedLineHeight(dimension: Int) {
         fixedLineHeight = dimension
     }
-    
+
+    /**
+     * 获取行高度
+     */
+    fun getFixedLineHeight(): Int {
+        return fixedLineHeight
+    }
+
     /**
      * 设置 text 并且固定行高度
      */

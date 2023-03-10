@@ -5,13 +5,13 @@
     android:id="@+id/sl_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:scrollbarStyle="outsideInset"
+    android:scrollbarTrackVertical="@null"
+    android:scrollbarStyle="outsideOverlay"
     android:scrollbarSize="2dp"
     android:scrollbarThumbVertical="@drawable/scrollbar_thumb"
     android:fadeScrollbars="false"
     android:paddingHorizontal="6dp"
-    android:layout_marginHorizontal="4dp"
-    android:background="@drawable/bg_card_blue"
+    android:layout_marginHorizontal="6dp"
     app:layout_constraintHeight_max="40dp"
     app:layout_constraintHeight_min="20dp">
 
@@ -19,10 +19,9 @@
         android:id="@+id/tv_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:includeFontPadding="false"
         android:scrollbars="none"
-        android:textColor="@color/white"
-        android:textSize="14sp"
+        android:ellipsize="end"
+        android:textSize="@dimen/default_scroll_text_view_text_size"
         tools:text="@string/test_string_long" />
 
 </ScrollView>
