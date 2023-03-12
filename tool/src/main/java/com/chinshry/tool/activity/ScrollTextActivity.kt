@@ -16,9 +16,9 @@ import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView
 
 /**
  * Created by chinshry on 2023/03/10.
- * Describe：滚动文本组件
+ * Describe：滚动文本页面
  */
-@BuryPoint(pageName = "滚动文本组件")
+@BuryPoint(pageName = "滚动文本组件测试页")
 @Route(path = Router.SCROLL_TEXT)
 class ScrollTextActivity : BaseActivity() {
     private val viewBinding by lazy { ActivityScrollTextBinding.inflate(layoutInflater) }

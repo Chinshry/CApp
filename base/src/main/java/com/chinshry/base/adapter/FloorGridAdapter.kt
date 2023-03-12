@@ -9,8 +9,8 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.chinshry.base.bean.BuryPointInfo
 import com.chinshry.base.bean.ElementAttribute
 import com.chinshry.base.util.FloorUtil
+import com.chinshry.base.util.dp
 import com.chinshry.base.view.ScrollGridView
-import com.chinshry.base.util.CommonUtils.dp2px
 
 /**
  * Created by chinshry on 2022/01/23.
@@ -34,9 +34,9 @@ class FloorGridAdapter(
         if (view.scrollScreen) {
             gridView.let {
                it.setPadding(
-                   view.viewPadding - dp2px(context, view.itemDividerVerticalHeight / 2),
+                   view.viewPadding - (view.itemDividerVerticalHeight / 2).dp(context).toInt(),
                    it.top,
-                   view.viewPadding - dp2px(context, view.itemDividerVerticalHeight / 2),
+                   view.viewPadding - (view.itemDividerVerticalHeight / 2).dp(context).toInt(),
                    it.bottom
                )
             }

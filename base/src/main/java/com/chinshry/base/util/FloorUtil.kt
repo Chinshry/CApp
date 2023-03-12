@@ -19,7 +19,6 @@ import com.chinshry.base.bean.Constants
 import com.chinshry.base.bean.ElementAttribute
 import com.chinshry.base.bean.FloorData
 import com.chinshry.base.bean.FloorUIData
-import com.chinshry.base.util.CommonUtils.dp2px
 import com.chinshry.base.view.buryPoint
 import com.chinshry.base.view.clickWithTrigger
 
@@ -77,11 +76,9 @@ object FloorUtil {
             floorView?.let {
                 floorView.setPadding(
                     floorView.paddingStart,
-                    marginTop?.let { dp2px(floorView.context, it.toFloat()) }
-                        ?: let { floorView.paddingTop },
+                    marginTop?.dp(floorView.context) ?: floorView.paddingTop,
                     floorView.paddingEnd,
-                    marginBottom?.let { dp2px(floorView.context, it.toFloat()) }
-                        ?: let { floorView.paddingBottom }
+                    marginBottom?.dp(floorView.context) ?: floorView.paddingBottom
                 )
             }
 
@@ -203,11 +200,11 @@ object FloorUtil {
         parent.addView(itemView, layoutParams)
 
         // 添加左右边距
-        layoutParams.leftMargin = ((itemDividerVerticalHeight ?: 0f) / 2).dp
-        layoutParams.rightMargin = ((itemDividerVerticalHeight ?: 0f) / 2).dp
+        layoutParams.leftMargin = ((itemDividerVerticalHeight ?: 0f) / 2).dp(parent.context).toInt()
+        layoutParams.rightMargin = ((itemDividerVerticalHeight ?: 0f) / 2).dp(parent.context).toInt()
         // 非第一行item 添加上边距
         if (isFirstColumnItem == false) {
-            layoutParams.topMargin = (itemDividerHorizontalHeight ?: 0f).dp
+            layoutParams.topMargin = (itemDividerHorizontalHeight ?: 0f).dp(parent.context).toInt()
         }
     }
 

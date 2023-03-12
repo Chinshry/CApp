@@ -59,7 +59,7 @@ class LabelTextView (
         )
         
         setTextColor(labelColor)
-        background = getShape(0.5F.dp, labelColor, null, 4.dp.toFloat())
+        background = getShape(0.5f.dp.toInt(), labelColor, null, 4.dp.toFloat())
         
         typedArray.recycle()
     }

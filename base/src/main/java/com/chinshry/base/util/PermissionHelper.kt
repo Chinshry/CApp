@@ -1,11 +1,12 @@
 package com.chinshry.base.util
 
 import android.Manifest
-import com.blankj.utilcode.util.*
+import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.PermissionUtils
+import com.chinshry.base.R
 import com.chinshry.base.bean.BuryPoint
 import com.chinshry.base.dialog.MyDialog
 import com.chinshry.base.util.PermissionMap.Companion.permissions2String
-import com.chinshry.base.R
 
 /**
  * Created by chinshry on 2022/1/3.
@@ -67,8 +68,8 @@ object PermissionHelper {
     @BuryPoint(pageName = "权限申请-申请前提示弹框")
     private fun showExplainDialog(denied: List<String>, shouldRequest: PermissionUtils.OnExplainListener.ShouldRequest) {
         MyDialog()
-            .setTitle(StringUtils.getString(android.R.string.dialog_alert_title))
-            .setMsg(String.format(StringUtils.getString(R.string.permission_request_message), permissions2String(denied)))
+            .setTitle(getStringById(android.R.string.dialog_alert_title))
+            .setMsg(String.format(getStringById(R.string.permission_request_message), permissions2String(denied)))
             .setConfirmBtn("打开权限") { shouldRequest.start(true) }
             .setCancelBtn { shouldRequest.start(false) }
             .show()
@@ -77,8 +78,8 @@ object PermissionHelper {
     @BuryPoint(pageName = "权限申请-再次申请弹框")
     private fun showRationaleDialog(shouldRequest: PermissionUtils.OnRationaleListener.ShouldRequest) {
         MyDialog()
-            .setTitle(StringUtils.getString(android.R.string.dialog_alert_title))
-            .setMsg(StringUtils.getString(R.string.permission_rationale_message))
+            .setTitle(getStringById(android.R.string.dialog_alert_title))
+            .setMsg(getStringById(R.string.permission_rationale_message))
             .setConfirmBtn("再次授权") { shouldRequest.again(true) }
             .setCancelBtn { shouldRequest.again(false) }
             .show()
@@ -87,8 +88,8 @@ object PermissionHelper {
     @BuryPoint(pageName = "权限申请-申请被拒提示去设置弹框")
     private fun showOpenAppSettingDialog(deniedForever: List<String>) {
         MyDialog()
-            .setTitle(StringUtils.getString(android.R.string.dialog_alert_title))
-            .setMsg(String.format(StringUtils.getString(R.string.permission_denied), permissions2String(deniedForever)))
+            .setTitle(getStringById(android.R.string.dialog_alert_title))
+            .setMsg(String.format(getStringById(R.string.permission_denied), permissions2String(deniedForever)))
             .setConfirmBtn("去设置") { PermissionUtils.launchAppDetailsSettings() }
             .show()
     }

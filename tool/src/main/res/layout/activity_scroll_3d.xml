@@ -3,27 +3,29 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center_horizontal"
-    tools:context=".activity.TestActivity">
+    tools:context=".activity.Scroll3DActivity">
 
     <com.chinshry.base.view.CustomHeaderBar
         android:id="@id/custom_header_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title_text="@string/page_test"
+        app:title_text="@string/page_scroll_3d"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <LinearLayout
-        android:id="@+id/ll_btn"
-        android:layout_width="wrap_content"
+    <com.chinshry.base.view.Scroll3DView
+        android:id="@+id/sl_3d"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="30dp"
         android:layout_gravity="center_horizontal"
-        android:orientation="vertical"
-        android:divider="@drawable/divider_10"
-        android:showDividers="middle" />
+        android:background="@color/grey_light"/>
+
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/rl_3d"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content" />-->
 
 </LinearLayout>

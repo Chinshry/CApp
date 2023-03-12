@@ -10,7 +10,7 @@
         android:id="@id/custom_header_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title_text="图片选择"
+        app:title_text="@string/page_picture_select"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <LinearLayout

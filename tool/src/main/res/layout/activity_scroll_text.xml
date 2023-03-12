@@ -15,7 +15,7 @@
         android:id="@id/custom_header_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title_text="滚动文本组件"/>
+        app:title_text="@string/page_scroll_text"/>
 
     <com.chinshry.base.view.ScrollTextView
         android:id="@+id/tv_scroll"

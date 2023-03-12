@@ -21,9 +21,9 @@ import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView
 
 /**
  * Created by chinshry on 2021/12/23.
- * Describe：脱敏测试
+ * Describe：脱敏组件测试
  */
-@BuryPoint(pageName = "脱敏测试")
+@BuryPoint(pageName = "脱敏组件测试")
 @Route(path = Router.MASKING)
 class MaskingActivity : BaseActivity() {
     private val viewBinding by lazy { ActivityMaskingBinding.inflate(layoutInflater) }

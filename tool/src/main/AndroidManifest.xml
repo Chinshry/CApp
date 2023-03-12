@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.chinshry.tool">
     <application>
+        <activity android:name=".activity.Scroll3DActivity" />
         <activity android:name=".activity.ScrollTextActivity" />
         <activity android:name=".activity.PictureSelectActivity" />
         <activity android:name=".activity.MaskingActivity" />

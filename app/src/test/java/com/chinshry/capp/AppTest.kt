@@ -1,7 +1,7 @@
 package com.chinshry.capp
 
-import org.junit.Assert
 import org.junit.Test
+import kotlin.math.abs
 
 /**
  * Created by chinshry on 2023/2/10.
@@ -10,7 +10,13 @@ import org.junit.Test
 class AppTest {
     @Test
     fun testMathRound() {
-        println("test")
-        Assert.assertEquals(3.14f, 3.1415926)
+        getElevation(0.4f)
+        getElevation(1.4f)
+        getElevation(2.4f)
+    }
+
+    private fun getElevation(position: Float) {
+        val elevation = (2 - abs(position).toInt()).toFloat()
+        println("position=$position elevation=$elevation")
     }
 }

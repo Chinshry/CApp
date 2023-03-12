@@ -7,9 +7,9 @@ import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.ColorUtils.getColor
-import com.chinshry.base.adapter.FloorAdapter
-import com.chinshry.base.util.CommonUtils.dp2px
 import com.chinshry.base.R
+import com.chinshry.base.adapter.FloorAdapter
+import com.chinshry.base.util.dp
 
 
 /**
@@ -39,7 +39,7 @@ class FloorDivider : RecyclerView.ItemDecoration() {
             if (floorAdapter.hasHeaderLayout()) position -= 1
             if (floorAdapter.itemCount > position + 1) {
                 floorAdapter.data.getOrNull(position)?.dividerH ?.let {
-                    dividerHeight = dp2px(parent.context, it)
+                    dividerHeight = it.dp(parent.context).toInt()
                 }
             }
         }
@@ -60,7 +60,7 @@ class FloorDivider : RecyclerView.ItemDecoration() {
         canvas.save()
 
         floorAdapter.data.forEachIndexed { position, itemData ->
-            val dividerHeight = itemData.dividerH ?.let { dp2px(parent.context, it) } ?: return@forEachIndexed
+            val dividerHeight = itemData.dividerH?.dp(parent.context) ?: return@forEachIndexed
             // 默认颜色f9f9f
             val dividerColor = try { Color.parseColor(itemData.dividerColor) } catch (e: Exception) {
                 getColor(R.color.empty)
@@ -76,9 +76,9 @@ class FloorDivider : RecyclerView.ItemDecoration() {
             floorAdapter.getViewByPosition(adapterPosition, R.id.common_floor) ?.let { childView ->
                 mPaint.color = dividerColor
                 canvas.drawRect(
-                    childView.left.toFloat() + dp2px(parent.context, (itemData.dividerMarginLeft ?: 0).toFloat()),
+                    childView.left.toFloat() + (itemData.dividerMarginLeft?.dp(parent.context) ?: 0f),
                     childView.top.toFloat() - dividerHeight,
-                    childView.right.toFloat() - dp2px(parent.context, (itemData.dividerMarginRight ?: 0).toFloat()),
+                    childView.right.toFloat() - (itemData.dividerMarginRight?.dp(parent.context) ?: 0f),
                     childView.top.toFloat(),
                     mPaint
                 )

@@ -1,15 +1,14 @@
 package com.chinshry.base.holder
 
-import android.content.Context
 import android.view.View
-import androidx.core.content.ContextCompat
 import com.blankj.utilcode.util.ActivityUtils
 import com.chinshry.base.R
 import com.chinshry.base.adapter.FloorBannerAdapter
 import com.chinshry.base.bean.BuryPointInfo
 import com.chinshry.base.bean.ElementAttribute
 import com.chinshry.base.bean.FloorData
-import com.chinshry.base.util.CommonUtils.dp2px
+import com.chinshry.base.util.dp
+import com.chinshry.base.util.getColorById
 import com.youth.banner.Banner
 import com.youth.banner.indicator.RectangleIndicator
 
@@ -41,16 +40,15 @@ class FloorBannerViewHolder {
             itemData: List<ElementAttribute?>,
             buryPointInfo: BuryPointInfo? = null,
         ) {
-            val context: Context = ActivityUtils.getTopActivity().applicationContext
             banner.setAdapter(FloorBannerAdapter(itemData.filterNotNull(), banner, buryPointInfo))
-            banner.indicator = RectangleIndicator(context)
-            banner.setIndicatorSelectedWidth(dp2px(context, 6F))
-            banner.setIndicatorNormalWidth(dp2px(context, 6F))
-            banner.setIndicatorHeight(dp2px(context, 6F))
-            banner.setIndicatorRadius(dp2px(context, 6F))
+            banner.indicator = RectangleIndicator(ActivityUtils.getTopActivity())
+            banner.setIndicatorSelectedWidth(6.dp)
+            banner.setIndicatorNormalWidth(6.dp)
+            banner.setIndicatorHeight(6.dp)
+            banner.setIndicatorRadius(6.dp)
             banner.setLoopTime(2500)
-            banner.setIndicatorNormalColor(ContextCompat.getColor(context, R.color.half_white))
-            banner.setIndicatorSelectedColor(ContextCompat.getColor(context, R.color.white))
+            banner.setIndicatorNormalColor(getColorById(R.color.half_white))
+            banner.setIndicatorSelectedColor(getColorById(R.color.white))
         }
     }
 }

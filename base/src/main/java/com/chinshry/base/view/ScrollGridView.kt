@@ -4,18 +4,17 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.MotionEvent
-import android.widget.*
+import android.widget.RelativeLayout
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.ScreenUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import com.chinshry.base.adapter.FloorGridAdapter
 import com.chinshry.base.bean.BuryPointInfo
 import com.chinshry.base.bean.ElementAttribute
 import com.chinshry.base.bean.FloorData
-import com.chinshry.base.util.CommonUtils.dp2px
-import com.chinshry.base.adapter.FloorGridAdapter
 import com.chinshry.base.databinding.ScrollGridviewBinding
 import com.chinshry.base.util.dp
 import kotlin.math.abs
@@ -123,7 +122,7 @@ class ScrollGridView(context: Context, attrs: AttributeSet?) :
             LayoutParams.MATCH_PARENT
         } else {
             // 头尾padding = 控件左边距 - (item间距/2)
-            val pagePaddingHorizontal = viewPadding - dp2px(context, itemDividerVerticalHeight) / 2
+            val pagePaddingHorizontal = (viewPadding - itemDividerVerticalHeight.dp(context) / 2).toInt()
 
             viewBinding.recyclerView.let { view ->
                 view.setPadding(
@@ -138,10 +137,10 @@ class ScrollGridView(context: Context, attrs: AttributeSet?) :
             val screenAppWidth = ScreenUtils.getAppScreenWidth()
 
             // 屏幕上显示的子元素横向间距总宽度
-            val dividerWidth = dp2px(context, itemDividerVerticalHeight) * gridColumnsNum.toInt()
+            val dividerWidth = itemDividerVerticalHeight.dp(context) * gridColumnsNum.toInt()
 
             // 一个item的宽度 = (屏幕宽度 - 控件边距 - 屏幕上显示的子元素横向间距总宽度) * item显示占比 + 子元素横向间距
-            ((screenAppWidth - viewPadding - dividerWidth) * percent).toInt() + dp2px(context, itemDividerVerticalHeight)
+            ((screenAppWidth - viewPadding - dividerWidth) * percent + itemDividerVerticalHeight.dp(context)).toInt()
         }
     }
 

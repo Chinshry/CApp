@@ -7,11 +7,16 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.chinshry.base.BaseFragment
 import com.chinshry.base.adapter.FloorAdapter
-import com.chinshry.base.bean.*
-import com.chinshry.base.util.CommonUtils.dp2px
+import com.chinshry.base.bean.BuryPoint
+import com.chinshry.base.bean.Constants
+import com.chinshry.base.bean.ElementAttribute
+import com.chinshry.base.bean.FloatingWindowData
+import com.chinshry.base.bean.FloorData
+import com.chinshry.base.bean.FloorUIData
+import com.chinshry.base.util.dp
 import com.chinshry.base.util.getScrollYHeight
-import com.chinshry.base.view.FloorDivider
 import com.chinshry.base.view.CRefreshHeader
+import com.chinshry.base.view.FloorDivider
 import com.chinshry.home.databinding.FragmentHomeBinding
 
 /**
@@ -53,7 +58,7 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infla
     }
 
     private fun initToolbar(scrollYHeight: Int) {
-        val baseHeight = dp2px(context ?: requireContext(), 100f)
+        val baseHeight = 100f.dp(context)
 
         val toolBarAlpha = when {
             scrollYHeight >= baseHeight -> {

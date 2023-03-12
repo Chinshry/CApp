@@ -10,12 +10,15 @@ import android.widget.TextView
 import com.alibaba.android.arouter.launcher.ARouter
 import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.chinshry.base.BaseDialog
 import com.chinshry.base.BaseFragment
 import com.chinshry.base.bean.BuryPoint
 import com.chinshry.base.bean.Router
 import com.chinshry.base.dialog.MyDialog
-import com.chinshry.base.BaseDialog
-import com.chinshry.base.util.*
+import com.chinshry.base.util.DevicesCheckUtil
+import com.chinshry.base.util.WindowConfig
+import com.chinshry.base.util.WindowManagerList
+import com.chinshry.base.util.addButton
 import com.chinshry.base.view.VerCodeEditText
 import com.chinshry.base.view.VerCodeLayout
 import com.chinshry.base.view.clickWithTrigger
@@ -107,25 +110,31 @@ class ToolFragment : BaseFragment<FragmentToolBinding>(FragmentToolBinding::infl
             }
         }
 
-        viewBinding.llBtn.addButton("滚动文本组件") {
+        viewBinding.llBtn.addButton(getString(R.string.page_scroll_text)) {
             it.clickWithTrigger {
                 ARouter.getInstance().build(Router.SCROLL_TEXT).navigation()
             }
         }
 
-        viewBinding.llBtn.addButton("图片选择器") {
+        viewBinding.llBtn.addButton(getString(R.string.page_scroll_3d)) {
+            it.clickWithTrigger {
+                ARouter.getInstance().build(Router.SCROLL_3D).navigation()
+            }
+        }
+
+        viewBinding.llBtn.addButton(getString(R.string.page_picture_select)) {
             it.clickWithTrigger {
                 ARouter.getInstance().build(Router.PICTURE_SELECT).navigation()
             }
         }
 
-        viewBinding.llBtn.addButton("脱敏测试") {
+        viewBinding.llBtn.addButton(getString(R.string.page_masking)) {
             it.clickWithTrigger {
                 ARouter.getInstance().build(Router.MASKING).navigation()
             }
         }
 
-        viewBinding.llBtn.addButton("测试页面") {
+        viewBinding.llBtn.addButton(getString(R.string.page_test)) {
             it.clickWithTrigger {
                 ARouter.getInstance().build(Router.TEST).navigation()
             }

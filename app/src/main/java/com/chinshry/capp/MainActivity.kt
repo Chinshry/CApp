@@ -3,11 +3,11 @@ package com.chinshry.capp
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.launcher.ARouter
-import com.blankj.utilcode.util.ColorUtils
-import com.blankj.utilcode.util.ResourceUtils
 import com.chinshry.base.BaseActivity
 import com.chinshry.base.bean.Module
 import com.chinshry.base.bean.TabBean
+import com.chinshry.base.util.getColorById
+import com.chinshry.base.util.getDrawableById
 import com.chinshry.base.view.CustomTabView
 import com.chinshry.capp.databinding.ActivityMainBinding
 import com.chinshry.home.fragment.HomeFragment
@@ -71,12 +71,12 @@ open class MainActivity : BaseActivity() {
                         normal = it.normalTitle,
                         select = it.selectTitle)
                     .setIcon(
-                        normal = it.normalIcon?.let { it1 -> ResourceUtils.getDrawable(it1) },
-                        select = it.selectIcon?.let { it1 -> ResourceUtils.getDrawable(it1) })
+                        normal = it.normalIcon?.let { it1 -> getDrawableById(it1) },
+                        select = it.selectIcon?.let { it1 -> getDrawableById(it1) })
                     .setTextColor(
-                        normal = it.normalTextColor?.let { it1 -> ColorUtils.getColor(it1) },
-                        select = it.selectTextColor?.let { it1 -> ColorUtils.getColor(it1) })
-                    .setBadge(it.badge?.let { it1 -> ResourceUtils.getDrawable(it1) })
+                        normal = it.normalTextColor?.let { it1 -> getColorById(it1) },
+                        select = it.selectTextColor?.let { it1 -> getColorById(it1) })
+                    .setBadge(it.badge?.let { it1 -> getDrawableById(it1) })
                     .onTabSelect {
                         changeFragment(it.model!!)
                     }

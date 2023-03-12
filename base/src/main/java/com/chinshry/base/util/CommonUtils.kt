@@ -3,8 +3,8 @@ package com.chinshry.base.util
 import android.annotation.SuppressLint
 import android.content.Context
 import com.blankj.utilcode.util.*
-import com.chinshry.base.bean.Constants
 import com.chinshry.base.R
+import com.chinshry.base.bean.Constants
 import com.qmuiteam.qmui.util.QMUIDisplayHelper
 import org.json.JSONArray
 import org.json.JSONObject
@@ -80,7 +80,7 @@ object CommonUtils {
             )
         } catch (e: Exception) {
             LogUtils.e(
-                "string2object: " + StringUtils.getString(R.string.json_error_msg) + e.message
+                "string2object: " + getStringById(R.string.json_error_msg) + e.message
             )
             null
         }
@@ -94,7 +94,7 @@ object CommonUtils {
             )
         } catch (e: Exception) {
             LogUtils.e(
-                "string2object: " + StringUtils.getString(R.string.json_error_msg) + e.message
+                "string2object: " + getStringById(R.string.json_error_msg) + e.message
             )
             null
         }
@@ -280,8 +280,8 @@ object CommonUtils {
         return result.toString()
     }
 
-    fun dp2px(context: Context?, dp: Float): Int {
-        return (QMUIDisplayHelper.getDensity(context) * dp + 0.5).toInt()
+    fun dp2px(context: Context?, dp: Float): Float {
+        return (QMUIDisplayHelper.getDensity(context) * dp + 0.5f)
     }
 
 }

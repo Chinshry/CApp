@@ -1,5 +1,12 @@
 <resources>
     <string name="app_name">Chinshry App</string>
+
+    <string name="page_scroll_text">滚动文本组件测试页</string>
+    <string name="page_scroll_3d">滚动3D组件测试页</string>
+    <string name="page_picture_select">图片选择组件测试页</string>
+    <string name="page_masking">脱敏组件测试页</string>
+    <string name="page_test">测试页</string>
+
     <string name="json_error_msg">数据解析异常</string>
     <string name="permission_request_message">请授予应用%s权限，以正常使用该功能。</string>
     <string name="permission_rationale_message">您上次拒绝了应用使用权限, 请同意授权，否则将无法正常使用本功能!</string>
