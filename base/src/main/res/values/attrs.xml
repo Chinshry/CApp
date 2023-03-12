@@ -92,4 +92,9 @@
         <attr name="scroll_text_color" format="color" />
         <attr name="scroll_text_line_height" format="dimension" />
     </declare-styleable>
+    <declare-styleable name="Scroll3DView">
+        <attr name="scroll_3d_item_width" format="dimension" />
+        <attr name="scroll_3d_offset_count" format="integer" />
+        <attr name="scroll_3d_loop" format="boolean" />
+    </declare-styleable>
 </resources>

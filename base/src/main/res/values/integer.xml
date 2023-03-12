@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer name="default_scroll_text_view_text_max_lines">2</integer>
+
+    <integer name="default_scroll_3d_view_offset_count">2</integer>
 </resources>

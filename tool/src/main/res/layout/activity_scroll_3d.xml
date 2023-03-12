@@ -21,11 +21,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:background="@color/grey_light"/>
-
-<!--    <androidx.recyclerview.widget.RecyclerView-->
-<!--        android:id="@+id/rl_3d"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content" />-->
+        android:background="@color/grey_light"
+        app:scroll_3d_item_width="200dp"
+        app:scroll_3d_offset_count="2"
+        app:scroll_3d_loop="true"/>
 
 </LinearLayout>

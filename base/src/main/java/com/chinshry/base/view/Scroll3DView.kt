@@ -5,11 +5,15 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.blankj.utilcode.util.ScreenUtils
+import com.chinshry.base.R
 import com.chinshry.base.adapter.Scroll3DAdapter
 import com.chinshry.base.databinding.LayoutScroll3dBinding
 import com.chinshry.base.transformer.Scroll3DTransformer
-import com.chinshry.base.util.dp
+import com.chinshry.base.util.getBooleanById
+import com.chinshry.base.util.getDimensionById
+import com.chinshry.base.util.getIntegerById
 
 /**
  * Created by chinshry on 2023/03/11.
@@ -21,27 +25,58 @@ class Scroll3DView @JvmOverloads constructor(
     defStyleAttr: Int = 0,
 ) : FrameLayout(context, attrs, defStyleAttr) {
     private val viewBinding: LayoutScroll3dBinding
-    private val itemWidth = 200.dp
+
+    private val scroll3DAdapter by lazy { Scroll3DAdapter() }
+
+    private var scrollLoop = false
 
     private val positions = listOf(0, 1, 2)
     private val scales = listOf(1f, 0.6f, 0.3f)
     private val alphas = listOf(1f, 0.6f, 0f)
-    private val rotations = listOf(0f, 20f, 20f)
-    private val translations = listOf(0f, 80f.dp, 240f.dp)
+    private val rotationsY = listOf(0f, 20f, 20f)
+    private val translationsX get() = listOf(0f, 0.4f, 1.2f)
+    private val translationsY get() = listOf(0f, 0.13f, 0.13f)
 
     init {
         viewBinding = LayoutScroll3dBinding.inflate(LayoutInflater.from(context), this, true)
-        setRecyclerViewWidth()
+        initView(context, attrs)
+        initPager()
+    }
 
-        viewBinding.viewpager2.offscreenPageLimit = 2
-        viewBinding.viewpager2.setPageTransformer(Scroll3DTransformer(positions, scales, alphas, rotations, translations))
+    private fun initView(context: Context, attrs: AttributeSet?) {
+        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.Scroll3DView)
+
+        val itemWidth = typedArray.getDimensionPixelSize(
+            R.styleable.Scroll3DView_scroll_3d_item_width,
+            getDimensionById(R.dimen.default_scroll_3d_view_item_width).toInt()
+        )
+        setItemWidth(itemWidth)
+
+        val scrollOffsetCount = typedArray.getInteger(
+            R.styleable.Scroll3DView_scroll_3d_offset_count,
+            getIntegerById(R.integer.default_scroll_3d_view_offset_count)
+        )
+        setScrollOffsetCount(scrollOffsetCount)
+
+        val scrollLoop = typedArray.getBoolean(
+            R.styleable.Scroll3DView_scroll_3d_loop,
+            getBooleanById(R.bool.default_scroll_3d_loop)
+        )
+        setScrollLoop(scrollLoop)
+
+        typedArray.recycle()
+    }
+
+    private fun initPager() {
+        viewBinding.viewpager2.adapter = scroll3DAdapter
+        setPageTransformer(Scroll3DTransformer(positions, scales, alphas, rotationsY, translationsX, translationsY))
     }
 
     fun setData(data: List<Int>) {
-        viewBinding.viewpager2.adapter = Scroll3DAdapter(data)
+        scroll3DAdapter.data = data
     }
 
-    private fun setRecyclerViewWidth() {
+    private fun setItemWidth(itemWidth: Int) {
         val recyclerView = (viewBinding.viewpager2.getChildAt(0) as? RecyclerView) ?: return
         recyclerView.clipChildren = false
         recyclerView.clipToPadding = false
@@ -53,5 +88,17 @@ class Scroll3DView @JvmOverloads constructor(
             paddingHorizontal,
             recyclerView.paddingBottom
         )
+    }
+
+    private fun setPageTransformer(transformer: ViewPager2.PageTransformer) {
+        viewBinding.viewpager2.setPageTransformer(transformer)
+    }
+
+    private fun setScrollOffsetCount(scrollOffsetCount: Int) {
+        viewBinding.viewpager2.offscreenPageLimit = scrollOffsetCount
+    }
+
+    private fun setScrollLoop(scrollLoop: Boolean) {
+        this.scrollLoop = scrollLoop
     }
 }

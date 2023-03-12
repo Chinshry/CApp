@@ -2,4 +2,5 @@
 <resources>
     <bool name="default_scroll_bar_enable">true</bool>
     <bool name="default_scroll_fading_edge_enable">true</bool>
+    <bool name="default_scroll_3d_loop">true</bool>
 </resources>
