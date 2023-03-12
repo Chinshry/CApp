@@ -29,13 +29,14 @@ class Scroll3DView @JvmOverloads constructor(
     private val scroll3DAdapter by lazy { Scroll3DAdapter() }
 
     private var scrollLoop = false
+    private var scrollOffsetCount = 0
 
     private val positions = listOf(0, 1, 2)
     private val scales = listOf(1f, 0.6f, 0.3f)
     private val alphas = listOf(1f, 0.6f, 0f)
     private val rotationsY = listOf(0f, 20f, 20f)
-    private val translationsX get() = listOf(0f, 0.4f, 1.2f)
-    private val translationsY get() = listOf(0f, 0.13f, 0.13f)
+    private val translationsX = listOf(0f, 0.4f, 1.2f)
+    private val translationsY = listOf(0f, 0.13f, 0.13f)
 
     init {
         viewBinding = LayoutScroll3dBinding.inflate(LayoutInflater.from(context), this, true)
@@ -73,7 +74,32 @@ class Scroll3DView @JvmOverloads constructor(
     }
 
     fun setData(data: List<Int>) {
-        scroll3DAdapter.data = data
+        if (scrollLoop && data.size >= scrollOffsetCount) {
+            val startData = data.takeLast(scrollOffsetCount)
+            val endData = data.take(scrollOffsetCount)
+            scroll3DAdapter.data = startData + data + endData
+            viewBinding.viewpager2.currentItem = scrollOffsetCount
+            viewBinding.viewpager2.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
+                override fun onPageScrollStateChanged(state: Int) {
+                    super.onPageScrollStateChanged(state)
+                    if (state == ViewPager2.SCROLL_STATE_IDLE) {
+                        // 5 6 1 2 3 4 5 6 1 2
+                        // 0 1 2 3 4 5 6 7 8 9
+                        val position = viewBinding.viewpager2.currentItem
+                        val newPosition = if (position < scrollOffsetCount) {
+                            position + data.size
+                        } else if (position >= scrollOffsetCount + data.size) {
+                            position - data.size
+                        } else {
+                            position
+                        }
+                        viewBinding.viewpager2.setCurrentItem(newPosition, false)
+                    }
+                }
+            })
+        } else {
+            scroll3DAdapter.data = data
+        }
     }
 
     private fun setItemWidth(itemWidth: Int) {
@@ -89,16 +115,16 @@ class Scroll3DView @JvmOverloads constructor(
             recyclerView.paddingBottom
         )
     }
-
-    private fun setPageTransformer(transformer: ViewPager2.PageTransformer) {
-        viewBinding.viewpager2.setPageTransformer(transformer)
-    }
-
     private fun setScrollOffsetCount(scrollOffsetCount: Int) {
+        this.scrollOffsetCount = scrollOffsetCount
         viewBinding.viewpager2.offscreenPageLimit = scrollOffsetCount
     }
 
     private fun setScrollLoop(scrollLoop: Boolean) {
         this.scrollLoop = scrollLoop
+    }
+
+    private fun setPageTransformer(transformer: ViewPager2.PageTransformer) {
+        viewBinding.viewpager2.setPageTransformer(transformer)
     }
 }
