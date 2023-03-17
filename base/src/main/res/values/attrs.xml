@@ -97,4 +97,21 @@
         <attr name="scroll_3d_offset_count" format="integer" />
         <attr name="scroll_3d_loop" format="boolean" />
     </declare-styleable>
+
+    <!--圆角控件属性-->
+    <declare-styleable name="RadiusView">
+        <!--圆角属性-->
+        <attr name="rv_radius" format="dimension" />
+
+        <!--背景颜色，系统的background将会失效，和 rv_shader_xxx 属性为互斥，rv_shader_xxx 优先级更高-->
+        <attr name="rv_background_color" format="color" />
+        <attr name="rv_background_color_list" format="reference" />
+        <attr name="rv_background_position_list" format="reference" />
+
+        <!--边框属性-->
+        <attr name="rv_border_width" format="dimension" />
+        <attr name="rv_border_color" format="color" />
+        <attr name="rv_border_color_list" format="reference" />
+        <attr name="rv_border_position_list" format="reference" />
+    </declare-styleable>
 </resources>

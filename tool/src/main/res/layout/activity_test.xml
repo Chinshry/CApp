@@ -25,5 +25,35 @@
         android:orientation="vertical"
         android:divider="@drawable/divider_10"
         android:showDividers="middle" />
+    
+    <com.chinshry.base.view.shape.RadiusFrameLayout
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        app:rv_radius="20dp"
+        app:rv_background_color_list="@array/radius_view_background_colors"
+        app:rv_background_position_list="@array/radius_view_background_positions" />
+
+    <com.chinshry.base.view.shape.RadiusFrameLayout
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        app:rv_radius="20dp"
+        app:rv_background_color="@color/purple"
+        app:rv_border_width="2dp"
+        app:rv_border_color_list="@array/radius_view_border_colors"
+        app:rv_border_position_list="@array/radius_view_border_positions" />
+
+    <com.chinshry.base.view.shape.RadiusFrameLayout
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        app:rv_radius="20dp"
+        app:rv_border_width="2dp"
+        app:rv_border_color_list="@array/radius_view_border_colors"
+        app:rv_border_position_list="@array/radius_view_border_positions" />
 
 </LinearLayout>

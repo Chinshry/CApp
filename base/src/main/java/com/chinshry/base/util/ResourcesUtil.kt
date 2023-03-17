@@ -49,6 +49,26 @@ fun View.getDimenById(dimenId: Int): Int {
     return resources.getDimensionPixelSize(dimenId)
 }
 
+/**
+ * 根据resId获取array
+ * @receiver View
+ * @param arrayId Int
+ * @return IntArray
+ */
+fun View.getIntArray(arrayId: Int): IntArray {
+    return runCatching { resources.getIntArray(arrayId) }.getOrDefault(intArrayOf())
+}
+
+/**
+ * 根据resId获取array
+ * @receiver View
+ * @param arrayId Int
+ * @return Array<String>
+ */
+fun View.getStringArray(arrayId: Int): Array<String> {
+    return runCatching { resources.getStringArray(arrayId) }.getOrDefault(arrayOf())
+}
+
 fun getStringById(@StringRes id: Int?, defValue: String = "") = id?.let { StringUtils.getString(it) } ?: defValue
 fun getColorById(@ColorRes id: Int) = ColorUtils.getColor(id)
 fun getDrawableById(@DrawableRes id: Int): Drawable = ResourceUtils.getDrawable(id)

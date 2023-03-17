@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="radius_view_background_colors">
+        <item>@color/green</item>
+        <item>@color/red</item>
+    </array>
+    <string-array name="radius_view_background_positions">
+        <item>0f</item>
+        <item>1f</item>
+    </string-array>
+    <array name="radius_view_border_colors">
+        <item>@color/blue</item>
+        <item>@color/green</item>
+        <item>@color/yellow</item>
+        <item>#FF5722</item>
+    </array>
+    <string-array name="radius_view_border_positions">
+        <item>0f</item>
+        <item>0.2f</item>
+        <item>0.3f</item>
+        <item>1f</item>
+    </string-array>
+</resources>

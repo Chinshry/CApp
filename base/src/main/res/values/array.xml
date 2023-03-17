@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="default_radius_view_bg_colors">
+        <item>@color/transparent</item>
+        <item>@color/transparent</item>
+    </array>
+    <string-array name="default_radius_view_bg_positions">
+        <item>0f</item>
+        <item>1f</item>
+    </string-array>
+</resources>
