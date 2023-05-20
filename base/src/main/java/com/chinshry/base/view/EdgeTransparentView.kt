@@ -23,9 +23,6 @@ open class EdgeTransparentView constructor(
     attrs: AttributeSet?,
     defStyleAttr: Int,
 ) : FrameLayout(context, attrs, defStyleAttr) {
-    constructor(context: Context) : this(context, null)
-    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
-
     /** 标记边沿透明 **/
     var fadeEdgePosition = 0
 

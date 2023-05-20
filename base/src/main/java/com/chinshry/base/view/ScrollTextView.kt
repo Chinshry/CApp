@@ -3,7 +3,6 @@ package com.chinshry.base.view
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
-import android.os.Build
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.Gravity
@@ -135,7 +134,7 @@ class ScrollTextView(
      * @return Boolean
      */
     fun adjustScrollOffset() {
-        val scrollOffset = viewBinding.slContainer.scrollY.mod(viewBinding.tvContent.getFixedLineHeight())
+        val scrollOffset = viewBinding.slContainer.scrollY.mod(viewBinding.tvContent.lineHeight)
         if (scrollOffset != 0) {
             viewBinding.slContainer.smoothScrollBy(0, -scrollOffset)
         }
@@ -211,7 +210,7 @@ class ScrollTextView(
      * @param text String
      */
     fun setScrollText(text: String) {
-        viewBinding.tvContent.setTextWithFixedHeight(text)
+        viewBinding.tvContent.text = text
     }
 
     /**
@@ -228,6 +227,28 @@ class ScrollTextView(
      */
     fun setScrollTextSize(textSize: Float) {
         viewBinding.tvContent.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize)
+    }
+
+    fun getDisplayText(): String? {
+        val text = viewBinding.tvContent.text ?: return null
+        val layout = viewBinding.tvContent.layout ?: return null
+        val ellipsisCount = layout.getEllipsisCount(layout.lineCount - 1)
+        val sb = StringBuilder()
+        if (ellipsisCount == 0) {
+            // 如果没有省略号，则返回完整的文本
+            sb.append(text)
+        } else {
+            // 获取省略号前面的文本
+            (0 until layout.lineCount).forEach {
+                val endIndex = if (it == layout.lineCount - 1) {
+                    layout.getLineStart(it) + layout.getEllipsisStart(it)
+                } else {
+                    layout.getLineEnd(it)
+                }
+                sb.append(text.subSequence(layout.getLineStart(it), endIndex))
+            }
+        }
+        return sb.toString()
     }
 
     private fun updateViewMaxHeight() {
@@ -250,7 +271,7 @@ class ScrollTextView(
      * @param lineHeight Int
      */
     fun setTextLineHeight(lineHeight: Int) {
-        viewBinding.tvContent.setFixedLineHeight(lineHeight)
+        viewBinding.tvContent.lineHeight = lineHeight
         updateViewMaxHeight()
     }
 
@@ -259,7 +280,7 @@ class ScrollTextView(
      * @return Int
      */
     fun getTextLineHeight(): Int {
-        return viewBinding.tvContent.getFixedLineHeight()
+        return viewBinding.tvContent.lineHeight
     }
 
     /**
@@ -275,9 +296,7 @@ class ScrollTextView(
      * @param listener OnScrollChangeListener
      */
     fun addScrollListener(listener: OnScrollChangeListener) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            viewBinding.slContainer.setOnScrollChangeListener(listener)
-        }
+        viewBinding.slContainer.setOnScrollChangeListener(listener)
     }
 
     /**
