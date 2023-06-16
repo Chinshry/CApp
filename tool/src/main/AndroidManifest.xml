@@ -2,10 +2,26 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.chinshry.tool">
     <application>
+        <activity android:name=".activity.AccessibilityActivity" />
         <activity android:name=".activity.Scroll3DActivity" />
         <activity android:name=".activity.ScrollTextActivity" />
         <activity android:name=".activity.PictureSelectActivity" />
         <activity android:name=".activity.MaskingActivity" />
         <activity android:name=".activity.TestActivity" />
+
+        <service
+            android:name=".service.AppAccessibilityService"
+            android:exported="false"
+            android:description="@string/app_name"
+            android:label="@string/app_name"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_config" />
+        </service>
     </application>
 </manifest>

@@ -74,3 +74,11 @@ fun QMUIGroupListView.getGroupSwitchItemView(
         switch.setOnCheckedChangeListener(listener)
     }
 }
+
+fun QMUIGroupListView.getGroupNoneItemView(
+    title: String,
+): QMUICommonListItemView {
+    return createItemView(title).apply {
+        accessoryType = QMUICommonListItemView.ACCESSORY_TYPE_NONE
+    }
+}

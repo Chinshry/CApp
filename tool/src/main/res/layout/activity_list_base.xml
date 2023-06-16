@@ -1,22 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ll_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:focusable="true"
-    android:focusableInTouchMode="true"
-    tools:context=".activity.MaskingActivity">
+    android:focusableInTouchMode="true">
 
     <com.chinshry.base.view.CustomHeaderBar
         android:id="@id/custom_header_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:title_text="@string/page_masking"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:layout_height="wrap_content"/>
 
     <ScrollView
         android:layout_width="match_parent"

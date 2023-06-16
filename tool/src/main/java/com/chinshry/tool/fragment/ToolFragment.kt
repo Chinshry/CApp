@@ -40,6 +40,11 @@ class ToolFragment : BaseFragment<FragmentToolBinding>(FragmentToolBinding::infl
 
     @SuppressLint("InflateParams", "SetTextI18n")
     private fun initView() {
+        viewBinding.llBtn.addButton("无障碍") {
+            it.clickWithTrigger {
+                ARouter.getInstance().build(Router.ACCESSIBILITY).navigation()
+            }
+        }
         viewBinding.llBtn.addButton("测试弹窗") {
             it.clickWithTrigger {
                 WindowManagerList.addWindow(

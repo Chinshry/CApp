@@ -14,7 +14,8 @@ import com.chinshry.base.util.getGroupInputItemView
 import com.chinshry.base.util.getGroupSwitchItemView
 import com.chinshry.base.view.MaskingTextView
 import com.chinshry.base.view.MaskingTextView.MaskType
-import com.chinshry.tool.databinding.ActivityMaskingBinding
+import com.chinshry.tool.R
+import com.chinshry.tool.databinding.ActivityListBaseBinding
 import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView
 import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView
 
@@ -26,12 +27,13 @@ import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView
 @BuryPoint(pageName = "脱敏组件测试")
 @Route(path = Router.MASKING)
 class MaskingActivity : BaseActivity() {
-    private val viewBinding by lazy { ActivityMaskingBinding.inflate(layoutInflater) }
+    private val viewBinding by lazy { ActivityListBaseBinding.inflate(layoutInflater) }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(viewBinding.root)
+        viewBinding.customHeaderBar.setPageTitle(getString(R.string.page_masking))
         initGroupListView()
 
         viewBinding.llActivity.setOnTouchListener { _, _ ->

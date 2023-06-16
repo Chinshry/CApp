@@ -5,8 +5,6 @@ android {
     defaultConfig {
         minSdkVersion project.MIN_SDK_VERSION.toInteger()
         targetSdkVersion project.TARGET_SDK_VERSION.toInteger()
-        versionCode 1
-        versionName "1.0"
         kapt {
             arguments {
                 arg("AROUTER_MODULE_NAME", project.getName())

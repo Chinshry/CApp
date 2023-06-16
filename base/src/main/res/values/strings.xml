@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Chinshry App</string>
 
+    <string name="page_accessibility">无障碍测试页</string>
     <string name="page_scroll_text">滚动文本组件测试页</string>
     <string name="page_scroll_3d">滚动3D组件测试页</string>
     <string name="page_picture_select">图片选择组件测试页</string>
