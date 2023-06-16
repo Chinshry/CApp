@@ -4,17 +4,17 @@ import android.content.Context
 import android.text.method.ScrollingMovementMethod
 import android.widget.Button
 import android.widget.TextView
-import com.blankj.utilcode.util.ActivityUtils
 import com.chinshry.base.BaseDialog
 import com.chinshry.base.view.clickWithTrigger
 import com.chinshry.base.R
+import com.chinshry.base.util.ContextHelper
 
 /**
  * Created by chinshry on 2022/01/01.
  * Describe：通用弹窗
  */
 class MyDialog(
-    context: Context = ActivityUtils.getTopActivity(),
+    context: Context = ContextHelper.getApplication(),
     style: Int = 0,
 ) : BaseDialog(context, style) {
 

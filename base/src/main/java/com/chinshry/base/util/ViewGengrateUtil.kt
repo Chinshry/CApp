@@ -1,15 +1,17 @@
 package com.chinshry.base.util
 
+import android.content.Context
 import android.graphics.Color
 import android.view.Gravity
+import android.view.ViewGroup.LayoutParams
 import android.widget.Button
 import android.widget.CompoundButton
 import android.widget.EditText
 import android.widget.LinearLayout
 import com.blankj.utilcode.util.ScreenUtils
 import com.chinshry.base.R
+import com.qmuiteam.qmui.util.QMUIResHelper
 import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView
-import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView
 
 /**
  * Created by chinshry on 2023/3/10.
@@ -38,12 +40,13 @@ fun LinearLayout.addButton(
     addView(newButton, layoutParams)
 }
 
-fun QMUIGroupListView.getGroupInputItemView(
+fun getGroupInputItemView(
     title: String,
     inputType: Int,
-    focusFunction: (EditText) -> Unit
+    focusFunction: (EditText) -> Unit,
 ): QMUICommonListItemView {
-    val editTextView = EditText(this.context)
+    val context = ContextHelper.getActivity()
+    val editTextView = EditText(context)
     editTextView.width = ScreenUtils.getAppScreenWidth() / 3
     editTextView.gravity = Gravity.END
     editTextView.inputType = inputType
@@ -57,28 +60,43 @@ fun QMUIGroupListView.getGroupInputItemView(
         }
     }
 
-    return createItemView(title).apply {
+    return QMUICommonListItemView(context).apply {
+        text = title
+        layoutParams = LayoutParams(
+            LayoutParams.MATCH_PARENT,
+            QMUIResHelper.getAttrDimen(context, R.attr.qmui_list_item_height)
+        )
         accessoryType = QMUICommonListItemView.ACCESSORY_TYPE_CUSTOM
         addAccessoryCustomView(editTextView)
     }
 }
 
-fun QMUIGroupListView.getGroupSwitchItemView(
+fun Context.getGroupSwitchItemView(
     title: String,
     isChecked: Boolean = false,
-    listener: CompoundButton.OnCheckedChangeListener
+    listener: CompoundButton.OnCheckedChangeListener,
 ): QMUICommonListItemView {
-    return createItemView(title).apply {
+    return QMUICommonListItemView(this).apply {
+        text = title
+        layoutParams = LayoutParams(
+            LayoutParams.MATCH_PARENT,
+            QMUIResHelper.getAttrDimen(context, R.attr.qmui_list_item_height)
+        )
         accessoryType = QMUICommonListItemView.ACCESSORY_TYPE_SWITCH
         switch.isChecked = isChecked
         switch.setOnCheckedChangeListener(listener)
     }
 }
 
-fun QMUIGroupListView.getGroupNoneItemView(
+fun Context.getGroupNoneItemView(
     title: String,
 ): QMUICommonListItemView {
-    return createItemView(title).apply {
+    return QMUICommonListItemView(this).apply {
+        text = title
+        layoutParams = LayoutParams(
+            LayoutParams.MATCH_PARENT,
+            QMUIResHelper.getAttrDimen(context, R.attr.qmui_list_item_height)
+        )
         accessoryType = QMUICommonListItemView.ACCESSORY_TYPE_NONE
     }
 }

@@ -1,9 +1,12 @@
 package com.chinshry.base.util
 
-import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.LogUtils
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 /**
  * Created by chinshry on 2021/12/23.
@@ -135,7 +138,9 @@ object WindowManagerList {
 
         delay(delayTime)
 
-        LogUtils.dTag(TAG, "windowShowJob delay over \n isDialogShowing = $isDialogShowing \n windowList = ${windowList.toString()}")
+        LogUtils.dTag(
+            TAG, "windowShowJob delay over \n " +
+                    "isDialogShowing = $isDialogShowing \n windowList = ${windowList.toString()}")
 
         // 无弹窗展示中 任务列表不为空
         // 防止延时过程中应用到后台 页面跳转会失败
@@ -180,9 +185,9 @@ object WindowManagerList {
      */
     private fun canShowWindow(type: WindowType): Boolean {
         // 当前activity
-        val currentActivity = ActivityUtils.getTopActivity()?.javaClass
+        val currentActivity = ContextHelper.getActivity()?.javaClass
 
-        return when(type) {
+        return when (type) {
             WindowType.LOW -> {
                 currentActivity?.simpleName == "MainActivity"
             }

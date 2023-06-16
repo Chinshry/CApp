@@ -9,13 +9,15 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
-import androidx.annotation.*
+import androidx.annotation.FloatRange
+import androidx.annotation.IdRes
 import androidx.annotation.IntRange
-import com.blankj.utilcode.util.ActivityUtils
+import androidx.annotation.StyleRes
 import com.blankj.utilcode.util.KeyboardUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ScreenUtils
 import com.chinshry.base.bean.BuryPointInfo
+import com.chinshry.base.util.ContextHelper
 import com.chinshry.base.util.getTrackBuryPoint
 import com.chinshry.base.util.WindowManagerList
 import com.chinshry.base.util.logBuryPoint
@@ -27,7 +29,7 @@ import com.chinshry.base.view.CustomHeaderBar.Companion.initCustomHeaderBar
  * Describe：基础弹窗
  */
 open class BaseDialog(
-    context: Context = ActivityUtils.getTopActivity(),
+    context: Context = ContextHelper.getApplication(),
     style: Int = 0,
 ): Dialog(context, style) {
 

@@ -37,7 +37,7 @@ class ScrollTextActivity : BaseActivity() {
     private fun initView() {
         QMUIGroupListView.newSection(this)
             .addItemView(
-                viewBinding.groupListView.getGroupSwitchItemView(
+                getGroupSwitchItemView(
                     "设置短文本"
                 ) { _, isChecked ->
                     viewBinding.tvScroll.setScrollText(
@@ -51,7 +51,7 @@ class ScrollTextActivity : BaseActivity() {
                 null
             )
             .addItemView(
-                viewBinding.groupListView.getGroupSwitchItemView(
+                getGroupSwitchItemView(
                     "显示边缘渐变",
                     viewBinding.tvScroll.getFadingEdgeEnable()
                 ) { _, isChecked ->
@@ -60,7 +60,7 @@ class ScrollTextActivity : BaseActivity() {
                 null
             )
             .addItemView(
-                viewBinding.groupListView.getGroupSwitchItemView(
+                getGroupSwitchItemView(
                     "显示滚动条",
                     viewBinding.tvScroll.getScrollBarEnable()
                 ) { _, isChecked ->
@@ -69,7 +69,7 @@ class ScrollTextActivity : BaseActivity() {
                 null
             )
             .addItemView(
-                viewBinding.groupListView.getGroupInputItemView(
+                getGroupInputItemView(
                     title = "设置最大行数",
                     inputType = EditorInfo.TYPE_CLASS_NUMBER
                 ) {

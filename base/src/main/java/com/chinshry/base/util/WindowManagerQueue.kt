@@ -2,8 +2,11 @@ package com.chinshry.base.util
 
 import android.os.Handler
 import android.os.Looper
-import com.blankj.utilcode.util.ActivityUtils
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
 import java.util.concurrent.PriorityBlockingQueue
 
 /**
@@ -151,8 +154,8 @@ object WindowManagerQueue {
      */
     private fun canShowWindow(level: WindowLevel): Boolean {
         // 当前activity名
-        val currentActivityName = ActivityUtils.getTopActivity().javaClass.name
-        return when(level) {
+        val currentActivityName = ContextHelper.getActivity()?.javaClass?.name ?: ""
+        return when (level) {
             WindowLevel.LOW -> {
                 currentActivityName == "com.chinshry.application.MainActivity"
             }

@@ -11,7 +11,6 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.text.isDigitsOnly
-import com.blankj.utilcode.util.ActivityUtils
 import com.bumptech.glide.Glide
 import com.chinshry.base.R
 import com.chinshry.base.bean.BuryPointInfo
@@ -128,7 +127,7 @@ object FloorUtil {
         itemView: View,
         buryPointInfo: BuryPointInfo?,
     ) {
-        val context: Context = ActivityUtils.getTopActivity().applicationContext
+        val context = ContextHelper.getApplication()
 
         itemData?.apply {
             val elementView = itemView.findViewById<ConstraintLayout>(R.id.iv_element_bg_color)

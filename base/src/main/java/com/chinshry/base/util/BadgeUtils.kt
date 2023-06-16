@@ -2,7 +2,6 @@ package com.chinshry.base.util
 
 import android.view.View
 import com.blankj.utilcode.constant.TimeConstants
-import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.TimeUtils
 import com.chinshry.base.bean.ElementAttribute
 import com.chinshry.base.db.BadgeDataModel
@@ -95,13 +94,13 @@ object BadgeUtils {
 
     private suspend fun saveBadgeDb(data: BadgeDataModel) {
         withContext(Dispatchers.IO) {
-            val context = ActivityUtils.getTopActivity()
+            val context = ContextHelper.getApplication()
             DatabaseManager.getBadgeDao(context).insert(data)
         }
     }
 
     private fun getBadgeDb(id: String?, type: String): BadgeDataModel? {
-        val context = ActivityUtils.getTopActivity() ?: return null
+        val context = ContextHelper.getApplication()
         id?.let {
             return DatabaseManager.getBadgeDao(context).get(it, type)
         } ?: let {

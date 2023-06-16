@@ -1,8 +1,14 @@
 package com.chinshry.base.util
 
 import android.annotation.SuppressLint
+import android.content.ComponentName
 import android.content.Context
-import com.blankj.utilcode.util.*
+import android.content.Intent
+import android.os.Bundle
+import android.provider.Settings
+import com.blankj.utilcode.util.GsonUtils
+import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.Utils
 import com.chinshry.base.R
 import com.chinshry.base.bean.Constants
 import com.qmuiteam.qmui.util.QMUIDisplayHelper
@@ -278,6 +284,24 @@ object CommonUtils {
             e.printStackTrace()
         }
         return result.toString()
+    }
+
+    private fun jumpAccessibilityServiceSettings(
+        cls: Class<*>,
+        context: Context = ContextHelper.getApplication()
+    ) {
+        val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        intent.putComponent(context.packageName, cls)
+        context.startActivity(intent)
+    }
+
+    private fun Intent.putComponent(pkg: String, cls: Class<*>) {
+        val cs = ComponentName(pkg, cls.name).flattenToString()
+        val bundle = Bundle()
+        bundle.putString(":settings:fragment_args_key", cs)
+        putExtra(":settings:fragment_args_key", cs)
+        putExtra(":settings:show_fragment_args", bundle)
     }
 
     fun dp2px(context: Context?, dp: Float): Float {

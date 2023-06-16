@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.Gravity
 import android.view.inputmethod.EditorInfo
+import android.view.ViewGroup.LayoutParams
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.blankj.utilcode.util.ScreenUtils
 import com.chinshry.base.BaseActivity
@@ -16,6 +17,7 @@ import com.chinshry.base.view.MaskingTextView
 import com.chinshry.base.view.MaskingTextView.MaskType
 import com.chinshry.tool.R
 import com.chinshry.tool.databinding.ActivityListBaseBinding
+import com.qmuiteam.qmui.util.QMUIResHelper
 import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView
 import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView
 
@@ -63,7 +65,7 @@ class MaskingActivity : BaseActivity() {
             .setTitle("自定义脱敏")
             .addItemView(itemCustomMaskView, null)
             .addItemView(
-                viewBinding.groupListView.getGroupInputItemView(
+                getGroupInputItemView(
                     title = "脱敏起始index 从开头起数",
                     inputType = EditorInfo.TYPE_CLASS_NUMBER
                 ) {
@@ -73,7 +75,7 @@ class MaskingActivity : BaseActivity() {
                 null
             )
             .addItemView(
-                viewBinding.groupListView.getGroupInputItemView(
+                getGroupInputItemView(
                     title = "脱敏结尾index 从末尾起数",
                     inputType = EditorInfo.TYPE_CLASS_NUMBER
                 ) {
@@ -83,7 +85,7 @@ class MaskingActivity : BaseActivity() {
                 null
             )
             .addItemView(
-                viewBinding.groupListView.getGroupInputItemView(
+                getGroupInputItemView(
                     title = "脱敏字符",
                     inputType = EditorInfo.TYPE_CLASS_TEXT
                 ) {
@@ -93,7 +95,7 @@ class MaskingActivity : BaseActivity() {
                 null
             )
             .addItemView(
-                viewBinding.groupListView.getGroupSwitchItemView(
+                getGroupSwitchItemView(
                     "脱敏字符替代所有"
                 ) { _, isChecked ->
                     itemCustomMaskInputView?.maskReplacementAll = isChecked
@@ -110,11 +112,14 @@ class MaskingActivity : BaseActivity() {
         maskingView.width = ScreenUtils.getAppScreenWidth() / 2
         maskingView.maskType = type
         maskingView.gravity = Gravity.END
-
-        val groupItemView: QMUICommonListItemView = viewBinding.groupListView.createItemView(title)
-        groupItemView.accessoryType = QMUICommonListItemView.ACCESSORY_TYPE_CUSTOM
-        groupItemView.addAccessoryCustomView(maskingView)
-
-        return groupItemView
+        return QMUICommonListItemView(this).apply {
+            layoutParams = LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                QMUIResHelper.getAttrDimen(context, R.attr.qmui_list_item_height)
+            )
+            text = title
+            accessoryType = QMUICommonListItemView.ACCESSORY_TYPE_CUSTOM
+            addAccessoryCustomView(maskingView)
+        }
     }
 }

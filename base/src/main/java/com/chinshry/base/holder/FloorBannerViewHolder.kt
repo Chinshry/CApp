@@ -1,12 +1,12 @@
 package com.chinshry.base.holder
 
 import android.view.View
-import com.blankj.utilcode.util.ActivityUtils
 import com.chinshry.base.R
 import com.chinshry.base.adapter.FloorBannerAdapter
 import com.chinshry.base.bean.BuryPointInfo
 import com.chinshry.base.bean.ElementAttribute
 import com.chinshry.base.bean.FloorData
+import com.chinshry.base.util.ContextHelper
 import com.chinshry.base.util.dp
 import com.chinshry.base.util.getColorById
 import com.youth.banner.Banner
@@ -41,7 +41,7 @@ class FloorBannerViewHolder {
             buryPointInfo: BuryPointInfo? = null,
         ) {
             banner.setAdapter(FloorBannerAdapter(itemData.filterNotNull(), banner, buryPointInfo))
-            banner.indicator = RectangleIndicator(ActivityUtils.getTopActivity())
+            banner.indicator = RectangleIndicator(ContextHelper.getApplication())
             banner.setIndicatorSelectedWidth(6.dp)
             banner.setIndicatorNormalWidth(6.dp)
             banner.setIndicatorHeight(6.dp)

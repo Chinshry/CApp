@@ -8,7 +8,6 @@ import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.ResourceUtils
 import com.blankj.utilcode.util.StringUtils
@@ -74,7 +73,7 @@ fun getColorById(@ColorRes id: Int) = ColorUtils.getColor(id)
 fun getDrawableById(@DrawableRes id: Int): Drawable = ResourceUtils.getDrawable(id)
 
 inline val Int.dp: Int get() = toFloat().dp.toInt()
-inline val Float.dp: Float get() = CommonUtils.dp2px(ActivityUtils.getTopActivity(), this)
+inline val Float.dp: Float get() = CommonUtils.dp2px(ContextHelper.getApplication(), this)
 
 fun Int.dp(context: Context?): Int = run { return toFloat().dp(context).toInt() }
 fun Float.dp(context: Context?): Float = CommonUtils.dp2px(context, this)
