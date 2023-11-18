@@ -41,6 +41,6 @@ object DeviceUtil {
     fun getVersionCode(context: Context): Int {
         val packageManager = context.applicationContext.packageManager
         val info = packageManager.getPackageInfo(context.packageName, 0)
-        return info.versionCode
+        return info.longVersionCode.toInt()
     }
 }

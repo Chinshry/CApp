@@ -87,13 +87,13 @@ class ScrollGridIndicator @JvmOverloads constructor(
         invalidate()
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
         isVisible = (ratio != 1F)
 
         //绘制背景
-        canvas?.drawRoundRect(mTrackRect, mRadius, mRadius, mTrackPaint)
+        canvas.drawRoundRect(mTrackRect, mRadius, mRadius, mTrackPaint)
 
         //计算指示器的长度和位置
         val leftOffset = viewWidth * (1f - ratio) * progress
@@ -102,7 +102,7 @@ class ScrollGridIndicator @JvmOverloads constructor(
         mRect.set(left, mTrackRect.top, right, mTrackRect.bottom)
 
         //绘制指示器
-        canvas?.drawRoundRect(mRect, mRadius, mRadius, mPaint)
+        canvas.drawRoundRect(mRect, mRadius, mRadius, mPaint)
     }
 
 }

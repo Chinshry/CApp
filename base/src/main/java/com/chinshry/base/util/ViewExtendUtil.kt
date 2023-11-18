@@ -1,7 +1,6 @@
 package com.chinshry.base.util
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.Drawable
@@ -68,25 +67,21 @@ fun View.setBgSelectorByColor(
     val bgSelector = StateListDrawable()
     val normal: Drawable? =
         if (idNormal == null) null else getShapeByColor(
-            context = context,
             solidColor = idNormal,
             radius = radius
         )
     val pressed: Drawable? =
         if (idPressed == null) null else getShapeByColor(
-            context = context,
             solidColor = idPressed,
             radius = radius
         )
     val focused: Drawable? =
         if (idFocused == null) null else getShapeByColor(
-            context = context,
             solidColor = idFocused,
             radius = radius
         )
     val unable: Drawable? =
         if (idUnable == null) null else getShapeByColor(
-            context = context,
             solidColor = idUnable,
             radius = radius
         )
@@ -140,17 +135,17 @@ fun View.setShape(
             }
         } else {
             FloatArray(8) {
-                radius[0];radius[0];
-                radius[1];radius[1];
-                radius[2];radius[2];
-                radius[3];radius[3]!!;
+                radius[0];radius[0]
+                radius[1];radius[1]
+                radius[2];radius[2]
+                radius[3];radius[3] ?: 0F
             }
         }
         gradientDrawable.cornerRadii = cornerRadii
     }
     val bgColor = solidColorRgb
         ?: if (solidColor != null) {
-            resources.getColor(solidColor)
+            getColorById(solidColor)
         } else {
             Color.TRANSPARENT
         }
@@ -161,7 +156,7 @@ fun View.setShape(
     strokeColor?.apply {
         gradientDrawable.setStroke(
             strokeWith ?: 0,
-            resources.getColor(strokeColor),
+            getColorById(strokeColor),
             dashWidth ?: 0F,
             dashGap ?: 0F
         )
@@ -171,7 +166,6 @@ fun View.setShape(
 }
 
 private fun getShapeByColor(
-    context: Context? = null,
     @ColorRes solidColor: Int?,
     @ShapeType
     shapeType: Int = ShapeType.RECTANGLE,
@@ -185,25 +179,25 @@ private fun getShapeByColor(
     gradientDrawable.shape = shapeType
     radius.apply {
         gradientDrawable.cornerRadii = FloatArray(8) {
-            radius[0];radius[0];
-            radius[1];radius[1];
-            radius[2];radius[2];
-            radius[3];radius[3]!!;
+            radius[0];radius[0]
+            radius[1];radius[1]
+            radius[2];radius[2]
+            radius[3];radius[3] ?: 0F
         }
     }
     val bgColor = if (solidColor != null) {
-        context?.resources?.getColor(solidColor)
+        getColorById(solidColor)
     } else {
         Color.TRANSPARENT
     }
     solidColor?.apply {
-        gradientDrawable.setColor(bgColor!!)
+        gradientDrawable.setColor(bgColor)
         //gradientDrawable.setColors(bgColors) 渐变色 按需添加
     }
     strokeColor?.apply {
         gradientDrawable.setStroke(
             strokeWith ?: 0,
-            context!!.resources!!.getColor(strokeColor),
+            getColorById(strokeColor),
             dashWidth ?: 0F,
             dashGap ?: 0F
         )

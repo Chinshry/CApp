@@ -91,7 +91,7 @@ class MarqueeTextView @JvmOverloads constructor(
             mTextView.measuredWidth,
             measuredHeight,
             Bitmap.Config.ARGB_8888
-        )?.apply {
+        ).apply {
             mTextView.draw(Canvas(this))
         }
     }

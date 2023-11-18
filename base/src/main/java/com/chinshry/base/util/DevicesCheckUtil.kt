@@ -436,7 +436,7 @@ object DevicesCheckUtil {
         val checkItemName = "usbInfo"
         val im = context.getSystemService(AppCompatActivity.INPUT_SERVICE) as InputManager
         for (id in im.inputDeviceIds) {
-            val value = im.getInputDevice(id).name
+            val value = im.getInputDevice(id)?.name ?: ""
             if (value.contains("Power Button")) {
                 return CheckItemResult(checkItemName, RESULT_MAYBE_EMULATOR, value)
             }

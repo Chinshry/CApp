@@ -7,7 +7,7 @@ plugins {
 apply from: "../common.gradle"
 
 dependencies {
-    api 'androidx.navigation:navigation-fragment-ktx:2.3.5'
+    api 'androidx.navigation:navigation-fragment-ktx:2.7.5'
 
     // ARouter
     kapt 'com.alibaba:arouter-compiler:1.5.2'
@@ -24,9 +24,9 @@ dependencies {
     implementation 'com.gyf.immersionbar:immersionbar-ktx:3.0.0'
 
     // Room
-    api "androidx.room:room-runtime:2.4.2"
-    api "androidx.room:room-ktx:2.4.2"
-    kapt "androidx.room:room-compiler:2.4.2"
+    api "androidx.room:room-runtime:2.6.0"
+    api "androidx.room:room-ktx:2.6.0"
+    kapt "androidx.room:room-compiler:2.6.0"
 
     // 开发工具
     api 'com.blankj:utilcodex:1.31.0'
