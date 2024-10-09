@@ -2,28 +2,18 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ll_activity"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    android:background="@color/black">
+    android:padding="5dp"
+    android:background="@color/transparent">
 
-    <View
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:background="@color/blue" />
-
-    <ScrollView
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/btn_start"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="2dp">
-
-        <com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView
-            android:id="@+id/groupListView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </ScrollView>
+        android:text="START" />
 
 </LinearLayout>

@@ -1,11 +1,10 @@
 package com.chinshry.capp
 
 import android.app.Application
-import cn.vove7.andro_accessibility_api.AccessibilityApi
 import com.blankj.utilcode.util.LogUtils
-import com.chinshry.tool.service.AppAccessibilityService
 import com.chinshry.base.ActivityLifecycleCallbackWrapper
 import com.chinshry.base.view.CRefreshHeader
+import com.chinshry.tool.service.AppAccessibilityService
 import com.scwang.smart.refresh.header.ClassicsHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 
@@ -20,7 +19,7 @@ class MainApplication : Application() {
         registerActivityLifecycleCallbacks(ActivityLifecycleCallbackWrapper())
         initLog()
         initSmartFresh()
-        AccessibilityApi.init(this, AppAccessibilityService::class.java)
+        AppAccessibilityService.initService(this)
     }
 
     private fun initLog() {

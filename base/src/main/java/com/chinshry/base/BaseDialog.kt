@@ -29,18 +29,22 @@ import com.chinshry.base.view.CustomHeaderBar.Companion.initCustomHeaderBar
  * Describe：基础弹窗
  */
 open class BaseDialog(
-    context: Context = ContextHelper.getApplication(),
+    context: Context = ContextHelper.getActivity(),
     style: Int = 0,
 ): Dialog(context, style) {
 
     // dialog宽度
     private var dialogWidth: Int? = null
+
     // dialog与屏幕边距百分比
     private var dialogWidthPercent: Float? = null
+
     // dialog gravity
     private var dialogGravity: Int? = null
+
     // dialog 消失是否执行弹窗任务 且不与弹窗管理内弹窗重叠
     private var windowShow: Boolean = false
+
     // 自定义埋点
     private var pageBuryPoint: BuryPointInfo = BuryPointInfo()
 

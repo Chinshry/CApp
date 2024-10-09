@@ -2,6 +2,7 @@ package com.chinshry.base
 
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.chinshry.base.bean.BuryPointInfo
@@ -44,8 +45,8 @@ open class BaseActivity : AppCompatActivity() {
 
     }
 
-    override fun setContentView(layoutResID: Int) {
-        super.setContentView(layoutResID)
+    override fun setContentView(view: View?) {
+        super.setContentView(view)
         // 初始化header点击事件
         initCustomHeaderBar(this)
     }

@@ -185,11 +185,11 @@ object WindowManagerList {
      */
     private fun canShowWindow(type: WindowType): Boolean {
         // 当前activity
-        val currentActivity = ContextHelper.getActivity()?.javaClass
+        val currentActivity = ContextHelper.getActivity().javaClass
 
         return when (type) {
             WindowType.LOW -> {
-                currentActivity?.simpleName == "MainActivity"
+                currentActivity.simpleName == "MainActivity"
             }
             WindowType.MIDDLE -> {
                 /** 带[MyPage]注解isAccountPage为true的activity **/

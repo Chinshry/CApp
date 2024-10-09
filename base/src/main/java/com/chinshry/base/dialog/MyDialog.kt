@@ -14,7 +14,7 @@ import com.chinshry.base.util.ContextHelper
  * Describe：通用弹窗
  */
 class MyDialog(
-    context: Context = ContextHelper.getApplication(),
+    context: Context = ContextHelper.getActivity(),
     style: Int = 0,
 ) : BaseDialog(context, style) {
 
