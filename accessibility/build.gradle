@@ -3,6 +3,9 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
 }
+android {
+    namespace 'com.chinshry.accessibility'
+}
 
 apply from: "../common.gradle"
 

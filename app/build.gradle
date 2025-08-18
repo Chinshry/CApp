@@ -8,6 +8,7 @@ plugins {
 apply from: "../common.gradle"
 
 android {
+    namespace 'com.chinshry.capp'
     defaultConfig {
         applicationId "com.chinshry.capp"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

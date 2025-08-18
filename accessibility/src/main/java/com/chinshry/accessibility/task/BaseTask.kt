@@ -1,5 +1,6 @@
 package com.chinshry.accessibility.task
 
+import android.annotation.SuppressLint
 import cn.vove7.andro_accessibility_api.AccessibilityApi
 import cn.vove7.auto.core.viewfinder.ConditionGroup
 import com.blankj.utilcode.util.LogUtils
@@ -29,6 +30,7 @@ abstract class BaseTask {
         }
     }
 
+    @SuppressLint("NewApi")
     fun start() {
         LogUtils.d(logTAG, "start")
         runCatching {
@@ -43,6 +45,10 @@ abstract class BaseTask {
             }
         }.onFailure {
             LogUtils.e(logTAG, "start ERROR.", it)
+            val rersult = AccessibilityApi.baseService?.windows?.sortedByDescending {
+                if (it.isActive) Int.MAX_VALUE else it.layer
+            }
+            rersult?.map { it.root?.apply { refresh() } }
         }
     }
 
